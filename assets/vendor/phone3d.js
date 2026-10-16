@@ -135,7 +135,7 @@ if (renderer) {
         }
         if (want !== cur && fading < 0) { scrB.material.map = tex[want]; scrB.material.needsUpdate = true; fading = want; fadeT = 0; }
         if (fading >= 0) {
-          fadeT = Math.min(1, fadeT + dt / .32); scrB.material.opacity = fadeT;
+          fadeT = Math.min(1, fadeT + dt / .55); scrB.material.opacity = fadeT;
           if (fadeT >= 1) { scrA.material.map = tex[fading]; scrA.material.needsUpdate = true; scrB.material.opacity = 0; cur = fading; fading = -1; }
         }
         renderer.render(scene, camera);
