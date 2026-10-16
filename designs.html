@@ -109,6 +109,14 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
 .mini-stats span{font-family:'Poppins',sans-serif;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
 .show{position:relative;height:420vh}
 .archive-hidden{display:none}
+#archive.arch-page{position:fixed;inset:0;z-index:80;overflow-y:auto;overscroll-behavior:contain;background:var(--bg);padding:0 0 12vh}
+#archive .arch-bar{position:sticky;top:0;z-index:46;display:flex;justify-content:space-between;align-items:center;padding:14px 5vw;background:rgba(6,6,6,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+#archive .arch-bar .mark{font-size:22px}
+#archive .wrap{padding-top:clamp(30px,5vh,60px)}
+#archive .tabs-bar{top:68px}
+.zoomer{position:fixed;z-index:90;overflow:hidden;pointer-events:none;display:none;background:#111;box-shadow:0 40px 120px -30px #000}
+.zoomer img{width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.9) brightness(.82)}
+.zoomer.anim{transition:left .8s var(--ease),top .8s var(--ease),width .8s var(--ease),height .8s var(--ease),border-radius .8s var(--ease),opacity .45s ease}
 .show-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
 .show-head{position:absolute;top:calc(var(--hh,70px) + 4vh);left:0;right:0;text-align:center}
 .show-head .sec-label{justify-content:center}.show-head .sec-label::after{display:none}
@@ -374,7 +382,8 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 </section>
 
 <!-- ARCHIVE -->
-<section class="sec archive-hidden" id="archive">
+<section class="sec archive-hidden" id="archive" aria-label="Designs">
+  <div class="arch-bar"><button type="button" class="pill" id="archBack"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg><span>Back</span></button><a href="index.html" class="mark"><em>S</em>T<em>.</em></a></div>
   <div class="wrap">
     <div class="sec-label rv"><b>04</b>The archive</div>
     <div class="arch-head rv">
@@ -535,9 +544,45 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
   const fromHash = () => { const h = location.hash.slice(1); return views.some(v => v.id === h) ? h : 'highlights'; };
   select(fromHash(), false);
   const archEl = document.getElementById('archive');
-  const reveal = () => archEl.classList.remove('archive-hidden');
-  if (location.hash && views.some(v => v.id === location.hash.slice(1))) { reveal(); setTimeout(() => archEl.scrollIntoView(), 60); }
-  addEventListener('hashchange', () => { const h = location.hash.slice(1); if (views.some(v => v.id === h)) { reveal(); select(h, false); document.getElementById('archive').scrollIntoView({ behavior: 'smooth' }); } });
+  /* ---------- archive as its own page: zooms out of the clicked card ---------- */
+  const zoomer = document.createElement('div'); zoomer.className = 'zoomer'; zoomer.innerHTML = '<img alt="">'; document.body.appendChild(zoomer);
+  const zImg = zoomer.querySelector('img');
+  let archOpen = false, lastCard = null, pushed = false;
+  const box = (r, rad) => Object.assign(zoomer.style, { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: rad + 'px' });
+  const full = () => ({ left: 0, top: 0, width: innerWidth, height: innerHeight });
+  const lockScroll = on => { document.documentElement.style.overflow = on ? 'hidden' : ''; };
+  function showPage(id) {
+    archEl.classList.remove('archive-hidden'); archEl.classList.add('arch-page'); archEl.scrollTop = 0;
+    if (!cur || cur.id !== id) select(id, false);
+    archOpen = true; lockScroll(true);
+  }
+  function openArch(id, card) {
+    if (archOpen) { select(id, false); return; }
+    lastCard = card || null;
+    if (card) {
+      zImg.src = card.querySelector('img').src;
+      zoomer.classList.remove('anim'); zoomer.style.opacity = 1; zoomer.style.display = 'block';
+      box(card.getBoundingClientRect(), 18); zoomer.offsetWidth;
+      zoomer.classList.add('anim'); box(full(), 0);
+      setTimeout(() => { showPage(id); zoomer.style.opacity = 0; setTimeout(() => { zoomer.style.display = 'none'; }, 460); }, 820);
+    } else showPage(id);
+    history.pushState({ arch: id }, '', '#' + id); pushed = true;
+  }
+  function closeArch() {
+    if (!archOpen) return; archOpen = false;
+    const card = lastCard, r = card && card.getBoundingClientRect();
+    if (card && r.bottom > 0 && r.top < innerHeight) {
+      zImg.src = card.querySelector('img').src;
+      zoomer.classList.remove('anim'); zoomer.style.display = 'block'; zoomer.style.opacity = 1; box(full(), 0); zoomer.offsetWidth;
+      archEl.classList.add('archive-hidden'); archEl.classList.remove('arch-page'); lockScroll(false);
+      zoomer.classList.add('anim'); box(r, 18);
+      setTimeout(() => { zoomer.style.opacity = 0; setTimeout(() => { zoomer.style.display = 'none'; }, 460); }, 800);
+    } else { archEl.classList.add('archive-hidden'); archEl.classList.remove('arch-page'); lockScroll(false); }
+  }
+  document.getElementById('archBack').addEventListener('click', () => { if (pushed) history.back(); else { closeArch(); history.replaceState(null, '', location.pathname); } });
+  addEventListener('popstate', () => { const h = location.hash.slice(1); if (archOpen && !views.some(v => v.id === h)) closeArch(); else if (views.some(v => v.id === h)) openArch(h, null); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && archOpen && !document.getElementById('lb').classList.contains('open')) document.getElementById('archBack').click(); });
+  if (location.hash && views.some(v => v.id === location.hash.slice(1))) { showPage(location.hash.slice(1)); }
 
   /* ---------- counters (on view) ---------- */
   const countUp = el => { const to = +el.dataset.count, t0 = performance.now(), dur = 1800;
@@ -631,7 +676,7 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
     b.querySelector('img').src = T + cov[0] + '.webp';
     b.querySelector('.pill2').textContent = order[ci].all.length.toLocaleString('en-US') + ' designs';
     b.querySelector('h4').textContent = c.name; b.querySelector('p').textContent = LINES[c.id];
-    b.addEventListener('click', () => { reveal(); select(c.id, true); requestAnimationFrame(() => archEl.scrollIntoView({ behavior: 'smooth' })); });
+    b.addEventListener('click', () => openArch(c.id, b));
     disc.appendChild(b); });
   /* ---------- paint the touchpoint section onto a canvas = the phone's screen texture ---------- */
   const tpIn = document.getElementById('tpIn'), tpCv = document.createElement('canvas');
