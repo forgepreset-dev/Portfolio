@@ -108,6 +108,7 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
 .mini-stats b{display:block;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(28px,3vw,42px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .mini-stats span{font-family:'Poppins',sans-serif;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
 .show{position:relative;height:420vh}
+.archive-hidden{display:none}
 .show-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
 .show-head{position:absolute;top:calc(var(--hh,70px) + 4vh);left:0;right:0;text-align:center}
 .show-head .sec-label{justify-content:center}.show-head .sec-label::after{display:none}
@@ -115,10 +116,10 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
 .slot-show{width:clamp(200px,17vw,250px)}
 .tp{position:absolute;inset:0;z-index:5;opacity:0;pointer-events:none;background:var(--bg)}
 .tp.on{pointer-events:auto}
-.tp-in{height:100%;display:flex;flex-direction:column;padding-top:calc(var(--hh,70px) + 3vh);padding-bottom:5vh}
+.tp{overflow:hidden}
+.tp-in{padding-top:calc(var(--hh,70px) + 4vh);padding-bottom:14vh;will-change:transform}
 .tp .sec-h{margin-top:16px;font-size:clamp(34px,4.6vw,72px)}
-.tp .disc{flex:1;min-height:0;margin-top:clamp(20px,3.5vh,40px);grid-template-rows:repeat(2,minmax(0,1fr))}
-.tp .dcard{aspect-ratio:auto;height:100%}
+.tp .disc{margin-top:clamp(36px,5vh,64px)}
 .phone3d{transition:none}
 .show-cap{position:absolute;bottom:7vh;left:0;right:0;text-align:center;font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);opacity:0}
 @media (max-width:860px){
@@ -127,8 +128,8 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
   .slot-about{width:min(52vw,220px)}
   .show{height:360vh}
   .slot-show{width:min(44vw,190px)}
-  .tp-in{padding-top:calc(var(--hh,64px) + 2vh);padding-bottom:3vh}
-  .tp .disc{grid-template-rows:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
+  .tp-in{padding-top:calc(var(--hh,64px) + 3vh);padding-bottom:10vh}
+  .tp .disc{gap:10px;margin-top:24px}
 }
 /* ---------- story (pinned) ---------- */
 .story{position:relative;height:calc(var(--n,6) * 90vh + 40vh)}
@@ -373,9 +374,9 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 </section>
 
 <!-- ARCHIVE -->
-<section class="sec" id="archive" style="display:none">
+<section class="sec archive-hidden" id="archive">
   <div class="wrap">
-    <div class="sec-label rv"><b>05</b>The archive</div>
+    <div class="sec-label rv"><b>04</b>The archive</div>
     <div class="arch-head rv">
       <h2>All <em>1,800+</em><br>pieces.</h2>
     </div>
@@ -533,8 +534,10 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
   }
   const fromHash = () => { const h = location.hash.slice(1); return views.some(v => v.id === h) ? h : 'highlights'; };
   select(fromHash(), false);
-  if (location.hash && views.some(v => v.id === location.hash.slice(1))) setTimeout(() => document.getElementById('archive').scrollIntoView(), 60);
-  addEventListener('hashchange', () => { const h = location.hash.slice(1); if (views.some(v => v.id === h)) { select(h, false); document.getElementById('archive').scrollIntoView({ behavior: 'smooth' }); } });
+  const archEl = document.getElementById('archive');
+  const reveal = () => archEl.classList.remove('archive-hidden');
+  if (location.hash && views.some(v => v.id === location.hash.slice(1))) { reveal(); setTimeout(() => archEl.scrollIntoView(), 60); }
+  addEventListener('hashchange', () => { const h = location.hash.slice(1); if (views.some(v => v.id === h)) { reveal(); select(h, false); document.getElementById('archive').scrollIntoView({ behavior: 'smooth' }); } });
 
   /* ---------- counters (on view) ---------- */
   const countUp = el => { const to = +el.dataset.count, t0 = performance.now(), dur = 1800;
@@ -572,7 +575,10 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
     // scroll positions where each stop is "settled"
     const yAbout = pageY(slotAbout) + B.h / 2 - vh / 2;           // about slot centred in viewport
     const yShow = pageY(showSec);                                 // showcase pins
-    const showLen = showSec.offsetHeight - vh;
+    const baseLen = (vw > 860 ? 3.2 : 2.6) * vh, extra = Math.max(0, tpIn.offsetHeight - vh);
+    const want = Math.round(baseLen + vh + extra) + 'px'; if (showSec.style.height !== want) showSec.style.height = want;
+    const showLen = baseLen;
+    tpIn.style.transform = 'translate3d(0,' + (-clamp(sy - pageY(showSec) - baseLen, 0, extra)).toFixed(1) + 'px,0)';
     const t1 = ease(seg(sy, 0, Math.max(1, yAbout)));             // hero → about
     const t2 = ease(seg(sy, yAbout + vh * .15, yShow));           // about → showcase
     const ps = clamp((sy - yShow) / Math.max(1, showLen), 0, 1);  // inside showcase
@@ -625,7 +631,7 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
     b.querySelector('img').src = T + cov[0] + '.webp';
     b.querySelector('.pill2').textContent = order[ci].all.length.toLocaleString('en-US') + ' designs';
     b.querySelector('h4').textContent = c.name; b.querySelector('p').textContent = LINES[c.id];
-    b.addEventListener('click', () => openLB(0, order[ci].all));
+    b.addEventListener('click', () => { reveal(); select(c.id, true); requestAnimationFrame(() => archEl.scrollIntoView({ behavior: 'smooth' })); });
     disc.appendChild(b); });
   /* ---------- paint the touchpoint section onto a canvas = the phone's screen texture ---------- */
   const tpIn = document.getElementById('tpIn'), tpCv = document.createElement('canvas');
