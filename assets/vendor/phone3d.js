@@ -1,6 +1,8 @@
 // Zofeur portfolio — real-time 3D phone (Three.js). Reads window.__pose each frame.
 import * as THREE from 'three';
 import { RoomEnvironment } from './RoomEnvironment.js';
+import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from './jsm/loaders/DRACOLoader.js';
 
 const SCREENS = window.__screens || [];
 const canvas = document.getElementById('phone3d');
@@ -46,62 +48,34 @@ if (renderer) {
     return g;
   };
 
-  // ---------- dimensions (≈ iPhone Pro proportions) ----------
-  const SW = 0.664, SH = SW * 3376 / 1560;          // screen matches the real screenshots
-  const W = SW + 0.036, H = SH + 0.036, D = 0.082, R = 0.108, BEV = 0.014;
-
-  // ---------- materials ----------
-  const titanium = new THREE.MeshPhysicalMaterial({ color: 0x5a5550, metalness: 1, roughness: .26, clearcoat: .4, clearcoatRoughness: .2 });
-  const blackGlass = new THREE.MeshPhysicalMaterial({ color: 0x050505, metalness: 0, roughness: .06, clearcoat: 1 });
-  const backGlass = new THREE.MeshPhysicalMaterial({ color: 0x1b1916, metalness: .15, roughness: .5, clearcoat: .25, clearcoatRoughness: .6 });
-  const bumpGlass = new THREE.MeshPhysicalMaterial({ color: 0x2c2926, metalness: .2, roughness: .25, clearcoat: 1 });
-  const lensGlass = new THREE.MeshPhysicalMaterial({ color: 0x0a0d14, metalness: .3, roughness: .05, clearcoat: 1, iridescence: .6, iridescenceIOR: 1.6 });
-
+  // ---------- real iPhone 15 Pro Max model (CC BY 4.0, polyman) ----------
   const phone = new THREE.Group(); scene.add(phone);
-
-  // body: extruded rounded rect — caps get black glass, sides get titanium
-  const body = new THREE.Mesh(new THREE.ExtrudeGeometry(rrShape(W - 2 * BEV, H - 2 * BEV, R - BEV), {
-    depth: D - 2 * BEV, bevelEnabled: true, bevelThickness: BEV, bevelSize: BEV, bevelSegments: 8, curveSegments: 32 }), [blackGlass, titanium]);
-  body.geometry.translate(0, 0, -(D - 2 * BEV) / 2); phone.add(body);
-
-  // screen (base + crossfade overlay) + glass sheen + dynamic island
+  let H = 1.47;                                   // model height in world units after normalising
   const loader = new THREE.TextureLoader();
   const tex = SCREENS.map(src => { const t = loader.load(src); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; });
-  const sGeo = planeRR(SW, SH, R - 0.02);
-  const scrA = new THREE.Mesh(sGeo, new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false }));
-  const scrB = new THREE.Mesh(sGeo, new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false, transparent: true, opacity: 0, depthWrite: false }));
-  scrA.position.z = D / 2 + .0006; scrB.position.z = D / 2 + .0009; phone.add(scrA, scrB);
-  const sheen = new THREE.Mesh(planeRR(W - .01, H - .01, R - .005), new THREE.MeshPhysicalMaterial({ color: 0x000000, roughness: .03, metalness: 0, clearcoat: 1, transparent: true, opacity: .08, depthWrite: false }));
-  sheen.position.z = D / 2 + .0014; phone.add(sheen);
-  const island = new THREE.Mesh(planeRR(.19, .056, .028), new THREE.MeshBasicMaterial({ color: 0x000000 }));
-  island.position.set(0, SH / 2 - .045, D / 2 + .0012); phone.add(island);
-
-  // back: frosted glass + camera plateau + three lenses + flash + logo
-  const back = new THREE.Mesh(planeRR(W - .006, H - .006, R - .003), backGlass);
-  back.rotation.y = Math.PI; back.position.z = -D / 2 - .0006; phone.add(back);
-  const BW = .31, bx = -W / 2 + .03 + BW / 2, by = H / 2 - .03 - BW / 2;
-  const bump = new THREE.Mesh(new THREE.ExtrudeGeometry(rrShape(BW, BW, .075), { depth: .006, bevelEnabled: true, bevelThickness: .004, bevelSize: .004, bevelSegments: 4, curveSegments: 24 }), bumpGlass);
-  bump.position.set(bx, by, -D / 2 - .006); phone.add(bump);
-  const lensAt = [[-.07, .07], [-.07, -.07], [.075, 0]];
-  lensAt.forEach(([lx, ly]) => {
-    const ring = new THREE.Mesh(new THREE.CylinderGeometry(.056, .058, .022, 40), titanium);
-    ring.rotation.x = Math.PI / 2; ring.position.set(bx + lx, by + ly, -D / 2 - .021); phone.add(ring);
-    const glass = new THREE.Mesh(new THREE.CircleGeometry(.044, 40), lensGlass);
-    glass.rotation.y = Math.PI; glass.position.set(bx + lx, by + ly, -D / 2 - .0325); phone.add(glass);
+  const scrMatA = new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false });
+  const scrMatB = new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false, transparent: true, opacity: 0, depthFunc: THREE.LessEqualDepth });
+  const scrA = { material: scrMatA }, scrB = { material: scrMatB };
+  const draco = new DRACOLoader(); draco.setDecoderPath(new URL('./jsm/libs/draco/gltf/', import.meta.url).href);
+  const gl = new GLTFLoader(); gl.setDRACOLoader(draco);
+  gl.load(new URL('./models/iphone15promax.glb', import.meta.url).href, g => {
+    const m = g.scene;
+    m.traverse(o => {
+      if (!o.isMesh) return;
+      if (o.material && o.material.name === 'pIJKfZsazmcpEiU') {          // the display
+        o.material = scrMatA;
+        const over = new THREE.Mesh(o.geometry, scrMatB); over.renderOrder = 2;
+        over.position.copy(o.position); over.quaternion.copy(o.quaternion); over.scale.copy(o.scale); o.parent.add(over);
+      } else if (o.material) { o.material.envMapIntensity = 1.2; }
+    });
+    // normalise: centre it, height = H
+    const box = new THREE.Box3().setFromObject(m), size = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+    m.position.sub(c);
+    const holder = new THREE.Group(); holder.add(m); holder.rotation.y = Math.PI; // model ships back-first
+    const sc = 1.47 / size.y; holder.scale.setScalar(sc); H = 1.47;
+    phone.add(holder);
+    document.documentElement.classList.add('gl-ready');
   });
-  const flash = new THREE.Mesh(new THREE.CircleGeometry(.018, 24), new THREE.MeshStandardMaterial({ color: 0xf3ead7, roughness: .4 }));
-  flash.rotation.y = Math.PI; flash.position.set(bx + .085, by + .095, -D / 2 - .0125); phone.add(flash);
-  // logo (canvas texture)
-  const lc = document.createElement('canvas'); lc.width = lc.height = 256; const g = lc.getContext('2d');
-  g.fillStyle = '#d6bb7d'; g.beginPath(); g.arc(128, 70, 46, 0, Math.PI * 2); g.fill();
-  g.beginPath(); g.moveTo(28, 236); g.bezierCurveTo(28, 160, 76, 128, 128, 128); g.bezierCurveTo(180, 128, 228, 160, 228, 236); g.closePath(); g.fill();
-  const lt = new THREE.CanvasTexture(lc); lt.colorSpace = THREE.SRGBColorSpace;
-  const logo = new THREE.Mesh(new THREE.PlaneGeometry(.13, .13), new THREE.MeshStandardMaterial({ map: lt, transparent: true, metalness: .9, roughness: .25 }));
-  logo.rotation.y = Math.PI; logo.position.set(0, .02, -D / 2 - .0012); phone.add(logo);
-
-  // side buttons
-  const btn = (len, x, y) => { const m = new THREE.Mesh(new THREE.CapsuleGeometry(.0065, len, 4, 12), titanium); m.position.set(x, y, 0); phone.add(m); };
-  btn(.14, W / 2 + .002, .2); btn(.075, -W / 2 - .002, .33); btn(.075, -W / 2 - .002, .21); btn(.035, -W / 2 - .002, .45);
 
   // soft contact shadow (blob under the phone)
   const shC = document.createElement('canvas'); shC.width = shC.height = 128; const sg = shC.getContext('2d');

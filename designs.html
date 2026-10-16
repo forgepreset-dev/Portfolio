@@ -88,7 +88,7 @@ header.stuck{background:rgba(6,6,6,.72);backdrop-filter:blur(14px);-webkit-backd
 .phone-slot{width:clamp(220px,21vw,300px);aspect-ratio:1560/3376}
 .story-phone .phone-slot{width:clamp(220px,22vw,320px)}
 .phone3d{position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:4;pointer-events:none;display:none}
-html.gl .phone3d{display:block}html.gl .phone-rig{display:none}
+html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
 .phone-rig{position:fixed;left:0;top:0;width:0;height:0;z-index:4;pointer-events:none}
 .phone-rig .phone{position:absolute;left:0;top:0;width:300px;transform-origin:50% 50%;transform-style:preserve-3d}
 .phone .screen{backface-visibility:hidden;-webkit-backface-visibility:hidden}
@@ -222,6 +222,7 @@ section{position:relative}
 .so-row a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:#c9a24d;transform:scaleX(0);transform-origin:right;transition:transform .45s cubic-bezier(.22,1,.36,1)}
 .so-row a:hover{color:#e2c77f}
 .so-row a:hover::after{transform:scaleX(1);transform-origin:left}
+footer .credit{flex-basis:100%;font-size:11px;color:#47474c}footer .credit a{text-decoration:underline;text-underline-offset:2px}
 footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:13px;color:var(--dim)}
 
 /* ---------- lightbox ---------- */
@@ -392,6 +393,7 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 <footer class="wrap">
   <span>© 2026 Stephen J — Visual Designer &amp; Video Editor</span>
   <span>Open to opportunities</span>
+  <span class="credit">3D iPhone model: "Apple iPhone 15 Pro Max Black" by <a href="https://sketchfab.com/Polyman_3D" target="_blank" rel="noopener">polyman</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span>
 </footer>
 
 
