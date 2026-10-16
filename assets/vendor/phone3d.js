@@ -54,17 +54,21 @@ if (renderer) {
   const loader = new THREE.TextureLoader();
   const tex = SCREENS.map(src => { const t = loader.load(src); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; });
   const WALLI = SCREENS.length - 1, wallTex = tex[WALLI]; wallTex.repeat.set(1, .5);
+  const tpTex = new THREE.CanvasTexture(window.__tpCanvas || document.createElement('canvas'));
+  tpTex.colorSpace = THREE.SRGBColorSpace; tpTex.anisotropy = 8; tex.push(tpTex);
+  let tpSeen = -1, scr = null;
+  const K = window.__fitK = 1.04;
   const scrMatA = new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false });
   const scrMatB = new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false, transparent: true, opacity: 0, depthFunc: THREE.LessEqualDepth });
   const scrA = { material: scrMatA }, scrB = { material: scrMatB };
   const draco = new DRACOLoader(); draco.setDecoderPath(new URL('./jsm/libs/draco/gltf/', import.meta.url).href);
   const gl = new GLTFLoader(); gl.setDRACOLoader(draco);
   gl.load(new URL('./models/iphone15promax.glb', import.meta.url).href, g => {
-    const m = g.scene;
+    const m = g.scene; let disp = null;
     m.traverse(o => {
       if (!o.isMesh) return;
       if (o.material && o.material.name === 'pIJKfZsazmcpEiU') {          // the display
-        o.material = scrMatA;
+        o.material = scrMatA; disp = o;
         const over = new THREE.Mesh(o.geometry, scrMatB); over.renderOrder = 2;
         over.position.copy(o.position); over.quaternion.copy(o.quaternion); over.scale.copy(o.scale); o.parent.add(over);
       } else if (o.material) { o.material.envMapIntensity = 1.2; }
@@ -74,6 +78,9 @@ if (renderer) {
     m.position.sub(c);
     const holder = new THREE.Group(); holder.add(m); holder.rotation.y = Math.PI; // model ships back-first
     const sc = 1.47 / size.y; holder.scale.setScalar(sc); H = 1.47;
+    holder.updateMatrixWorld(true);
+    if (disp) { const b = new THREE.Box3().setFromObject(disp), bs = b.getSize(new THREE.Vector3()), bc = b.getCenter(new THREE.Vector3());
+      scr = { w: bs.x, h: bs.y, cx: bc.x, cy: bc.y, z: b.max.z }; window.__scrR = bs.y / bs.x; window.__redrawTP && window.__redrawTP(); }
     phone.add(holder);
     document.documentElement.classList.add('gl-ready');
   });
@@ -105,8 +112,19 @@ if (renderer) {
       wallTex.offset.y = .5 * (1 - (P.pan || 0));
       if (visible) {
         phone.position.set((P.x - vw / 2) * k, -(P.y - vh / 2) * k, 0);
-        const sc = (P.h * k) / H; phone.scale.setScalar(sc);
+        let sc = (P.h * k) / H;
         phone.rotation.set(d2r(P.rx), d2r(P.ry), d2r(-P.rz), 'XYZ');
+        if (window.__tpVer !== tpSeen && window.__tpCanvas) { tpTex.image = window.__tpCanvas; tpTex.needsUpdate = true; tpSeen = window.__tpVer; }
+        const f = P.fit || 0;
+        if (f > 0 && scr) {                         // zoom until the screen exactly fills the viewport
+          const visW = visH * camera.aspect;
+          const sc1 = K * (P.ls ? Math.max(visH / scr.w, visW / scr.h) : Math.max(visW / scr.w, visH / scr.h));
+          sc = sc * Math.pow(sc1 / sc, f);
+          const v = new THREE.Vector3(scr.cx, scr.cy, scr.z).multiplyScalar(sc).applyEuler(phone.rotation);
+          phone.position.multiplyScalar(1 - f).addScaledVector(v, -f);
+        }
+        phone.scale.setScalar(sc);
+        shadow.visible = f < .02;
         shadow.position.set(phone.position.x, phone.position.y - (H / 2 + .07) * sc, -0.6);
         shadow.scale.setScalar(sc);
         // screen crossfade

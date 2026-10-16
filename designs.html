@@ -25,7 +25,7 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 img{display:block;max-width:100%}
 ::selection{background:var(--accent);color:#111}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.wrap{width:90vw;max-width:1600px;margin:0 auto;padding:0}
 
 /* ---------- header ---------- */
 header{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
@@ -113,6 +113,13 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
 .show-head .sec-label{justify-content:center}.show-head .sec-label::after{display:none}
 .show-head .sec-h{margin:18px auto 0;font-size:clamp(34px,4.4vw,68px)}
 .slot-show{width:clamp(200px,17vw,250px)}
+.tp{position:absolute;inset:0;z-index:5;opacity:0;pointer-events:none;background:var(--bg)}
+.tp.on{pointer-events:auto}
+.tp-in{height:100%;display:flex;flex-direction:column;padding-top:calc(var(--hh,70px) + 3vh);padding-bottom:5vh}
+.tp .sec-h{margin-top:16px;font-size:clamp(34px,4.6vw,72px)}
+.tp .disc{flex:1;min-height:0;margin-top:clamp(20px,3.5vh,40px);grid-template-rows:repeat(2,minmax(0,1fr))}
+.tp .dcard{aspect-ratio:auto;height:100%}
+.phone3d{transition:none}
 .show-cap{position:absolute;bottom:7vh;left:0;right:0;text-align:center;font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);opacity:0}
 @media (max-width:860px){
   .about2{min-height:auto}
@@ -120,6 +127,8 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
   .slot-about{width:min(52vw,220px)}
   .show{height:360vh}
   .slot-show{width:min(44vw,190px)}
+  .tp-in{padding-top:calc(var(--hh,64px) + 2vh);padding-bottom:3vh}
+  .tp .disc{grid-template-rows:repeat(4,minmax(0,1fr));gap:10px;margin-top:18px}
 }
 /* ---------- story (pinned) ---------- */
 .story{position:relative;height:calc(var(--n,6) * 90vh + 40vh)}
@@ -320,7 +329,7 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="wrap" style="width:100%">
+  <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy">
         <div class="eyebrow rv">Selected work · Zofeur</div>
@@ -355,41 +364,16 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
   <div class="show-pin">
     <div class="show-head"><div class="sec-label"><b>02</b>The work</div><h2 class="sec-h">Designed <em>to be seen.</em></h2></div>
     <div class="phone-slot slot-show" id="slotShow"></div>
-    <p class="show-cap" id="showCap">1,800+ designs. One brand.</p>
+    <div class="tp" id="tp"><div class="wrap tp-in" id="tpIn">
+      <div class="sec-label"><b>03</b>What I do</div>
+      <h2 class="sec-h">Every <em>touchpoint.</em></h2>
+      <div class="disc" id="disc"></div>
+    </div></div>
   </div>
-</section>
-
-<!-- BIG STAT -->
-<section class="bigstat">
-  <div class="wrap">
-    <div class="n rv"><span data-count="1878" data-onview>0</span></div>
-    <p class="rv">designs shipped for one brand.</p>
-  </div>
-</section>
-
-<!-- WHAT I DO -->
-<section class="sec" id="disciplines" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-label rv"><b>03</b>What I do</div>
-    <h2 class="sec-h rv">Every <em>touchpoint.</em></h2>
-    <div class="disc" id="disc"></div>
-  </div>
-</section>
-
-<!-- SHIPPED -->
-<section class="sec" style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-label rv"><b>04</b>Shipped</div>
-    <h2 class="sec-h rv"><em>Shipped.</em></h2>
-    <div class="mq-label rv"><h4>Store listings</h4><span>APP STORE · GOOGLE PLAY</span></div>
-  </div>
-  <div class="mq" id="mqStore" style="--h:440px;--d:90s"><div class="mq-track"></div></div>
-  <div class="wrap"><div class="mq-label rv"><h4>Campaigns</h4><span>CRM · SOCIAL · PARTNERS · PRINT</span></div></div>
-  <div class="mq rev" id="mqCamp" style="--h:300px;--d:110s"><div class="mq-track"></div></div>
 </section>
 
 <!-- ARCHIVE -->
-<section class="sec" id="archive" style="padding-top:0">
+<section class="sec" id="archive" style="display:none">
   <div class="wrap">
     <div class="sec-label rv"><b>05</b>The archive</div>
     <div class="arch-head rv">
@@ -563,11 +547,12 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
   /* ---------- ONE phone, three stops: hero → about (spin) → showcase (turn landscape, zoom inside) ---------- */
   const SC = D.screens;   // [home, service, confirm, found, ontheway, live, garage]
   window.__screens = SC.map(k => 'assets/phone/' + k + '.webp').concat(['assets/phone/wall.webp']);
-  const WALL = SC.length;
+  const WALL = SC.length, TP = SC.length + 1;
+  const tp = document.getElementById('tp');
   const phone = document.getElementById('phone'), pScreen = document.getElementById('pScreen');
   const slotHero = document.getElementById('slotHero'), slotAbout = document.getElementById('slotAbout'), slotShow = document.getElementById('slotShow');
   const hStage = document.getElementById('heroStage'), aboutSec = document.getElementById('about'), showSec = document.getElementById('show');
-  const showHead = document.querySelector('.show-head'), showCap = document.getElementById('showCap');
+  const showHead = document.querySelector('.show-head');
   const imgs = SC.map((k, i) => { const im = new Image(); im.src = F + k + '.webp'; im.alt = ''; im.decoding = 'async'; if (i === 0) im.className = 'on'; pScreen.appendChild(im); return im; });
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -593,7 +578,7 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
     const ps = clamp((sy - yShow) / Math.max(1, showLen), 0, 1);  // inside showcase
     const fl = Math.sin(t / 1400);
 
-    let x, y, h, rx, ry, rz, si = 0, pan = 0, op = 1;
+    let x, y, h, rx, ry, rz, si = 0, pan = 0, op = 1, fitP = 0;
     if (t2 <= 0) {
       x = lerp(A.x, B.x, t1); y = lerp(A.y, B.y, t1) + fl * 6; h = lerp(A.h, B.h, t1);
       ry = lerp(-20 + smx * 30, 360 + 18, t1);                    // full turn, lands angled toward the text
@@ -603,21 +588,20 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
       x = lerp(B.x, C.x, t2); y = lerp(B.y, C.y, t2) + fl * 6 * (1 - t2); h = lerp(B.h, C.h, t2);
       ry = lerp(18, 18 - 360, t2);                                // spins right → left
       rx = lerp(4, 0, t2); rz = -Math.sin(t2 * Math.PI) * 10;
-      si = t2 > .5 ? WALL : 3;
+      si = 3;
+      const LS = vw > 860;
       if (ps > 0) {
-        const land = ease(seg(ps, 0, .2)), panP = seg(ps, .2, .6), zoom = ease(seg(ps, .58, .92));
-        rz = 90 * land; ry = 0; rx = 0; si = WALL; pan = panP;
-        // zoom: screen grows past the viewport, then the phone fades away
-        const need = Math.max(vh * 1.15 / .44, vw * 1.15 / .95);
-        const big = vw > 860 ? lerp(1, 1.55, land) : 1;
-        h = lerp(C.h * big, need, zoom);
-        x = C.x; y = C.y;
-        op = 1 - seg(ps, .9, .98);
-        showHead.style.opacity = 1 - seg(ps, .05, .2);
-        showCap.style.opacity = seg(ps, .25, .35) * (1 - seg(ps, .55, .62));
-      } else { showHead.style.opacity = 1; showCap.style.opacity = 0; }
+        const land = LS ? ease(seg(ps, 0, .2)) : 0, fit = ease(seg(ps, .32, .72));
+        rz = 90 * land; ry = 0; rx = 0;
+        if (!LS || land > .5) si = TP;
+        x = C.x; y = C.y; h = C.h * (LS ? lerp(1, 1.5, land) : 1);
+        fitP = fit;
+        const tpo = seg(ps, .72, .78); tp.style.opacity = tpo; tp.classList.toggle('on', tpo > .5);
+        op = 1 - seg(ps, .78, .84);
+        showHead.style.opacity = 1 - seg(ps, .05, .22);
+      } else { showHead.style.opacity = 1; tp.style.opacity = 0; tp.classList.remove('on'); }
     }
-    window.__pose = { x, y, h, rx: -rx, ry, rz: -rz, si, pan, op };
+    window.__pose = { x, y, h, rx: -rx, ry, rz: -rz, si, pan, op, fit: fitP, ls: vw > 860 };
     // CSS fallback (no WebGL)
     phone.style.opacity = op;
     phone.style.transform = `translate3d(${(x - 150).toFixed(1)}px,${(y - phone.offsetHeight / 2).toFixed(1)}px,0) scale(${(h / phone.offsetHeight).toFixed(4)}) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${-rz}deg)`;
@@ -635,26 +619,71 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
   const COVER = { app: 1, crm: 0, social: 0, ads: 0, partners: 0, print: 0, brand: 0, chauffeur: 0 };
   const disc = document.getElementById('disc');
   cats.forEach((c, ci) => { if (!LINES[c.id]) return;
-    const b = document.createElement('button'); b.type = 'button'; b.className = 'dcard rv';
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'dcard';
     const pk = order[ci].picks, cov = items[pk[COVER[c.id]] ?? pk[0] ?? order[ci].all[0]];
-    b.innerHTML = '<img loading="lazy" alt=""><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span><div class="in"><span class="pill2"></span><h4></h4><p></p></div>';
+    b.innerHTML = '<img alt="" crossorigin="anonymous"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></span><div class="in"><span class="pill2"></span><h4></h4><p></p></div>';
     b.querySelector('img').src = T + cov[0] + '.webp';
     b.querySelector('.pill2').textContent = order[ci].all.length.toLocaleString('en-US') + ' designs';
     b.querySelector('h4').textContent = c.name; b.querySelector('p').textContent = LINES[c.id];
-    b.addEventListener('click', () => { select(c.id, true); document.getElementById('archive').scrollIntoView({ behavior: 'smooth' }); });
-    disc.appendChild(b); rio.observe(b); });
-
-  /* ---------- marquees ---------- */
-  function fill(id, list) {
-    const tr = document.querySelector('#' + id + ' .mq-track');
-    list.concat(list).forEach((i, n) => { const it = items[i], im = new Image(); im.loading = 'lazy'; im.decoding = 'async';
-      im.src = T + it[0] + '.webp'; im.alt = it[1]; im.width = it[3]; im.height = it[4];
-      im.addEventListener('click', () => openSolo(i)); if (n >= list.length) im.setAttribute('aria-hidden', 'true'); tr.appendChild(im); });
+    b.addEventListener('click', () => openLB(0, order[ci].all));
+    disc.appendChild(b); });
+  /* ---------- paint the touchpoint section onto a canvas = the phone's screen texture ---------- */
+  const tpIn = document.getElementById('tpIn'), tpCv = document.createElement('canvas');
+  window.__tpCanvas = tpCv; window.__tpVer = 0;
+  function rr(ctx, x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  function drawText(ctx, el, O) {
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n; (n = w.nextNode());) {
+      const txt = n.textContent; if (!txt.trim()) continue;
+      const cs = getComputedStyle(n.parentElement), rg = document.createRange(); rg.selectNodeContents(n);
+      const rc = rg.getClientRects()[0]; if (!rc) continue;
+      ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      try { ctx.letterSpacing = cs.letterSpacing === 'normal' ? '0px' : cs.letterSpacing; } catch (e) {}
+      ctx.fillStyle = cs.color; ctx.textBaseline = 'middle';
+      ctx.fillText(cs.textTransform === 'uppercase' ? txt.toUpperCase().trim() : txt.trim(), rc.left - O.left, rc.top - O.top + rc.height / 2);
+    }
   }
-  fill('mqStore', D.store);
-  const ix = id => cats.findIndex(c => c.id === id), camp = [];
-  for (let r = 0; r < 6; r++) ['crm', 'social', 'partners', 'print', 'ads', 'brand'].forEach(id => { const p = order[ix(id)].picks[r]; if (p != null) camp.push(p); });
-  fill('mqCamp', camp);
+  function drawTP() {
+    const vw = innerWidth, vh = innerHeight, LS = vw > 860, r = window.__scrR || 2.164;
+    const S = (window.__fitK || 1.04) * (LS ? Math.max(vh, vw / r) : Math.max(vw, vh / r));
+    const cw = LS ? r * S : S, ch = LS ? S : r * S;                 // logical (upright) canvas size
+    const ox = (cw - vw) / 2, oy = (ch - vh) / 2;
+    const q = Math.min(2, 3072 / Math.max(cw, ch));
+    tpCv.width = Math.round((LS ? ch : cw) * q); tpCv.height = Math.round((LS ? cw : ch) * q);
+    const ctx = tpCv.getContext('2d'); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.scale(q, q);
+    if (LS) { ctx.translate(ch, 0); ctx.rotate(Math.PI / 2); }      // stored rotated: upright once the phone turns landscape
+    ctx.fillStyle = '#060606'; ctx.fillRect(0, 0, cw, ch);
+    ctx.translate(ox, oy);
+    const O = tp.getBoundingClientRect();
+    tpIn.querySelectorAll('.sec-label, .sec-h').forEach(el => drawText(ctx, el, O));
+    tpIn.querySelectorAll('.dcard').forEach(card => {
+      const c = card.getBoundingClientRect(), x = c.left - O.left, y = c.top - O.top, w = c.width, h = c.height;
+      const rad = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 20;
+      ctx.save(); rr(ctx, x, y, w, h, rad); ctx.clip(); ctx.fillStyle = '#111'; ctx.fillRect(x, y, w, h);
+      const im = card.querySelector('img');
+      if (im && im.complete && im.naturalWidth) {
+        const s2 = Math.max(w / im.naturalWidth, h / im.naturalHeight), iw = im.naturalWidth * s2;
+        ctx.filter = 'saturate(.9) brightness(.82)'; ctx.drawImage(im, x + (w - iw) / 2, y, iw, im.naturalHeight * s2); ctx.filter = 'none';
+      }
+      const g = ctx.createLinearGradient(0, y, 0, y + h); g.addColorStop(.3, 'rgba(0,0,0,.05)'); g.addColorStop(1, 'rgba(0,0,0,.88)');
+      ctx.fillStyle = g; ctx.fillRect(x, y, w, h); ctx.restore();
+      ctx.save(); rr(ctx, x + .5, y + .5, w - 1, h - 1, rad); ctx.strokeStyle = 'rgba(255,255,255,.09)'; ctx.stroke(); ctx.restore();
+      const pl = card.querySelector('.pill2').getBoundingClientRect();
+      rr(ctx, pl.left - O.left, pl.top - O.top, pl.width, pl.height, pl.height / 2); ctx.fillStyle = '#d6bb7d'; ctx.fill();
+      drawText(ctx, card.querySelector('.pill2'), O); drawText(ctx, card.querySelector('h4'), O);
+      const go = card.querySelector('.go').getBoundingClientRect(), gx = go.left - O.left + go.width / 2, gy = go.top - O.top + go.height / 2;
+      ctx.beginPath(); ctx.arc(gx, gy, go.width / 2, 0, Math.PI * 2); ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fill(); ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(gx - 6, gy); ctx.lineTo(gx + 6, gy); ctx.moveTo(gx + 1, gy - 5); ctx.lineTo(gx + 6, gy); ctx.lineTo(gx + 1, gy + 5);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.8; ctx.lineCap = 'round'; ctx.stroke(); ctx.lineWidth = 1;
+    });
+    window.__tpVer++;
+  }
+  let tpT; const tpLater = () => { clearTimeout(tpT); tpT = setTimeout(drawTP, 120); };
+  window.__redrawTP = tpLater;
+  document.fonts.ready.then(tpLater);
+  disc.querySelectorAll('img').forEach(im => im.addEventListener('load', tpLater));
+  addEventListener('resize', tpLater);
+
 
   /* ---------- sign-off fill ---------- */
   (function () {
