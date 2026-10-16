@@ -100,6 +100,27 @@ html.gl .phone3d{display:block}html.gl-ready .phone-rig{display:none}
 .back i::before{left:8%;top:8%}.back i::after{left:8%;bottom:8%}
 .back b{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:22%;aspect-ratio:1;border-radius:22%;background:#e9e3d6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111'%3E%3Ccircle cx='12' cy='6.5' r='3.6'/%3E%3Cpath d='M4 21c0-4.7 3.6-8 8-8s8 3.3 8 8z'/%3E%3C/svg%3E") center/60% no-repeat;opacity:.9}
 .chip{z-index:6}
+/* about + showcase */
+.about2{min-height:100svh;display:flex;align-items:center;padding:clamp(120px,14vw,200px) 0}
+.about2-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(40px,7vw,120px)}
+.slot-about{justify-self:center;width:clamp(220px,20vw,290px)}
+.mini-stats{display:flex;gap:clamp(28px,4vw,56px);margin-top:44px}
+.mini-stats b{display:block;font-family:'Jost',sans-serif;font-weight:500;font-size:clamp(28px,3vw,42px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.mini-stats span{font-family:'Poppins',sans-serif;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.show{position:relative;height:420vh}
+.show-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+.show-head{position:absolute;top:calc(var(--hh,70px) + 4vh);left:0;right:0;text-align:center}
+.show-head .sec-label{justify-content:center}.show-head .sec-label::after{display:none}
+.show-head .sec-h{margin:18px auto 0;font-size:clamp(34px,4.4vw,68px)}
+.slot-show{width:clamp(200px,17vw,250px)}
+.show-cap{position:absolute;bottom:7vh;left:0;right:0;text-align:center;font-family:'Poppins',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);opacity:0}
+@media (max-width:860px){
+  .about2{min-height:auto}
+  .about2-grid{grid-template-columns:1fr;gap:56px}
+  .slot-about{width:min(52vw,220px)}
+  .show{height:360vh}
+  .slot-show{width:min(44vw,190px)}
+}
 /* ---------- story (pinned) ---------- */
 .story{position:relative;height:calc(var(--n,6) * 90vh + 40vh)}
 .story-pin{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center}
@@ -305,7 +326,7 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
         <div class="eyebrow rv">Selected work · Zofeur</div>
         <h1 class="rv">Designing<br><em>Zofeur.</em></h1>
         <p class="lead rv">Visual Designer &amp; Video Editor for the UAE's on-demand chauffeur app, across the app, campaigns, print and brand.</p>
-        <div class="hero-cta rv"><a href="#app" class="btn-gold">See the work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg></a></div>
+        <div class="hero-cta rv"><a href="#about" class="btn-gold">See the work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg></a></div>
       </div>
       <div class="hero-stage" id="heroStage">
         <div class="phone-slot" id="slotHero"></div>
@@ -314,19 +335,27 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
   </div>
 </section>
 
-<!-- APP STORY -->
-<section class="story" id="app">
-  <div class="story-pin">
-    <div class="wrap story-head"><div class="sec-label"><b>01</b>The app</div></div>
-    <div class="wrap" style="width:100%">
-      <div class="story-grid">
-        <div>
-          <div class="story-text" id="chaps"></div>
-          <div class="dots" id="dots"></div>
-        </div>
-        <div class="story-phone"><div class="phone-slot" id="slotStory"></div></div>
+<!-- ABOUT ZOFEUR -->
+<section class="about2" id="about">
+  <div class="wrap">
+    <div class="about2-grid">
+      <div class="phone-slot slot-about" id="slotAbout"></div>
+      <div class="about2-copy">
+        <div class="sec-label rv"><b>01</b>About Zofeur</div>
+        <h2 class="sec-h rv">Your car.<br><em>Our chauffeur.</em></h2>
+        <p class="sec-p rv">Zofeur is the UAE's on-demand, pay-per-minute chauffeur app. I design everything people see from it, from the app to campaigns, print and brand.</p>
+        <div class="mini-stats rv"><div><b data-count="1878">0</b><span>Designs</span></div><div><b data-count="9">0</b><span>Disciplines</span></div><div><b>1</b><span>Brand</span></div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SHOWCASE: phone turns landscape, then we zoom inside -->
+<section class="show" id="show">
+  <div class="show-pin">
+    <div class="show-head"><div class="sec-label"><b>02</b>The work</div><h2 class="sec-h">Designed <em>to be seen.</em></h2></div>
+    <div class="phone-slot slot-show" id="slotShow"></div>
+    <p class="show-cap" id="showCap">1,800+ designs. One brand.</p>
   </div>
 </section>
 
@@ -341,7 +370,7 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 <!-- WHAT I DO -->
 <section class="sec" id="disciplines" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-label rv"><b>02</b>What I do at Zofeur</div>
+    <div class="sec-label rv"><b>03</b>What I do</div>
     <h2 class="sec-h rv">Every <em>touchpoint.</em></h2>
     <div class="disc" id="disc"></div>
   </div>
@@ -350,7 +379,7 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 <!-- SHIPPED -->
 <section class="sec" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-label rv"><b>03</b>Shipped</div>
+    <div class="sec-label rv"><b>04</b>Shipped</div>
     <h2 class="sec-h rv"><em>Shipped.</em></h2>
     <div class="mq-label rv"><h4>Store listings</h4><span>APP STORE · GOOGLE PLAY</span></div>
   </div>
@@ -362,7 +391,7 @@ footer{border-top:1px solid var(--line-soft);padding-block:34px;display:flex;fle
 <!-- ARCHIVE -->
 <section class="sec" id="archive" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-label rv"><b>04</b>The archive</div>
+    <div class="sec-label rv"><b>05</b>The archive</div>
     <div class="arch-head rv">
       <h2>All <em>1,800+</em><br>pieces.</h2>
     </div>
@@ -531,70 +560,68 @@ const D = {"cats":[{"id":"app","name":"App & UI","desc":"App Store and Google Pl
   const cio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } }), { threshold: .4 });
   document.querySelectorAll('[data-count]').forEach(el => cio.observe(el));
 
-  /* ---------- ONE phone: hero → travels into the story → flips between chapters ---------- */
-  const SC = D.screens; // [home, service, confirm, found, ontheway, live, garage]
+  /* ---------- ONE phone, three stops: hero → about (spin) → showcase (turn landscape, zoom inside) ---------- */
+  const SC = D.screens;   // [home, service, confirm, found, ontheway, live, garage]
+  window.__screens = SC.map(k => 'assets/phone/' + k + '.webp').concat(['assets/phone/wall.webp']);
+  const WALL = SC.length;
   const phone = document.getElementById('phone'), pScreen = document.getElementById('pScreen');
-  const slotHero = document.getElementById('slotHero'), slotStory = document.getElementById('slotStory');
-  const hStage = document.getElementById('heroStage');
-  window.__screens = SC.map(k => 'assets/phone/' + k + '.webp');
+  const slotHero = document.getElementById('slotHero'), slotAbout = document.getElementById('slotAbout'), slotShow = document.getElementById('slotShow');
+  const hStage = document.getElementById('heroStage'), aboutSec = document.getElementById('about'), showSec = document.getElementById('show');
+  const showHead = document.querySelector('.show-head'), showCap = document.getElementById('showCap');
   const imgs = SC.map((k, i) => { const im = new Image(); im.src = F + k + '.webp'; im.alt = ''; im.decoding = 'async'; if (i === 0) im.className = 'on'; pScreen.appendChild(im); return im; });
-  const CH = [
-    { s: [0], n: 'Home', h: 'One app for <em>every</em> car need.', p: 'Every service, one tap from home.', t: ['UI design', 'Information hierarchy'] },
-    { s: [1], n: 'Service type', h: 'Pay by the <em>minute</em>, or the hour.', p: 'Clear pricing, right when you book.', t: ['Pricing UX', 'Bottom sheets'] },
-    { s: [2], n: 'Booking', h: 'Book now, or <em>schedule</em> ahead.', p: 'Trip, car and payment in one sheet.', t: ['Flow design', 'Forms'] },
-    { s: [3], n: 'Matching', h: 'Your chauffeur, <em>found.</em>', p: 'A face and a rating before they arrive.', t: ['Trust & safety', 'Micro-moments'] },
-    { s: [4, 5], n: 'Live trip', h: 'Track <em>every</em> minute.', p: 'Live map and ETA, even on the lock screen.', t: ['Real-time UI', 'iOS Live Activity'] },
-    { s: [6], n: 'Garage', h: 'Garage pickup <em>&amp; drop.</em>', p: 'Your car serviced, without you.', t: ['Service design', 'Edge cases'] },
-  ];
-  const story = document.getElementById('app'), chaps = document.getElementById('chaps'), dotsEl = document.getElementById('dots');
-  story.style.setProperty('--n', CH.length);
-  const cEls = CH.map((c, i) => { const d = document.createElement('div'); d.className = 'chap';
-    d.innerHTML = '<div class="num">' + String(i + 1).padStart(2, '0') + ' / ' + String(CH.length).padStart(2, '0') + ' · ' + c.n.toUpperCase() + '</div><h3>' + c.h + '</h3><p></p>';
-    d.querySelector('p').textContent = c.p;
-    chaps.appendChild(d); return d; });
-  const dots = CH.map(() => { const i = document.createElement('i'); i.innerHTML = '<b></b>'; dotsEl.appendChild(i); return i; });
 
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-  const sstep = x => x * x * (3 - 2 * x);
   const lerp = (a, b, t) => a + (b - a) * t;
-  let mx = 0, my = 0, smx = 0, smy = 0, curC = -1, curS = 0;
+  const seg = (v, a, b) => clamp((v - a) / (b - a), 0, 1);
+  const centreOf = el => { const r = el.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2, h: r.height }; };
+  const pageY = el => el.getBoundingClientRect().top + scrollY;
+  let mx = 0, my = 0, smx = 0, smy = 0;
   hStage.addEventListener('pointermove', e => { const r = hStage.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5; });
   hStage.addEventListener('pointerleave', () => { mx = 0; my = 0; });
-  const BASE = 300; // phone's layout width in px; slots decide the rendered size
 
   function frame(t) {
     smx += (mx - smx) * .07; smy += (my - smy) * .07;
-    const a = slotHero.getBoundingClientRect(), b = slotStory.getBoundingClientRect();
-    const sTop = story.offsetTop, sH = story.offsetHeight - innerHeight;
-    // travel: 0 at top of page → 1 when the story pins
-    const tr = ease(clamp(scrollY / Math.max(1, sTop), 0, 1));
-    // story progress
-    const p = clamp((scrollY - sTop) / Math.max(1, sH), 0, 1);
-    const f = p * CH.length, ci = Math.min(CH.length - 1, Math.floor(f)), local = clamp(f - ci, 0, 1);
+    const vh = innerHeight, vw = innerWidth, sy = scrollY;
+    const A = centreOf(slotHero), B = centreOf(slotAbout), C = centreOf(slotShow);
+    // scroll positions where each stop is "settled"
+    const yAbout = pageY(slotAbout) + B.h / 2 - vh / 2;           // about slot centred in viewport
+    const yShow = pageY(showSec);                                 // showcase pins
+    const showLen = showSec.offsetHeight - vh;
+    const t1 = ease(seg(sy, 0, Math.max(1, yAbout)));             // hero → about
+    const t2 = ease(seg(sy, yAbout + vh * .15, yShow));           // about → showcase
+    const ps = clamp((sy - yShow) / Math.max(1, showLen), 0, 1);  // inside showcase
+    const fl = Math.sin(t / 1400);
 
-    // position + scale (lerp between slots)
-    const x = lerp(a.left + a.width / 2, b.left + b.width / 2, tr), y = lerp(a.top + a.height / 2, b.top + b.height / 2, tr);
-    const s = lerp(a.width, b.width, tr) / BASE;
-    // rotation
-    const float = Math.sin(t / 1400) * (1 - tr) * 7;
-    let ry = lerp(-20 + smx * 30, -14, tr) + 360 * tr;            // one full spin while travelling
-    let rx = lerp(7 - smy * 14, 6, tr), rz = lerp(2, 0, tr) - Math.sin(tr * Math.PI) * 12;
-    if (scrollY >= sTop) {
-      const near = Math.round(f), fb = f - near, dir = ci % 2 ? 1 : -1, sw = Math.sin(local * Math.PI);
-      const flip = (near > 0 && near < CH.length && Math.abs(fb) < .14) ? sstep((fb + .14) / .28) * 360 : 0; // 360° turn at each chapter change
-      ry = -14 + dir * sw * 12 + flip; rx = 6 - sw * 3; rz = dir * sw * 2;
+    let x, y, h, rx, ry, rz, si = 0, pan = 0, op = 1;
+    if (t2 <= 0) {
+      x = lerp(A.x, B.x, t1); y = lerp(A.y, B.y, t1) + fl * 6; h = lerp(A.h, B.h, t1);
+      ry = lerp(-20 + smx * 30, 360 + 18, t1);                    // full turn, lands angled toward the text
+      rx = lerp(6 - smy * 12, 4, t1); rz = Math.sin(t1 * Math.PI) * 10;
+      si = t1 > .5 ? 3 : 0;
+    } else {
+      x = lerp(B.x, C.x, t2); y = lerp(B.y, C.y, t2) + fl * 6 * (1 - t2); h = lerp(B.h, C.h, t2);
+      ry = lerp(18, 18 - 360, t2);                                // spins right → left
+      rx = lerp(4, 0, t2); rz = -Math.sin(t2 * Math.PI) * 10;
+      si = t2 > .5 ? WALL : 3;
+      if (ps > 0) {
+        const land = ease(seg(ps, 0, .2)), panP = seg(ps, .2, .6), zoom = ease(seg(ps, .58, .92));
+        rz = 90 * land; ry = 0; rx = 0; si = WALL; pan = panP;
+        // zoom: screen grows past the viewport, then the phone fades away
+        const need = Math.max(vh * 1.15 / .44, vw * 1.15 / .95);
+        const big = vw > 860 ? lerp(1, 1.55, land) : 1;
+        h = lerp(C.h * big, need, zoom);
+        x = C.x; y = C.y;
+        op = 1 - seg(ps, .9, .98);
+        showHead.style.opacity = 1 - seg(ps, .05, .2);
+        showCap.style.opacity = seg(ps, .25, .35) * (1 - seg(ps, .55, .62));
+      } else { showHead.style.opacity = 1; showCap.style.opacity = 0; }
     }
-    window.__pose = { x, y: y + float, h: lerp(a.height, b.height, tr), rx: -rx, ry, rz, si: scrollY < sTop ? 0 : CH[ci].s[Math.min(CH[ci].s.length - 1, Math.floor(local * CH[ci].s.length))] };
-    phone.style.transform = `translate3d(${(x - BASE / 2).toFixed(1)}px,${(y - phone.offsetHeight / 2 + float).toFixed(1)}px,0) scale(${s.toFixed(4)}) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) rotateZ(${rz.toFixed(2)}deg)`;
-
-    // screens: swap only while the phone shows its back (mid-flip), otherwise follow chapter
-    const inStory = scrollY >= sTop - innerHeight * .2;
-    if (inStory && ci !== curC) { cEls.forEach((e, i) => e.classList.toggle('on', i === ci)); curC = ci; }
-    if (!inStory && curC !== -1) { cEls.forEach(e => e.classList.remove('on')); curC = -1; }
-    const ss = CH[ci].s, si = scrollY < sTop ? 0 : ss[Math.min(ss.length - 1, Math.floor(local * ss.length))];
-    if (si !== curS) { imgs.forEach((im, i) => im.classList.toggle('on', i === si)); curS = si; }
-    dots.forEach((d, i) => d.style.setProperty('--f', i < ci ? 1 : i > ci ? 0 : local.toFixed(3)));
+    window.__pose = { x, y, h, rx: -rx, ry, rz: -rz, si, pan, op };
+    // CSS fallback (no WebGL)
+    phone.style.opacity = op;
+    phone.style.transform = `translate3d(${(x - 150).toFixed(1)}px,${(y - phone.offsetHeight / 2).toFixed(1)}px,0) scale(${(h / phone.offsetHeight).toFixed(4)}) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${-rz}deg)`;
+    const css = Math.min(si, SC.length - 1); imgs.forEach((im, i) => im.classList.toggle('on', i === css));
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

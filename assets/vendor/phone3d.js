@@ -53,6 +53,7 @@ if (renderer) {
   let H = 1.47;                                   // model height in world units after normalising
   const loader = new THREE.TextureLoader();
   const tex = SCREENS.map(src => { const t = loader.load(src); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; });
+  const WALLI = SCREENS.length - 1, wallTex = tex[WALLI]; wallTex.repeat.set(1, .5);
   const scrMatA = new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false });
   const scrMatB = new THREE.MeshBasicMaterial({ map: tex[0], toneMapped: false, transparent: true, opacity: 0, depthFunc: THREE.LessEqualDepth });
   const scrA = { material: scrMatA }, scrB = { material: scrMatB };
@@ -98,8 +99,10 @@ if (renderer) {
     const P = window.__pose;
     if (P) {
       const vw = innerWidth, vh = innerHeight, k = visH / vh;
-      const visible = P.y + P.h > -40 && P.y - P.h < vh + 40;
+      const visible = P.op > 0.005 && P.y + P.h > -40 && P.y - P.h < vh + 40;
       canvas.style.visibility = visible ? 'visible' : 'hidden';
+      canvas.style.opacity = P.op;
+      wallTex.offset.y = .5 * (1 - (P.pan || 0));
       if (visible) {
         phone.position.set((P.x - vw / 2) * k, -(P.y - vh / 2) * k, 0);
         const sc = (P.h * k) / H; phone.scale.setScalar(sc);
