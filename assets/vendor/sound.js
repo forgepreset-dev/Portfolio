@@ -31,15 +31,23 @@
   const here = (document.currentScript && document.currentScript.src) || location.href;
   const music = new Audio(new URL('../audio/home.mp3', here).href);
   window.__sjMusic = music; music.loop = true; music.preload = 'auto'; music.crossOrigin = 'anonymous';
-  try { const t = parseFloat(sessionStorage.getItem('sj-music-t')); if (t > 0) music.currentTime = t; } catch (e) {}
-  addEventListener('pagehide', () => { try { sessionStorage.setItem('sj-music-t', String(music.currentTime || 0)); } catch (e) {} });
-  // the main page has a preloader: music begins once it completes
-  let loaded = !document.getElementById('loader') || window.__sjLoaded;
+  // carry the music across pages: resume at the exact point the visitor left the last page
+  let resumeAt = 0; try { resumeAt = parseFloat(sessionStorage.getItem('sj-music-t')) || 0; } catch (e) {}
+  const continuing = resumeAt > 0;
+  const seek = () => { if (resumeAt > 0 && music.duration) { music.currentTime = resumeAt % music.duration; resumeAt = 0; } };
+  music.addEventListener('loadedmetadata', seek); seek();
+  const savePos = () => { try { if (music.currentTime > 0) sessionStorage.setItem('sj-music-t', String(music.currentTime)); } catch (e) {} };
+  addEventListener('pagehide', savePos);
+  addEventListener('pageshow', e => { if (e.persisted && ctx && wantOn) { try { resumeAt = parseFloat(sessionStorage.getItem('sj-music-t')) || 0; } catch (x) {} seek(); ctx.resume().then(playMusic); } }); addEventListener('beforeunload', savePos);
+  addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[href]'); if (a && !a.target) savePos(); }, true);
+  setInterval(() => { if (!music.paused) savePos(); }, 1000);
+  // first visit: music begins when the preloader completes. Moving between pages: it continues straight away.
+  let loaded = !document.getElementById('loader') || window.__sjLoaded || continuing;
   addEventListener('sj:loaded', () => { loaded = true; playMusic(); });
   function playMusic() {
     if (!ctx || !wantOn || !loaded || ctx.state !== 'running') return;
-    if (music.paused) music.play().catch(() => {});
-    amb.gain.cancelScheduledValues(now()); amb.gain.setTargetAtTime(.8, now(), 1.2);   // slow fade in
+    if (music.paused) { seek(); music.play().catch(() => {}); }
+    amb.gain.cancelScheduledValues(now()); amb.gain.setTargetAtTime(.8, now(), continuing ? .25 : 1.2);   // quick pick-up when continuing, slow fade on first start
   }
 
   /* ---------- audio graph ---------- */
@@ -101,7 +109,7 @@
     wantOn = on; store.set('sj-sound', on ? 'on' : 'off'); label();
     if (on) { init(); if (!ctx) return; ctx.resume();
       master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(.9, now(), .3);
-      const go = () => { if (ctx.state !== 'running') return; if (withBoot && !booted) { booted = true; boot(); } playMusic(); };
+      const go = () => { if (ctx.state !== 'running') return; if (withBoot && !booted) { booted = true; if (!continuing) boot(); } playMusic(); };
       ctx.resume().then(go); go();
     } else if (ctx) { master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(0, now(), .25); setTimeout(() => { if (!wantOn) music.pause(); }, 900); }
   }
