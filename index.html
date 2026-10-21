@@ -1547,6 +1547,7 @@ body{letter-spacing:-.01em}
   }
 
   function finish(){
+    window.__sjLoaded = true; dispatchEvent(new Event('sj:loaded'));   // background music starts now
     if (reduce || !document.querySelector('#wordmark span')){
       setTimeout(() => {
         loader.classList.add('done');
@@ -1611,13 +1612,17 @@ body{letter-spacing:-.01em}
   // even, steady pacing — gentle ease in and out so no digit jumps
   const easeInOutSine = t => -(Math.cos(Math.PI * t) - 1) / 2;
   const duration = 2600;
-  const start = performance.now();
-  (function tick(now){
+  let start = 0;
+  function tick(now){
+    if (!start) start = now;
     const t = Math.min((now - start) / duration, 1);
     const p = easeInOutSine(t);
     render(Math.round(p * 100), p);
     t < 1 ? requestAnimationFrame(tick) : finish();
-  })(start);
+  }
+  // wait for the sound start screen (if the browser needs a click), like pressing the power button
+  let go = false; const begin = () => { if (go) return; go = true; requestAnimationFrame(tick); };
+  window.__sjRelease = begin; setTimeout(() => { if (!window.__sjSound) begin(); }, 2500);
 })();
 
 

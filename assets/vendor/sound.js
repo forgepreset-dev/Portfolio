@@ -1,4 +1,4 @@
-/* Stephen J — ambient sound system (original synthesized audio, console-UI inspired).
+/* Stephen J — sound system: Home Menu background music + synthesized boot chime and UI ticks.
    Glass toggle: live waveform while playing, flat line when muted. */
 (function () {
   if (window.__sjSound) return; window.__sjSound = true;
@@ -27,6 +27,21 @@
   const mount = () => document.body.appendChild(btn);
   document.body ? mount() : addEventListener('DOMContentLoaded', mount);
 
+  /* ---------- music ---------- */
+  const here = (document.currentScript && document.currentScript.src) || location.href;
+  const music = new Audio(new URL('../audio/home.mp3', here).href);
+  window.__sjMusic = music; music.loop = true; music.preload = 'auto'; music.crossOrigin = 'anonymous';
+  try { const t = parseFloat(sessionStorage.getItem('sj-music-t')); if (t > 0) music.currentTime = t; } catch (e) {}
+  addEventListener('pagehide', () => { try { sessionStorage.setItem('sj-music-t', String(music.currentTime || 0)); } catch (e) {} });
+  // the main page has a preloader: music begins once it completes
+  let loaded = !document.getElementById('loader') || window.__sjLoaded;
+  addEventListener('sj:loaded', () => { loaded = true; playMusic(); });
+  function playMusic() {
+    if (!ctx || !wantOn || !loaded || ctx.state !== 'running') return;
+    if (music.paused) music.play().catch(() => {});
+    amb.gain.cancelScheduledValues(now()); amb.gain.setTargetAtTime(.8, now(), 1.2);   // slow fade in
+  }
+
   /* ---------- audio graph ---------- */
   function impulse(sec, decay) {
     const len = ctx.sampleRate * sec, b = ctx.createBuffer(2, len, ctx.sampleRate);
@@ -43,27 +58,10 @@
     const wet = ctx.createGain(); wet.gain.value = .55;
     master.connect(analyser); analyser.connect(ctx.destination);
     verb.connect(wet); wet.connect(master);
-    amb = ctx.createGain(); amb.gain.value = .0; amb.connect(master); amb.connect(verb);
+    amb = ctx.createGain(); amb.gain.value = .0; amb.connect(master);
     fx = ctx.createGain(); fx.gain.value = .9; fx.connect(master); fx.connect(verb);
-    // ambient pad: soft detuned chord through a breathing low-pass
-    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 900; lp.Q.value = .4; lp.connect(amb);
-    const lfo = ctx.createOscillator(), lfoG = ctx.createGain(); lfo.frequency.value = .05; lfoG.gain.value = 500; lfo.connect(lfoG); lfoG.connect(lp.frequency); lfo.start();
-    [110, 164.81, 220, 277.18, 329.63, 415.3].forEach((f, i) => {
-      [-6, 6].forEach(cents => {
-        const o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = i % 2 ? 'triangle' : 'sine'; o.frequency.value = f; o.detune.value = cents;
-        g.gain.value = .035 / (1 + i * .35);
-        const sw = ctx.createOscillator(), swG = ctx.createGain();            // each voice swells on its own slow cycle
-        sw.frequency.value = .03 + i * .011; swG.gain.value = g.gain.value * .8; sw.connect(swG); swG.connect(g.gain); sw.start();
-        o.connect(g); g.connect(lp); o.start();
-      });
-    });
-    // air: filtered noise
-    const nb = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate), nd = nb.getChannelData(0);
-    for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-    const ns = ctx.createBufferSource(); ns.buffer = nb; ns.loop = true;
-    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2400; bp.Q.value = .6;
-    const ng = ctx.createGain(); ng.gain.value = .012; ns.connect(bp); bp.connect(ng); ng.connect(amb); ns.start();
+    // background music (Home Menu track), routed through the analyser for the waveform
+    const src = ctx.createMediaElementSource(music); src.connect(amb);
   }
   const now = () => ctx.currentTime;
   function bell(freq, t, dur, vol) {
@@ -103,9 +101,9 @@
     wantOn = on; store.set('sj-sound', on ? 'on' : 'off'); label();
     if (on) { init(); if (!ctx) return; ctx.resume();
       master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(.9, now(), .3);
-      amb.gain.setTargetAtTime(.55, now() + .4, 1.4);
-      if (withBoot && !booted) { const go = () => { if (!booted && ctx.state === 'running') { booted = true; boot(); } }; ctx.resume().then(go); go(); }
-    } else if (ctx) { master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(0, now(), .25); }
+      const go = () => { if (ctx.state !== 'running') return; if (withBoot && !booted) { booted = true; boot(); } playMusic(); };
+      ctx.resume().then(go); go();
+    } else if (ctx) { master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(0, now(), .25); setTimeout(() => { if (!wantOn) music.pause(); }, 900); }
   }
   btn.addEventListener('click', e => { e.stopPropagation(); setOn(!wantOn, true); if (wantOn) tick('click'); });
 
@@ -122,9 +120,10 @@
   }
   const first = e => { if (btn.contains(e.target)) return; startNow(); };
   GESTURES.forEach(t => addEventListener(t, first, { capture: true, passive: true }));
-  function hideGate() { if (!gate) return; gate.classList.add('out'); const g = gate; gate = null; setTimeout(() => g.remove(), 1400); }
+  function release() { if (window.__sjRelease) window.__sjRelease(); }
+  function hideGate() { release(); if (!gate) return; gate.classList.add('out'); const g = gate; gate = null; setTimeout(() => g.remove(), 1400); }
   function showGate() {
-    if (gate || started || !wantOn || ss.get('sj-gate')) return; ss.set('sj-gate', '1');
+    if (gate || started || !wantOn || ss.get('sj-gate')) { release(); return; } ss.set('sj-gate', '1');
     const gs = document.createElement('style');
     gs.textContent = `.sj-gate{position:fixed;inset:0;z-index:200;background:#000;display:grid;place-items:center;cursor:pointer;transition:opacity 1.2s cubic-bezier(.16,1,.3,1),visibility 1.2s}
     .sj-gate.out{opacity:0;visibility:hidden}.sj-gate .in{display:grid;justify-items:center;gap:26px;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}.sj-gate.out .in{transform:scale(1.06)}
@@ -139,9 +138,9 @@
     document.body.appendChild(gate); gate.focus({ preventScroll: true });
   }
   function tryAutoplay() {
-    if (!wantOn) return;
+    if (!wantOn) { release(); return; }
     setOn(true, true);
-    const check = () => { if (ctx && ctx.state === 'running') { started = true; GESTURES.forEach(t => removeEventListener(t, first, true)); } else showGate(); };
+    const check = () => { if (gate) return; if (ctx && ctx.state === 'running') { release(); started = true; GESTURES.forEach(t => removeEventListener(t, first, true)); } else showGate(); };
     if (ctx) { ctx.resume().then(check, check); setTimeout(check, 350); } else check();
   }
   document.body ? tryAutoplay() : addEventListener('DOMContentLoaded', tryAutoplay);
@@ -150,7 +149,7 @@
   const hit = 'a,button,.tile,.dcard,.tab,[role=tab],.pcard,.live,.say-hi,.cta,input[type=submit]';
   addEventListener('click', e => { const el = e.target.closest(hit); if (el && el !== btn) tick(el.matches('.dcard,.live,.tile') ? 'open' : 'click'); }, true);
   addEventListener('pointerover', e => { if (e.pointerType !== 'mouse') return; const el = e.target.closest(hit); if (el && el !== btn && !el.contains(e.relatedTarget)) tick('hover'); }, true);
-  document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (wantOn) ctx.resume(); });
+  document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) { music.pause(); ctx.suspend(); } else if (wantOn) ctx.resume().then(playMusic); });
 
   /* ---------- waveform: live while playing, flat when muted ---------- */
   let amp = 0, ph = 0;
