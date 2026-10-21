@@ -104,18 +104,47 @@
     if (on) { init(); if (!ctx) return; ctx.resume();
       master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(.9, now(), .3);
       amb.gain.setTargetAtTime(.55, now() + .4, 1.4);
-      if (withBoot && !booted) { booted = true; boot(); }
+      if (withBoot && !booted) { const go = () => { if (!booted && ctx.state === 'running') { booted = true; boot(); } }; ctx.resume().then(go); go(); }
     } else if (ctx) { master.gain.cancelScheduledValues(now()); master.gain.setTargetAtTime(0, now(), .25); }
   }
   btn.addEventListener('click', e => { e.stopPropagation(); setOn(!wantOn, true); if (wantOn) tick('click'); });
 
-  // browsers block audio until the visitor interacts: start on the first gesture
-  const first = e => {
-    if (started) return; started = true;
-    ['pointerdown', 'keydown', 'touchstart', 'wheel'].forEach(t => removeEventListener(t, first, true));
-    if (wantOn && !btn.contains(e.target)) setOn(true, true);
-  };
-  ['pointerdown', 'keydown', 'touchstart', 'wheel'].forEach(t => addEventListener(t, first, { capture: true, passive: true }));
+  // Try to play immediately. If the browser blocks autoplay, show a console-style
+  // "press to start" screen (once per visit) so the first click boots the sound.
+  const ss = { get(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} } };
+  const GESTURES = ['pointerdown', 'pointerup', 'keydown', 'touchend', 'click'];
+  let gate = null;
+  function startNow() {
+    if (started) return; if (!wantOn) return;
+    setOn(true, true); hideGate();
+    const ok = () => { if (ctx && ctx.state === 'running' && !started) { started = true; GESTURES.forEach(t => removeEventListener(t, first, true)); } };
+    if (ctx) ctx.resume().then(ok); ok();
+  }
+  const first = e => { if (btn.contains(e.target)) return; startNow(); };
+  GESTURES.forEach(t => addEventListener(t, first, { capture: true, passive: true }));
+  function hideGate() { if (!gate) return; gate.classList.add('out'); const g = gate; gate = null; setTimeout(() => g.remove(), 1400); }
+  function showGate() {
+    if (gate || started || !wantOn || ss.get('sj-gate')) return; ss.set('sj-gate', '1');
+    const gs = document.createElement('style');
+    gs.textContent = `.sj-gate{position:fixed;inset:0;z-index:200;background:#000;display:grid;place-items:center;cursor:pointer;transition:opacity 1.2s cubic-bezier(.16,1,.3,1),visibility 1.2s}
+    .sj-gate.out{opacity:0;visibility:hidden}.sj-gate .in{display:grid;justify-items:center;gap:26px;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}.sj-gate.out .in{transform:scale(1.06)}
+    .sj-gate .ring{width:64px;height:64px;border-radius:50%;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;animation:sjp 2.4s ease-in-out infinite}
+    .sj-gate .ring i{width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 18px #fff}
+    .sj-gate p{margin:0;font:500 12px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);animation:sjf 2.4s ease-in-out infinite}
+    @keyframes sjp{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,255,255,.18)}50%{transform:scale(1.06);box-shadow:0 0 0 16px rgba(255,255,255,0)}}
+    @keyframes sjf{0%,100%{opacity:.45}50%{opacity:1}}`;
+    document.head.appendChild(gs);
+    gate = document.createElement('div'); gate.className = 'sj-gate'; gate.setAttribute('role', 'button'); gate.tabIndex = 0;
+    gate.innerHTML = '<div class="in"><div class="ring"><i></i></div><p>Press anywhere to start</p></div>';
+    document.body.appendChild(gate); gate.focus({ preventScroll: true });
+  }
+  function tryAutoplay() {
+    if (!wantOn) return;
+    setOn(true, true);
+    const check = () => { if (ctx && ctx.state === 'running') { started = true; GESTURES.forEach(t => removeEventListener(t, first, true)); } else showGate(); };
+    if (ctx) { ctx.resume().then(check, check); setTimeout(check, 350); } else check();
+  }
+  document.body ? tryAutoplay() : addEventListener('DOMContentLoaded', tryAutoplay);
 
   // UI sounds
   const hit = 'a,button,.tile,.dcard,.tab,[role=tab],.pcard,.live,.say-hi,.cta,input[type=submit]';
