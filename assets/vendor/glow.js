@@ -61,94 +61,60 @@
 .gb:hover .gb-arr.down>*:nth-child(1){transform:translate(0,130%)}
 .gb:hover .gb-arr.back>*:nth-child(1){transform:translate(-130%,0)}
 .gb:hover .gb-arr>*:nth-child(2){transform:none}
-/* content icons — big and lively */
-.gb .gb-ic,.gb .gb-spark{width:26px!important;height:26px!important;flex:none;vertical-align:middle;margin:-7px 2px -7px -4px;overflow:visible;display:inline-block;
+/* Lottie icons */
+.gb .gb-lot{width:28px;height:28px;flex:none;display:inline-block;vertical-align:middle;margin:-8px 3px -8px -6px;
   transition:transform .7s cubic-bezier(.34,1.56,.64,1)}
-.gb:hover .gb-ic,.gb:hover .gb-spark{transform:scale(1.14) rotate(-4deg)}
+.gb:hover .gb-lot{transform:scale(1.12)}
+.gb-lot svg{display:block;width:100%!important;height:100%!important}
+.gb-lot path[stroke]{stroke:currentColor}
+.gb-lot path[fill]:not([fill="none"]){fill:currentColor}
 .gb-main .ico{width:auto!important;height:auto!important;border:0!important;background:none!important}
-.gb-ic{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.gb-ic .f{fill:currentColor;stroke:none}
-.gb-ic *{transform-box:fill-box;transform-origin:center}
-.gb:hover .gb-ic *{animation-duration:var(--hd)!important}
-/* compass — Explore Work: needle spins searching, overshoots, settles */
-.gb-ic .ndl{transform-box:view-box;transform-origin:12px 12px;animation:icNeedle 3.2s cubic-bezier(.5,0,.2,1) infinite;--hd:1.5s}
-.gb-ic .ring{animation:icPulse 3.2s ease-in-out infinite;--hd:1.5s}
-@keyframes icNeedle{0%{transform:rotate(0)}35%{transform:rotate(400deg)}50%{transform:rotate(330deg)}62%{transform:rotate(375deg)}72%,100%{transform:rotate(360deg)}}
-@keyframes icPulse{0%,30%,100%{transform:scale(1)}40%{transform:scale(1.08)}}
-/* chat — Let's Talk: bubble pops, dots type */
-.gb-ic .bub{animation:icBub 2.6s cubic-bezier(.34,1.56,.64,1) infinite;--hd:1.3s;transform-origin:20% 90%}
-.gb-ic .dot{animation:icDot 1.2s ease-in-out infinite;--hd:.7s}.gb-ic .dot:nth-of-type(2){animation-delay:.15s}.gb-ic .dot:nth-of-type(3){animation-delay:.3s}
-@keyframes icBub{0%,70%,100%{transform:scale(1) rotate(0)}78%{transform:scale(1.1) rotate(-6deg)}88%{transform:scale(.97) rotate(3deg)}}
-@keyframes icDot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-3.5px);opacity:1}}
-/* bezier pen — Brand: curve draws itself, handles swing */
-.gb-ic .crv{stroke-dasharray:30;animation:icDraw 2.8s cubic-bezier(.6,0,.2,1) infinite;--hd:1.4s}
-.gb-ic .anc{animation:icAnc 2.8s cubic-bezier(.34,1.56,.64,1) infinite;--hd:1.4s}
-.gb-ic .hdl{animation:icHdl 2.8s ease-in-out infinite;--hd:1.4s}
-@keyframes icDraw{0%{stroke-dashoffset:30}45%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-30}}
-@keyframes icAnc{0%,100%{transform:scale(.5) rotate(0)}45%,70%{transform:scale(1.25) rotate(45deg)}}
-@keyframes icHdl{0%,100%{opacity:.2}45%,70%{opacity:.7}}
-/* phone — App Interface: phone tilts, screen content scrolls in */
-.gb-ic .ph{animation:icTilt 3s ease-in-out infinite;--hd:1.5s}
-.gb-ic .bar{transform-origin:left center;animation:icBar 1.8s ease-in-out infinite;--hd:.9s}.gb-ic .bar:nth-of-type(3){animation-delay:.18s}.gb-ic .bar:nth-of-type(4){animation-delay:.36s}
-@keyframes icTilt{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
-@keyframes icBar{0%,100%{transform:scaleX(.2);opacity:.3}40%,70%{transform:scaleX(1);opacity:1}}
-/* clapperboard — Motion & Video: snap! with a jolt */
-.gb-ic .clap{transform-box:view-box;transform-origin:3.5px 9.5px;animation:icClap 1.9s cubic-bezier(.7,0,.3,1) infinite;--hd:.85s}
-.gb-ic .brd{animation:icJolt 1.9s ease-out infinite;--hd:.85s}
-.gb-ic .play{animation:icPlay 1.9s ease-out infinite;--hd:.85s}
-@keyframes icClap{0%,50%{transform:rotate(-32deg)}62%{transform:rotate(3deg)}70%,100%{transform:rotate(0)}}
-@keyframes icJolt{0%,60%{transform:translateY(0)}64%{transform:translateY(1.4px)}72%,100%{transform:translateY(0)}}
-@keyframes icPlay{0%,60%{transform:scale(.6);opacity:.4}72%{transform:scale(1.25);opacity:1}100%{transform:scale(1);opacity:1}}
-/* megaphone — Campaigns: shouts, waves ripple out */
-.gb-ic .meg{transform-origin:20% 50%;animation:icShout 1.6s ease-in-out infinite;--hd:.8s}
-.gb-ic .wv{animation:icWave 1.6s ease-out infinite;--hd:.8s}.gb-ic .wv:nth-of-type(2){animation-delay:.3s}
-@keyframes icShout{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-10deg) scale(1.08)}40%{transform:rotate(0) scale(1)}}
-@keyframes icWave{0%{opacity:0;transform:translateX(-3px) scale(.6)}35%{opacity:1}100%{opacity:0;transform:translateX(2.5px) scale(1.2)}}
-/* sparkle — AI: star spins and breathes, small stars twinkle */
-.gb-spark path{fill:currentColor;transform-box:fill-box;transform-origin:center}
-.gb-spark .s1{animation:gbStar 2.8s cubic-bezier(.45,0,.2,1) infinite}
-.gb-spark .s2{animation:gbTw 1.8s ease-in-out infinite}
-.gb-spark .s3{animation:gbTw 1.8s ease-in-out -.9s infinite}
-.gb:hover .gb-spark .s1{animation-duration:1.3s}.gb:hover .gb-spark .s2,.gb:hover .gb-spark .s3{animation-duration:.9s}
-@keyframes gbStar{0%,100%{transform:scale(1) rotate(0)}40%{transform:scale(.65) rotate(60deg)}58%{transform:scale(1.25) rotate(90deg)}75%{transform:scale(1) rotate(90deg)}}
-@keyframes gbTw{0%,100%{transform:scale(0) rotate(0);opacity:0}35%,55%{transform:scale(1.2) rotate(45deg);opacity:1}80%{transform:scale(.2);opacity:0}}
-/* eye — See the Work: looks around, blinks */
-.gb-ic .lid{animation:icBlink 3.4s ease-in-out infinite;--hd:1.7s}
-.gb-ic .pup{animation:icLook 3.4s ease-in-out infinite;--hd:1.7s}
-@keyframes icBlink{0%,42%,50%,88%,94%,100%{transform:scaleY(1)}46%,91%{transform:scaleY(.06)}}
-@keyframes icLook{0%,15%{transform:translate(0,0)}25%,38%{transform:translate(-3.5px,-.5px)}55%,72%{transform:translate(3.5px,.5px)}82%,100%{transform:translate(0,0)}}
-@media (prefers-reduced-motion:reduce){.gb-ic *,.gb-spark *{animation:none!important}}
-@media (prefers-reduced-motion:reduce){.gb>.gb-ring,.gb-spark path,.gb-main>.gb-halo{animation:none!important}}`;
+@media (prefers-reduced-motion:reduce){.gb>.gb-ring,.gb-main>.gb-halo{animation:none!important}}`;
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
-  const SPARK = '<svg class="gb-spark" viewBox="0 0 24 24" aria-hidden="true">' +
-    '<path class="s1" d="M10 3c.7 5.2 2.3 6.8 7.5 7.5-5.2.7-6.8 2.3-7.5 7.5-.7-5.2-2.3-6.8-7.5-7.5C7.7 9.8 9.3 8.2 10 3z"/>' +
-    '<path class="s2" d="M18.5 1.5c.3 2 .9 2.6 2.9 2.9-2 .3-2.6.9-2.9 2.9-.3-2-.9-2.6-2.9-2.9 2-.3 2.6-.9 2.9-2.9z"/>' +
-    '<path class="s3" d="M18 15.5c.25 1.6.75 2.1 2.3 2.3-1.6.25-2.05.75-2.3 2.3-.25-1.6-.75-2.05-2.3-2.3 1.6-.25 2.05-.75 2.3-2.3z"/></svg>';
-
-
-  const I = (inner, vb) => '<svg class="gb-ic" viewBox="0 0 24 24" aria-hidden="true">' + inner + '</svg>';
-  const ICONS = {
-    compass: I('<circle class="ring" cx="12" cy="12" r="9.2"/><g class="ndl"><path class="f" d="M12 5.8l2.3 6.2h-4.6z"/><path d="M9.7 12h4.6L12 18.2z"/></g><circle class="f" cx="12" cy="12" r="1"/>'),
-    chat: I('<path class="bub" d="M5 4.5h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-8.5L6 20.5v-3.5H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2z"/><circle class="f dot" cx="8.2" cy="10.8" r="1.25"/><circle class="f dot" cx="12" cy="10.8" r="1.25"/><circle class="f dot" cx="15.8" cy="10.8" r="1.25"/>'),
-    pen: I('<path class="crv" d="M4 18C6 6 18 18 20 6"/><rect class="f anc" x="2.2" y="16.2" width="3.6" height="3.6" rx=".6"/><rect class="f anc" x="18.2" y="4.2" width="3.6" height="3.6" rx=".6"/><path class="hdl" d="M4 18L9 13"/><path class="hdl" d="M20 6l-5 5"/>'),
-    phone: I('<g class="ph"><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><rect class="f bar" x="9" y="7" width="6" height="1.8" rx=".9"/><rect class="f bar" x="9" y="10.6" width="6" height="1.8" rx=".9"/><rect class="f bar" x="9" y="14.2" width="4" height="1.8" rx=".9"/><path d="M10.8 18.6h2.4"/></g>'),
-    clapper: I('<g class="brd"><rect x="3.5" y="9.5" width="17" height="11" rx="1.6"/><path d="M9.5 13.2v4.6l3.9-2.3z" class="f play"/></g><g class="clap"><path d="M3.5 9.5L4 5.6l16.4-2.2.5 3.8z"/><path d="M8.2 5l1.6 3.4M12.6 4.4l1.6 3.4M17 3.8l1.6 3.4"/></g>'),
-    megaphone: I('<g class="meg"><path d="M3.5 10v4.2h3l7 4.3V5.7l-7 4.3z"/><path d="M6.5 14.2l1.2 5"/></g><path class="wv" d="M16.4 9.4a3.6 3.6 0 0 1 0 5.4"/><path class="wv" d="M18.8 7a7 7 0 0 1 0 10.2"/>'),
-    eye: I('<g class="lid"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><g class="pup"><circle class="f" cx="12" cy="12" r="3"/></g></g>'),
-    spark: SPARK
-  };
+  /* ---------- Lottie icons (lottie-web player + MIT useAnimations icon set) ---------- */
+  const here = (document.currentScript && document.currentScript.src) || location.href;
+  const ICON_DIR = new URL('../icons/', here).href;
+  let lottieP = null;
+  const loadLottie = () => lottieP || (lottieP = window.lottie ? Promise.resolve(window.lottie) : new Promise((res, rej) => {
+    const sc = document.createElement('script'); sc.src = new URL('lottie_light.min.js', here).href;
+    sc.onload = () => res(window.lottie); sc.onerror = rej; document.head.appendChild(sc);
+  }));
+  const jsonCache = {};
+  const getJSON = n => jsonCache[n] || (jsonCache[n] = fetch(ICON_DIR + n + '.json').then(r => r.json()));
   function pick(b) {
     const t = ((b.getAttribute('aria-label') || '') + ' ' + b.textContent).toLowerCase();
-    if (/talk|contact|say hi/.test(t)) return 'chat';
-    if (/explore work|view work/.test(t)) return 'compass';
-    if (/see the work/.test(t)) return 'eye';
-    if (/brand/.test(t)) return 'pen';
-    if (/app|interface/.test(t)) return 'phone';
-    if (/motion|video/.test(t)) return 'clapper';
-    if (/campaign|awareness/.test(t)) return 'megaphone';
-    if (/\bai\b/.test(t)) return 'spark';
+    if (/talk|contact|say hi/.test(t)) return 'messageCircle';
+    if (/explore work|view work/.test(t)) return 'explore';
+    if (/see the work/.test(t)) return 'grid';
+    if (/brand/.test(t)) return 'penTool';
+    if (/app|interface/.test(t)) return 'smartphone';
+    if (/motion|video/.test(t)) return 'film';
+    if (/campaign|awareness/.test(t)) return 'radio';
+    if (/\bai\b/.test(t)) return 'aperture';
     return null;
+  }
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+    const a = e.target.__anim; e.target.__vis = e.isIntersecting; if (a && e.isIntersecting && !e.target.__played) { e.target.__played = 1; a.goToAndPlay(0, true); }
+  }), { threshold: .6 }) : null;
+  function mountIcon(b, name) {
+    const span = document.createElement('span'); span.className = 'gb-lot'; span.setAttribute('aria-hidden', 'true');
+    const ico = b.querySelector(':scope > .ico'), tri = b.querySelector(':scope > svg[fill="currentColor"]');
+    if (ico) { ico.textContent = ''; ico.appendChild(span); } else if (tri) tri.replaceWith(span); else { const ring = b.querySelector(':scope > .gb-ring'); b.insertBefore(span, ring ? ring.nextSibling : b.firstChild); }
+    Promise.all([loadLottie(), getJSON(name)]).then(([L, data]) => {
+      const a = L.loadAnimation({ container: span, renderer: 'svg', loop: false, autoplay: false, animationData: data });
+      span.__anim = a; a.goToAndStop(0, true);
+      if (reduce) return;
+      let hover = false;
+      a.addEventListener('complete', () => { if (hover) a.goToAndPlay(0, true); });
+      b.addEventListener('mouseenter', () => { hover = true; a.setSpeed(1.1); a.goToAndPlay(0, true); });
+      b.addEventListener('mouseleave', () => { hover = false; a.setSpeed(1); });
+      b.addEventListener('focus', () => a.goToAndPlay(0, true));
+      // gentle idle replay so the icons stay alive
+      const idle = () => { if (!hover && span.__vis !== false && !document.hidden) a.goToAndPlay(0, true); setTimeout(idle, 4200 + Math.random() * 2600); };
+      setTimeout(idle, 2500 + Math.random() * 2500);
+      if (io) io.observe(span); else a.goToAndPlay(0, true);
+    }).catch(() => span.remove());
   }
 
   function wrapArrow(el, dir) {
@@ -172,15 +138,7 @@
     b.prepend(...frag);
     if (b.classList.contains('send') || b.classList.contains('say-hi')) return;   // these keep their own icon animations
     // leading icon → animated sparkle (main buttons)
-    const key = pick(b), icon = key ? ICONS[key] : (main ? SPARK : null);
-    if (icon) {
-      const ico = b.querySelector(':scope > .ico');
-      const tri = b.querySelector(':scope > svg[fill="currentColor"]');
-      if (ico) ico.innerHTML = icon;
-      else if (tri) tri.outerHTML = icon;
-      else b.insertAdjacentHTML('afterbegin', icon);
-    }
-    // arrows
+    const key = pick(b); if (key) mountIcon(b, key);
     // arrows: removed — the icon carries the motion now (Back pills keep theirs)
     const isBack = b.classList.contains('pill');
     b.querySelectorAll(':scope > .arr').forEach(a => a.remove());
