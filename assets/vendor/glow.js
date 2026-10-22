@@ -50,17 +50,6 @@
 .gb-sub:hover>.gb-ring{opacity:1;animation-duration:2.4s}
 .gb-sub:hover{box-shadow:0 10px 34px -12px rgba(214,187,125,.45)!important}
 
-/* sparkle icon: big star turns and pulses, small stars twinkle in turn */
-.gb-spark{width:1.35em;height:1.35em;flex:none;overflow:visible;display:inline-block;vertical-align:-.25em}
-.gb-spark path{fill:currentColor;transform-box:fill-box;transform-origin:center}
-.gb-spark .s1{animation:gbStar 3.6s cubic-bezier(.45,0,.2,1) infinite}
-.gb-spark .s2{animation:gbTw 2.4s ease-in-out infinite}
-.gb-spark .s3{animation:gbTw 2.4s ease-in-out -1.2s infinite}
-.gb:hover .gb-spark .s1{animation-duration:1.6s}
-.gb:hover .gb-spark .s2,.gb:hover .gb-spark .s3{animation-duration:1.1s}
-.gb:hover .gb-spark .s3{animation-delay:-.55s}
-@keyframes gbStar{0%,100%{transform:scale(1) rotate(0)}45%{transform:scale(.78) rotate(45deg)}60%{transform:scale(1.12) rotate(90deg)}75%{transform:scale(1) rotate(90deg)}}
-@keyframes gbTw{0%,100%{transform:scale(0);opacity:0}35%,55%{transform:scale(1);opacity:1}80%{transform:scale(.2);opacity:0}}
 
 /* arrows: slide out and a fresh one slides in */
 .gb-arr{display:inline-grid!important;overflow:hidden;vertical-align:middle;transform:none!important}
@@ -72,39 +61,63 @@
 .gb:hover .gb-arr.down>*:nth-child(1){transform:translate(0,130%)}
 .gb:hover .gb-arr.back>*:nth-child(1){transform:translate(-130%,0)}
 .gb:hover .gb-arr>*:nth-child(2){transform:none}
-/* content icons */
-.gb-ic{width:1.35em;height:1.35em;flex:none;overflow:visible;display:inline-block;vertical-align:-.25em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* content icons — big and lively */
+.gb .gb-ic,.gb .gb-spark{width:26px!important;height:26px!important;flex:none;vertical-align:middle;margin:-7px 2px -7px -4px;overflow:visible;display:inline-block;
+  transition:transform .7s cubic-bezier(.34,1.56,.64,1)}
+.gb:hover .gb-ic,.gb:hover .gb-spark{transform:scale(1.14) rotate(-4deg)}
+.gb-main .ico{width:auto!important;height:auto!important;border:0!important;background:none!important}
+.gb-ic{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .gb-ic .f{fill:currentColor;stroke:none}
 .gb-ic *{transform-box:fill-box;transform-origin:center}
 .gb:hover .gb-ic *{animation-duration:var(--hd)!important}
-/* compass — Explore Work: the needle searches, then settles */
-.gb-ic .ndl{transform-box:view-box;transform-origin:12px 12px;animation:icNeedle 3.4s cubic-bezier(.5,0,.2,1) infinite;--hd:1.4s}
-@keyframes icNeedle{0%{transform:rotate(0)}30%{transform:rotate(70deg)}48%{transform:rotate(-30deg)}62%{transform:rotate(15deg)}74%,100%{transform:rotate(0)}}
-/* chat — Let's Talk: typing dots */
-.gb-ic .dot{animation:icDot 1.4s ease-in-out infinite;--hd:.8s}.gb-ic .dot:nth-of-type(2){animation-delay:.18s}.gb-ic .dot:nth-of-type(3){animation-delay:.36s}
-@keyframes icDot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-2.2px);opacity:1}}
-/* bezier pen — Brand: the curve draws itself */
-.gb-ic .crv{stroke-dasharray:28;animation:icDraw 3s cubic-bezier(.6,0,.2,1) infinite;--hd:1.5s}
-.gb-ic .anc{animation:icAnc 3s ease-in-out infinite;--hd:1.5s}
-@keyframes icDraw{0%{stroke-dashoffset:28}45%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-28}}
-@keyframes icAnc{0%,100%{transform:scale(.6)}45%,70%{transform:scale(1.15)}}
-/* phone — App Interface: screen content loads in */
-.gb-ic .bar{animation:icBar 2.4s ease-in-out infinite;--hd:1.2s}.gb-ic .bar:nth-of-type(2){animation-delay:.2s}.gb-ic .bar:nth-of-type(3){animation-delay:.4s}
-@keyframes icBar{0%,100%{transform:scaleX(.25);opacity:.35}40%,70%{transform:scaleX(1);opacity:1}}
-.gb-ic .bar{transform-origin:left center}
-/* clapperboard — Motion & Video: the clapper snaps */
-.gb-ic .clap{transform-box:view-box;transform-origin:3.5px 9.5px;animation:icClap 2.2s cubic-bezier(.7,0,.3,1) infinite;--hd:.9s}
-@keyframes icClap{0%,55%{transform:rotate(-22deg)}68%{transform:rotate(2deg)}74%,100%{transform:rotate(0)}}
-/* megaphone — Campaigns: sound waves go out */
-.gb-ic .wv{animation:icWave 1.8s ease-out infinite;--hd:.9s}.gb-ic .wv:nth-of-type(2){animation-delay:.35s}
-@keyframes icWave{0%{opacity:0;transform:translateX(-2px) scale(.7)}40%{opacity:1}100%{opacity:0;transform:translateX(1.5px) scale(1.1)}}
-/* eye — See the Work: looks around and blinks */
-.gb-ic .lid{animation:icBlink 4s ease-in-out infinite;--hd:2s}
-.gb-ic .pup{animation:icLook 4s ease-in-out infinite;--hd:2s}
-@keyframes icBlink{0%,44%,52%,100%{transform:scaleY(1)}48%{transform:scaleY(.08)}}
-@keyframes icLook{0%,20%{transform:translateX(0)}30%,40%{transform:translateX(-2.5px)}56%,70%{transform:translateX(2.5px)}82%,100%{transform:translateX(0)}}
-.live .gb-ic,.live .gb-spark{width:1.7em;height:1.7em;vertical-align:-.45em;margin:-.2em 0}
-@media (prefers-reduced-motion:reduce){.gb-ic *{animation:none!important}}
+/* compass — Explore Work: needle spins searching, overshoots, settles */
+.gb-ic .ndl{transform-box:view-box;transform-origin:12px 12px;animation:icNeedle 3.2s cubic-bezier(.5,0,.2,1) infinite;--hd:1.5s}
+.gb-ic .ring{animation:icPulse 3.2s ease-in-out infinite;--hd:1.5s}
+@keyframes icNeedle{0%{transform:rotate(0)}35%{transform:rotate(400deg)}50%{transform:rotate(330deg)}62%{transform:rotate(375deg)}72%,100%{transform:rotate(360deg)}}
+@keyframes icPulse{0%,30%,100%{transform:scale(1)}40%{transform:scale(1.08)}}
+/* chat — Let's Talk: bubble pops, dots type */
+.gb-ic .bub{animation:icBub 2.6s cubic-bezier(.34,1.56,.64,1) infinite;--hd:1.3s;transform-origin:20% 90%}
+.gb-ic .dot{animation:icDot 1.2s ease-in-out infinite;--hd:.7s}.gb-ic .dot:nth-of-type(2){animation-delay:.15s}.gb-ic .dot:nth-of-type(3){animation-delay:.3s}
+@keyframes icBub{0%,70%,100%{transform:scale(1) rotate(0)}78%{transform:scale(1.1) rotate(-6deg)}88%{transform:scale(.97) rotate(3deg)}}
+@keyframes icDot{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-3.5px);opacity:1}}
+/* bezier pen — Brand: curve draws itself, handles swing */
+.gb-ic .crv{stroke-dasharray:30;animation:icDraw 2.8s cubic-bezier(.6,0,.2,1) infinite;--hd:1.4s}
+.gb-ic .anc{animation:icAnc 2.8s cubic-bezier(.34,1.56,.64,1) infinite;--hd:1.4s}
+.gb-ic .hdl{animation:icHdl 2.8s ease-in-out infinite;--hd:1.4s}
+@keyframes icDraw{0%{stroke-dashoffset:30}45%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-30}}
+@keyframes icAnc{0%,100%{transform:scale(.5) rotate(0)}45%,70%{transform:scale(1.25) rotate(45deg)}}
+@keyframes icHdl{0%,100%{opacity:.2}45%,70%{opacity:.7}}
+/* phone — App Interface: phone tilts, screen content scrolls in */
+.gb-ic .ph{animation:icTilt 3s ease-in-out infinite;--hd:1.5s}
+.gb-ic .bar{transform-origin:left center;animation:icBar 1.8s ease-in-out infinite;--hd:.9s}.gb-ic .bar:nth-of-type(3){animation-delay:.18s}.gb-ic .bar:nth-of-type(4){animation-delay:.36s}
+@keyframes icTilt{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+@keyframes icBar{0%,100%{transform:scaleX(.2);opacity:.3}40%,70%{transform:scaleX(1);opacity:1}}
+/* clapperboard — Motion & Video: snap! with a jolt */
+.gb-ic .clap{transform-box:view-box;transform-origin:3.5px 9.5px;animation:icClap 1.9s cubic-bezier(.7,0,.3,1) infinite;--hd:.85s}
+.gb-ic .brd{animation:icJolt 1.9s ease-out infinite;--hd:.85s}
+.gb-ic .play{animation:icPlay 1.9s ease-out infinite;--hd:.85s}
+@keyframes icClap{0%,50%{transform:rotate(-32deg)}62%{transform:rotate(3deg)}70%,100%{transform:rotate(0)}}
+@keyframes icJolt{0%,60%{transform:translateY(0)}64%{transform:translateY(1.4px)}72%,100%{transform:translateY(0)}}
+@keyframes icPlay{0%,60%{transform:scale(.6);opacity:.4}72%{transform:scale(1.25);opacity:1}100%{transform:scale(1);opacity:1}}
+/* megaphone — Campaigns: shouts, waves ripple out */
+.gb-ic .meg{transform-origin:20% 50%;animation:icShout 1.6s ease-in-out infinite;--hd:.8s}
+.gb-ic .wv{animation:icWave 1.6s ease-out infinite;--hd:.8s}.gb-ic .wv:nth-of-type(2){animation-delay:.3s}
+@keyframes icShout{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-10deg) scale(1.08)}40%{transform:rotate(0) scale(1)}}
+@keyframes icWave{0%{opacity:0;transform:translateX(-3px) scale(.6)}35%{opacity:1}100%{opacity:0;transform:translateX(2.5px) scale(1.2)}}
+/* sparkle — AI: star spins and breathes, small stars twinkle */
+.gb-spark path{fill:currentColor;transform-box:fill-box;transform-origin:center}
+.gb-spark .s1{animation:gbStar 2.8s cubic-bezier(.45,0,.2,1) infinite}
+.gb-spark .s2{animation:gbTw 1.8s ease-in-out infinite}
+.gb-spark .s3{animation:gbTw 1.8s ease-in-out -.9s infinite}
+.gb:hover .gb-spark .s1{animation-duration:1.3s}.gb:hover .gb-spark .s2,.gb:hover .gb-spark .s3{animation-duration:.9s}
+@keyframes gbStar{0%,100%{transform:scale(1) rotate(0)}40%{transform:scale(.65) rotate(60deg)}58%{transform:scale(1.25) rotate(90deg)}75%{transform:scale(1) rotate(90deg)}}
+@keyframes gbTw{0%,100%{transform:scale(0) rotate(0);opacity:0}35%,55%{transform:scale(1.2) rotate(45deg);opacity:1}80%{transform:scale(.2);opacity:0}}
+/* eye — See the Work: looks around, blinks */
+.gb-ic .lid{animation:icBlink 3.4s ease-in-out infinite;--hd:1.7s}
+.gb-ic .pup{animation:icLook 3.4s ease-in-out infinite;--hd:1.7s}
+@keyframes icBlink{0%,42%,50%,88%,94%,100%{transform:scaleY(1)}46%,91%{transform:scaleY(.06)}}
+@keyframes icLook{0%,15%{transform:translate(0,0)}25%,38%{transform:translate(-3.5px,-.5px)}55%,72%{transform:translate(3.5px,.5px)}82%,100%{transform:translate(0,0)}}
+@media (prefers-reduced-motion:reduce){.gb-ic *,.gb-spark *{animation:none!important}}
 @media (prefers-reduced-motion:reduce){.gb>.gb-ring,.gb-spark path,.gb-main>.gb-halo{animation:none!important}}`;
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
@@ -116,12 +129,12 @@
 
   const I = (inner, vb) => '<svg class="gb-ic" viewBox="0 0 24 24" aria-hidden="true">' + inner + '</svg>';
   const ICONS = {
-    compass: I('<circle cx="12" cy="12" r="9.2"/><g class="ndl"><path class="f" d="M12 5.8l2.3 6.2h-4.6z"/><path d="M9.7 12h4.6L12 18.2z"/></g><circle class="f" cx="12" cy="12" r="1"/>'),
-    chat: I('<path d="M5 4.5h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-8.5L6 20.5v-3.5H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2z"/><circle class="f dot" cx="8.2" cy="10.8" r="1.25"/><circle class="f dot" cx="12" cy="10.8" r="1.25"/><circle class="f dot" cx="15.8" cy="10.8" r="1.25"/>'),
-    pen: I('<path class="crv" d="M4 18C6 6 18 18 20 6"/><rect class="f anc" x="2.2" y="16.2" width="3.6" height="3.6" rx=".6"/><rect class="f anc" x="18.2" y="4.2" width="3.6" height="3.6" rx=".6"/><path d="M4 18L9 13" opacity=".45"/><path d="M20 6l-5 5" opacity=".45"/>'),
-    phone: I('<rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><rect class="f bar" x="9" y="7" width="6" height="1.8" rx=".9"/><rect class="f bar" x="9" y="10.6" width="6" height="1.8" rx=".9"/><rect class="f bar" x="9" y="14.2" width="4" height="1.8" rx=".9"/><path d="M10.8 18.6h2.4"/>'),
-    clapper: I('<rect x="3.5" y="9.5" width="17" height="11" rx="1.6"/><path d="M9.5 13.2v4.6l3.9-2.3z" class="f"/><g class="clap"><path d="M3.5 9.5L4 5.6l16.4-2.2.5 3.8z"/><path d="M8.2 5l1.6 3.4M12.6 4.4l1.6 3.4M17 3.8l1.6 3.4"/></g>'),
-    megaphone: I('<path d="M3.5 10v4.2h3l7 4.3V5.7l-7 4.3z"/><path d="M6.5 14.2l1.2 5"/><path class="wv" d="M16.4 9.4a3.6 3.6 0 0 1 0 5.4"/><path class="wv" d="M18.8 7a7 7 0 0 1 0 10.2"/>'),
+    compass: I('<circle class="ring" cx="12" cy="12" r="9.2"/><g class="ndl"><path class="f" d="M12 5.8l2.3 6.2h-4.6z"/><path d="M9.7 12h4.6L12 18.2z"/></g><circle class="f" cx="12" cy="12" r="1"/>'),
+    chat: I('<path class="bub" d="M5 4.5h14a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-8.5L6 20.5v-3.5H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2z"/><circle class="f dot" cx="8.2" cy="10.8" r="1.25"/><circle class="f dot" cx="12" cy="10.8" r="1.25"/><circle class="f dot" cx="15.8" cy="10.8" r="1.25"/>'),
+    pen: I('<path class="crv" d="M4 18C6 6 18 18 20 6"/><rect class="f anc" x="2.2" y="16.2" width="3.6" height="3.6" rx=".6"/><rect class="f anc" x="18.2" y="4.2" width="3.6" height="3.6" rx=".6"/><path class="hdl" d="M4 18L9 13"/><path class="hdl" d="M20 6l-5 5"/>'),
+    phone: I('<g class="ph"><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><rect class="f bar" x="9" y="7" width="6" height="1.8" rx=".9"/><rect class="f bar" x="9" y="10.6" width="6" height="1.8" rx=".9"/><rect class="f bar" x="9" y="14.2" width="4" height="1.8" rx=".9"/><path d="M10.8 18.6h2.4"/></g>'),
+    clapper: I('<g class="brd"><rect x="3.5" y="9.5" width="17" height="11" rx="1.6"/><path d="M9.5 13.2v4.6l3.9-2.3z" class="f play"/></g><g class="clap"><path d="M3.5 9.5L4 5.6l16.4-2.2.5 3.8z"/><path d="M8.2 5l1.6 3.4M12.6 4.4l1.6 3.4M17 3.8l1.6 3.4"/></g>'),
+    megaphone: I('<g class="meg"><path d="M3.5 10v4.2h3l7 4.3V5.7l-7 4.3z"/><path d="M6.5 14.2l1.2 5"/></g><path class="wv" d="M16.4 9.4a3.6 3.6 0 0 1 0 5.4"/><path class="wv" d="M18.8 7a7 7 0 0 1 0 10.2"/>'),
     eye: I('<g class="lid"><path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><g class="pup"><circle class="f" cx="12" cy="12" r="3"/></g></g>'),
     spark: SPARK
   };
@@ -168,9 +181,10 @@
       else b.insertAdjacentHTML('afterbegin', icon);
     }
     // arrows
-    const arr = b.querySelector(':scope > .arr');
-    if (arr) wrapArrow(arr, '');
-    b.querySelectorAll(':scope > svg[stroke]').forEach(s => wrapArrow(s, arrowDir(s)));
+    // arrows: removed — the icon carries the motion now (Back pills keep theirs)
+    const isBack = b.classList.contains('pill');
+    b.querySelectorAll(':scope > .arr').forEach(a => a.remove());
+    b.querySelectorAll(':scope > svg[stroke]').forEach(s => { if (isBack) wrapArrow(s, arrowDir(s)); else s.remove(); });
   }
   function run(root) {
     (root || document).querySelectorAll(MAIN).forEach(b => enhance(b, true));
