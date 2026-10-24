@@ -105,6 +105,7 @@
     o.connect(g); g.connect(fx); o.start(t); o.stop(t + d + .02);
     if (kind !== 'hover') bell(kind === 'open' ? 1174.66 : 880, t + .01, .35, .03);
   }
+  window.__sjTick = k => tick(k);
   function setOn(on, withBoot) {
     wantOn = on; store.set('sj-sound', on ? 'on' : 'off'); label();
     if (on) { init(); if (!ctx) return; ctx.resume();

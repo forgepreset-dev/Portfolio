@@ -1079,6 +1079,73 @@ body{letter-spacing:-.01em}
   font-family:var(--font);font-weight:500;font-size:clamp(13px,1.1vw,15px);letter-spacing:-.005em;color:rgba(235,230,228,.62)}
 .phil-sub i{width:4px;height:4px;border-radius:50%;background:#c4a865}
 @media (max-width:860px){.phil-copy .phil-line{font-size:clamp(30px,9vw,44px)}.phil-line br{display:none}}
+
+/* =========================================================
+   TOOLKIT — PS5 home-menu style
+   ========================================================= */
+.ps{position:relative;height:100vh;height:100svh;min-height:640px;overflow:hidden;background:#050505;isolation:isolate;padding:0!important}
+.ps-bg{position:absolute;inset:0;z-index:-1}
+.ps-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.08);
+  transition:opacity 1.1s cubic-bezier(.16,1,.3,1),transform 7s cubic-bezier(.16,1,.3,1);filter:saturate(.9) blur(1.5px) brightness(.85)}
+.ps-bg img.on{opacity:1;transform:scale(1)}
+.ps-bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(5,5,5,.97) 0%,rgba(5,5,5,.88) 34%,rgba(5,5,5,.35) 62%,rgba(5,5,5,.1) 85%),
+             linear-gradient(0deg,rgba(5,5,5,.95) 0%,rgba(5,5,5,0) 45%),
+             linear-gradient(180deg,rgba(5,5,5,.85) 0%,rgba(5,5,5,0) 30%)}
+.ps-top{position:absolute;left:var(--pad,5vw);right:var(--pad,5vw);top:clamp(96px,13vh,128px);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.ps-tabs{display:flex;align-items:center;gap:clamp(14px,2vw,28px);flex-wrap:wrap}
+.ps-label{font-family:var(--font);font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c4a865;margin-right:clamp(4px,1vw,14px)}
+.ps-tab{all:unset;cursor:pointer;font-family:var(--font);font-size:clamp(16px,1.5vw,20px);font-weight:500;letter-spacing:-.01em;color:rgba(255,255,255,.45);
+  transition:color .4s;position:relative;padding:4px 0}
+.ps-tab:hover{color:rgba(255,255,255,.8)}
+.ps-tab.on{color:#fff}
+.ps-tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:2px;background:#fff}
+.ps-tab:focus-visible{outline:2px solid #d6bb7d;outline-offset:4px}
+.ps-clock{font-family:var(--font);font-size:clamp(16px,1.4vw,20px);font-weight:500;color:#fff;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.ps-row-wrap{position:absolute;left:var(--pad,5vw);right:0;top:calc(clamp(96px,13vh,128px) + 62px);height:150px;overflow:visible}
+.ps-row{display:flex;align-items:flex-start;gap:14px;transition:transform .7s cubic-bezier(.16,1,.3,1);will-change:transform}
+.ps-tile{all:unset;box-sizing:border-box;position:relative;flex:none;width:84px;height:84px;border-radius:18px;cursor:pointer;
+  display:grid;place-items:center;color:#fff;
+  background:radial-gradient(120% 120% at 30% 0%,color-mix(in srgb,var(--t) 55%,#000) 0%,color-mix(in srgb,var(--t) 18%,#0b0b0b) 60%,#0b0b0b 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 10px 24px -12px rgba(0,0,0,.8);
+  transition:width .6s cubic-bezier(.16,1,.3,1),height .6s cubic-bezier(.16,1,.3,1),margin .6s cubic-bezier(.16,1,.3,1),box-shadow .5s,opacity .5s,transform .5s cubic-bezier(.16,1,.3,1)}
+.ps-tile svg{width:42%;height:42%;fill:#fff;transition:transform .6s cubic-bezier(.34,1.56,.64,1)}
+.ps-tile .mono{font-family:var(--font);font-weight:600;font-size:30px;letter-spacing:-.04em;color:var(--t);transition:font-size .6s cubic-bezier(.16,1,.3,1)}
+.ps-tile:hover{transform:translateY(-3px)}
+.ps-tile.on{width:124px;height:124px;border-radius:24px;margin-right:calc(var(--lw,160px) + 34px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 0 0 3px #fff,0 0 0 7px rgba(255,255,255,.12),0 20px 50px -14px color-mix(in srgb,var(--t) 70%,transparent)}
+.ps-tile.on .mono{font-size:44px}
+.ps-tile .lbl{position:absolute;left:calc(100% + 20px);top:50%;transform:translate(-8px,-50%);opacity:0;white-space:nowrap;pointer-events:none;
+  font-family:var(--font);font-size:20px;font-weight:500;letter-spacing:-.01em;color:#fff;transition:opacity .5s .1s,transform .6s .1s cubic-bezier(.16,1,.3,1)}
+.ps-tile.on .lbl{opacity:1;transform:translate(0,-50%)}
+.ps-tile.past{opacity:0;pointer-events:none;transform:translateX(-12px) scale(.9)}
+.ps-tile:focus-visible{outline:2px solid #d6bb7d;outline-offset:6px}
+.ps-info{position:absolute;left:var(--pad,5vw);bottom:clamp(44px,10vh,110px);width:min(560px,86vw)}
+.ps-info>*{transition:opacity .5s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+.ps-info.swap>*{opacity:0;transform:translateY(14px)}
+.ps-meta{font-family:var(--font);font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#c4a865;display:flex;gap:10px;align-items:center}
+.ps-meta i{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:.7}
+.ps-name{margin:14px 0 0;font-family:var(--font);font-weight:500;font-size:clamp(44px,6.4vw,96px);line-height:.95;letter-spacing:-.045em;color:#fff}
+.ps-desc{margin:18px 0 0;font-family:var(--font);font-size:clamp(16px,1.35vw,19px);line-height:1.45;color:rgba(255,255,255,.72);max-width:44ch}
+.ps-use{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.ps-use span{font-family:var(--font);font-size:13px;font-weight:500;color:rgba(255,255,255,.85);padding:7px 13px;border-radius:100px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.ps-go{margin-top:28px;display:inline-flex}
+.ps-hint{position:absolute;right:var(--pad,5vw);bottom:clamp(44px,10vh,110px);display:flex;gap:6px;align-items:center;font-family:var(--font);font-size:12px;color:rgba(255,255,255,.45)}
+.ps-hint kbd{font:inherit;display:grid;place-items:center;width:26px;height:26px;border-radius:8px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7)}
+@media (max-width:860px){
+  .ps{min-height:720px}
+  .ps-top{flex-direction:column;align-items:flex-start;gap:14px}
+  .ps-clock{position:absolute;right:0;top:0}
+  .ps-tabs{gap:16px}.ps-label{width:100%}
+  .ps-row-wrap{top:calc(clamp(96px,13vh,128px) + 96px);left:20px;height:110px}
+  .ps-tile{width:60px;height:60px;border-radius:14px}.ps-tile .mono{font-size:22px}
+  .ps-tile.on{width:88px;height:88px;border-radius:20px;margin-right:6px}.ps-tile.on .mono{font-size:32px}
+  .ps-tile .lbl{display:none}
+  .ps-info{left:20px;bottom:56px}
+  .ps-hint{display:none}
+  .ps-bg::after{background:linear-gradient(0deg,rgba(5,5,5,.97) 0%,rgba(5,5,5,.7) 55%,rgba(5,5,5,.35) 100%)}
+}
 </style>
 </head>
 <body class="locked">
@@ -1432,25 +1499,25 @@ body{letter-spacing:-.01em}
 </section>
 
 <!-- ============ TOOLKIT — editing timeline ============ -->
-<section class="kit" id="kit" aria-label="Tools and skills">
-  <div class="kit-label"><span>THE TOOLKIT</span></div>
-  <div class="tl" id="toolTimeline" aria-hidden="true">
-    <div class="tl-bar">
-      <span class="tl-tc" id="tlTc">00:00:00:00</span>
-      <span class="tl-seq">SEQUENCE · STEPHEN_TOOLKIT_V4</span>
-      <span class="tl-dots"><i></i><i></i><i></i></span>
+<section class="kit ps" id="kit" aria-label="Toolkit">
+  <div class="ps-bg" aria-hidden="true"><img class="a" alt=""><img class="b" alt=""></div>
+  <div class="ps-top">
+    <div class="ps-tabs" role="tablist" aria-label="Tool categories">
+      <span class="ps-label">The Toolkit</span>
+      <button type="button" class="ps-tab on" data-f="All">All</button><button type="button" class="ps-tab" data-f="AI">AI</button><button type="button" class="ps-tab" data-f="Motion">Motion</button><button type="button" class="ps-tab" data-f="Design">Design</button><button type="button" class="ps-tab" data-f="UI / Web">UI / Web</button>
     </div>
-    <div class="tl-body" style="--p:0">
-      <div class="tl-row tl-ruler"><div class="tl-head"></div><div class="tl-lane"><span style="--x:0"><i>00:00</i></span><span style="--x:10"><i>00:03</i></span><span style="--x:20"><i>00:06</i></span><span style="--x:30"><i>00:09</i></span><span style="--x:40"><i>00:12</i></span><span style="--x:50"><i>00:15</i></span><span style="--x:60"><i>00:18</i></span><span style="--x:70"><i>00:21</i></span><span style="--x:80"><i>00:24</i></span><span style="--x:90"><i>00:27</i></span><span style="--x:100"><i>00:30</i></span></div></div>
-        <div class="tl-row"><div class="tl-head"><em>V4</em><span>AI</span></div><div class="tl-lane"><span class="clip" style="--s:3.0;--e:18.6" data-s="3.0"><b>Claude</b></span><span class="clip" style="--s:20.2;--e:41.0" data-s="20.2"><b>Higgsfield</b></span><span class="clip" style="--s:42.6;--e:58.1" data-s="42.6"><b>Gemini</b></span><span class="clip" style="--s:59.7;--e:76.6" data-s="59.7"><b>ChatGPT</b></span><span class="clip" style="--s:78.2;--e:99.0" data-s="78.2"><b>Midjourney</b></span></div></div>
-        <div class="tl-row"><div class="tl-head"><em>V3</em><span>MOTION</span></div><div class="tl-lane"><span class="clip" style="--s:6.0;--e:29.9" data-s="6.0"><b>After Effects</b></span><span class="clip" style="--s:31.5;--e:54.2" data-s="31.5"><b>Premiere Pro</b></span><span class="clip" style="--s:55.8;--e:82.3" data-s="55.8"><b>DaVinci Resolve</b></span><span class="clip" style="--s:83.9;--e:99.0" data-s="83.9"><b>CapCut</b></span></div></div>
-        <div class="tl-row"><div class="tl-head"><em>V2</em><span>DESIGN</span></div><div class="tl-lane"><span class="clip" style="--s:1.0;--e:23.5" data-s="1.0"><b>Photoshop</b></span><span class="clip" style="--s:25.1;--e:50.7" data-s="25.1"><b>Illustrator</b></span><span class="clip" style="--s:52.3;--e:73.3" data-s="52.3"><b>InDesign</b></span><span class="clip" style="--s:74.9;--e:99.0" data-s="74.9"><b>PowerPoint</b></span></div></div>
-        <div class="tl-row"><div class="tl-head"><em>V1</em><span>UI / WEB</span></div><div class="tl-lane"><span class="clip" style="--s:2.0;--e:12.6" data-s="2.0"><b>Figma</b></span><span class="clip" style="--s:14.2;--e:27.6" data-s="14.2"><b>Adobe XD</b></span><span class="clip" style="--s:29.2;--e:42.7" data-s="29.2"><b>InVision</b></span><span class="clip" style="--s:44.3;--e:60.6" data-s="44.3"><b>Dreamweaver</b></span><span class="clip" style="--s:62.2;--e:74.7" data-s="62.2"><b>Webflow</b></span><span class="clip" style="--s:76.3;--e:88.8" data-s="76.3"><b>Shopify</b></span><span class="clip" style="--s:90.4;--e:99.0" data-s="90.4"><b>Wix</b></span></div></div>
-        <div class="tl-row tl-audio"><div class="tl-head"><em>A1</em><span>RHYTHM</span></div><div class="tl-lane"><div class="wave" id="tlWave"></div></div></div>
-      <div class="tl-playhead"><i></i></div>
-    </div>
+    <div class="ps-clock" id="psClock" aria-hidden="true"></div>
   </div>
-  <p class="sr-only">Tools: Claude, Higgsfield, Gemini, ChatGPT, Midjourney, After Effects, Premiere Pro, DaVinci Resolve, CapCut, Photoshop, Illustrator, InDesign, PowerPoint, Figma, Adobe XD, InVision, Dreamweaver, Webflow, Shopify, Wix.</p>
+  <div class="ps-row-wrap"><div class="ps-row" id="psRow" role="listbox" aria-label="Tools"></div></div>
+  <div class="ps-info" id="psInfo" aria-live="polite">
+    <div class="ps-meta" id="psMeta"></div>
+    <h3 class="ps-name" id="psName"></h3>
+    <p class="ps-desc" id="psDesc"></p>
+    <div class="ps-use" id="psUse"></div>
+    <a class="cta cta-primary ps-go" id="psGo" href="designs.html">See the Work</a>
+  </div>
+  <div class="ps-hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> browse</div>
+  <p class="sr-only">Tools: Figma, Photoshop, Illustrator, InDesign, After Effects, Premiere Pro, DaVinci Resolve, CapCut, Midjourney, Higgsfield, Gemini, ChatGPT, Claude, Webflow, Shopify.</p>
 </section>
 
 <!-- ============ CONTACT ============ -->
@@ -2401,6 +2468,81 @@ body{letter-spacing:-.01em}
 })();
 
 
+
+/* ---------- Toolkit: PS5-style home menu ---------- */
+(function(){
+  const sec = document.getElementById('kit'); if (!sec || !sec.classList.contains('ps')) return;
+  const TOOLS = [{"n": "Figma", "c": "UI / Web", "m": null, "p": "M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z", "img": "assets/designs/full/b022_01243.webp", "t": "#a259ff", "d": "App screens, flows and clickable prototypes for the Zofeur app.", "u": ["App UI", "Prototypes", "Design systems"], "cat": "app"}, {"n": "Photoshop", "c": "Design", "m": "Ps", "p": null, "img": "assets/designs/full/b018_00783.webp", "t": "#31a8ff", "d": "Key visuals, retouching and every campaign composite.", "u": ["Key visuals", "Retouching", "Ad sets"], "cat": "ads"}, {"n": "Illustrator", "c": "Design", "m": "Ai", "p": null, "img": "assets/designs/full/b037_01639.webp", "t": "#ff9a00", "d": "Logos, icons and vector brand assets.", "u": ["Logos", "Icons", "Vectors"], "cat": "brand"}, {"n": "InDesign", "c": "Design", "m": "Id", "p": null, "img": "assets/designs/full/b029_01485.webp", "t": "#ff3366", "d": "Menus, brochures and print-ready layouts.", "u": ["Print", "Layouts", "Brochures"], "cat": "print"}, {"n": "After Effects", "c": "Motion", "m": "Ae", "p": null, "img": "assets/designs/full/b021_01128.webp", "t": "#9999ff", "d": "Motion graphics, animated ads and app promos.", "u": ["Motion graphics", "Animated ads"], "cat": "social"}, {"n": "Premiere Pro", "c": "Motion", "m": "Pr", "p": null, "img": "assets/designs/full/b022_01225.webp", "t": "#ea77ff", "d": "Cutting campaign films, reels and promos.", "u": ["Editing", "Reels", "Promos"], "cat": "social"}, {"n": "DaVinci Resolve", "c": "Motion", "m": null, "p": "M17.621 0 5.977.004c-1.37 0-2.756.345-3.762 1.11a4.925 4.925 0 0 0-1.61 2.003C.233 3.93 0 5.02 0 5.951l.012 12.2c.002 1.604.479 3.057 1.461 4.112.984 1.056 2.462 1.683 4.331 1.691L16.856 24c1.26.005 3.095-.036 4.303-.714 1.075-.605 2.025-1.556 2.497-2.984.278-.84.345-2.084.344-3.147l-.021-11.13c-.002-.888-.15-2.023-.547-2.934-.425-.976-1.181-1.815-2.322-2.425C20.353.26 19.123 0 17.622 0zm0 .93c1.378 0 2.538.295 3.04.565.977.523 1.544 1.166 1.889 1.96.315.721.47 1.793.473 2.572l.018 11.13c.002 1.013-.097 2.257-.298 2.86-.396 1.202-1.146 1.946-2.063 2.462-.814.457-2.612.593-3.82.588l-11.05-.044c-1.657-.007-2.832-.534-3.626-1.386-.792-.851-1.212-2.06-1.212-3.485L.999 5.95c0-.829.196-1.827.474-2.437.345-.757.75-1.207 1.365-1.674C3.585 1.27 4.868.97 6.08.97zm-5.66 3.423c-1.976.089-3.204 1.658-3.214 3.29.019 1.443 1.635 3.481 2.884 4.53.12.099.154.109.33.18.062.025.198-.047.327-.135.36-.245.993-.947 1.648-1.738a7.67 7.67 0 0 0 1.031-1.683c.409-.89.261-1.599.235-1.888a3.983 3.983 0 0 0-.99-1.692 3.36 3.36 0 0 0-2.251-.864zm4.172 7.922a10.185 10.185 0 0 0-3.244.61c-.15.058-.26.1-.374.17-.057.036-.11.135-.105.292.017.433.29 1.278.624 2.27.384 1.135 1.066 2.27 1.844 2.74a3.23 3.23 0 0 0 2.53.342c.832-.243 1.595-.868 1.962-1.546.986-1.818.19-3.548-1.121-4.417-.447-.296-1.133-.445-1.89-.46-.074 0-.15-.002-.226-.001zm-8.432.038a6.201 6.201 0 0 0-.752.047c-.596.078-.932.273-1.29.51a3.177 3.177 0 0 0-1.365 1.979c-.075.552-.086 1.053.033 1.507.433 1.389 1.326 2.222 2.847 2.452.636.028 1.37-.063 1.99-.45 1.269-.782 2.08-3.17 2.412-4.742.053-.176.035-.357-.013-.42-.005-.067-.044-.113-.19-.183-.398-.192-1.32-.417-2.375-.6a7.68 7.68 0 0 0-1.297-.1z", "img": "assets/designs/full/b022_01226.webp", "t": "#ff7a45", "d": "Colour grading that gives every frame the premium look.", "u": ["Colour grading", "Finishing"], "cat": "social"}, {"n": "CapCut", "c": "Motion", "m": "Cc", "p": null, "img": "assets/designs/full/b044_01803.webp", "t": "#25f4ee", "d": "Fast social edits, captions and trending formats.", "u": ["Social edits", "Captions"], "cat": "social"}, {"n": "Midjourney", "c": "AI", "m": "Mj", "p": null, "img": "assets/designs/full/b020_01076.webp", "t": "#e9e4da", "d": "Concept art and lifestyle imagery explorations.", "u": ["Concepts", "AI imagery"], "cat": "brand"}, {"n": "Higgsfield", "c": "AI", "m": "Hf", "p": null, "img": "assets/designs/full/b022_01227.webp", "t": "#c8ff3a", "d": "AI video shots and cinematic camera moves.", "u": ["AI video", "Camera motion"], "cat": "ads"}, {"n": "Gemini", "c": "AI", "m": null, "p": "M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81", "img": "assets/designs/full/b022_01231.webp", "t": "#8e7cff", "d": "Image edits, research and fast ideation.", "u": ["Image edits", "Ideation"], "cat": "ads"}, {"n": "ChatGPT", "c": "AI", "m": "Gpt", "p": null, "img": "assets/designs/full/b022_01228.webp", "t": "#10a37f", "d": "Copy drafts, naming and campaign ideas.", "u": ["Copy", "Ideas"], "cat": "crm"}, {"n": "Claude", "c": "AI", "m": null, "p": "m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z", "img": "assets/designs/full/b018_00742.webp", "t": "#d97757", "d": "Scripts, briefs and building this very website.", "u": ["Scripts", "Briefs", "Web builds"], "cat": "crm"}, {"n": "Webflow", "c": "UI / Web", "m": null, "p": "m24 4.515-7.658 14.97H9.149l3.205-6.204h-.144C9.566 16.713 5.621 18.973 0 19.485v-6.118s3.596-.213 5.71-2.435H0V4.515h6.417v5.278l.144-.001 2.622-5.277h4.854v5.244h.144l2.72-5.244H24Z", "img": "assets/designs/full/b029_01491.webp", "t": "#146ef5", "d": "Responsive marketing sites without the dev wait.", "u": ["Websites", "Landing pages"], "cat": "app"}, {"n": "Shopify", "c": "UI / Web", "m": null, "p": "M15.337 23.979l7.216-1.561s-2.604-17.613-2.625-17.73c-.018-.116-.114-.192-.211-.192s-1.929-.136-1.929-.136-1.275-1.274-1.439-1.411c-.045-.037-.075-.057-.121-.074l-.914 21.104h.023zM11.71 11.305s-.81-.424-1.774-.424c-1.447 0-1.504.906-1.504 1.141 0 1.232 3.24 1.715 3.24 4.629 0 2.295-1.44 3.76-3.406 3.76-2.354 0-3.54-1.465-3.54-1.465l.646-2.086s1.245 1.066 2.28 1.066c.675 0 .975-.545.975-.932 0-1.619-2.654-1.694-2.654-4.359-.034-2.237 1.571-4.416 4.827-4.416 1.257 0 1.875.361 1.875.361l-.945 2.715-.02.01zM11.17.83c.136 0 .271.038.405.135-.984.465-2.064 1.639-2.508 3.992-.656.213-1.293.405-1.889.578C7.697 3.75 8.951.84 11.17.84V.83zm1.235 2.949v.135c-.754.232-1.583.484-2.394.736.466-1.777 1.333-2.645 2.085-2.971.193.501.309 1.176.309 2.1zm.539-2.234c.694.074 1.141.867 1.429 1.755-.349.114-.735.231-1.158.366v-.252c0-.752-.096-1.371-.271-1.871v.002zm2.992 1.289c-.02 0-.06.021-.078.021s-.289.075-.714.21c-.423-1.233-1.176-2.37-2.508-2.37h-.115C12.135.209 11.669 0 11.265 0 8.159 0 6.675 3.877 6.21 5.846c-1.194.365-2.063.636-2.16.674-.675.213-.694.232-.772.87-.075.462-1.83 14.063-1.83 14.063L15.009 24l.927-21.166z", "img": "assets/designs/full/b035_01586.webp", "t": "#95bf47", "d": "Storefronts and product pages for e-commerce brands.", "u": ["Storefronts", "E-commerce"], "cat": "other"}];
+  const row = document.getElementById('psRow'), info = document.getElementById('psInfo');
+  const $ = id => document.getElementById(id);
+  const imgs = [...sec.querySelectorAll('.ps-bg img')]; let front = 0;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tiles = TOOLS.map((t, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'ps-tile'; b.setAttribute('role', 'option');
+    b.style.setProperty('--t', t.t); b.setAttribute('aria-label', t.n);
+    b.innerHTML = (t.p ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + t.p + '"/></svg>' : '<span class="mono" aria-hidden="true">' + t.m + '</span>') + '<span class="lbl">' + t.n + '</span>';
+    b.addEventListener('click', () => { user(); focus(i, true); });
+    b.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) { user(); focus(i); } });
+    row.appendChild(b); return b;
+  });
+  let cur = -1, filter = 'All', bgTok = 0;
+  const visible = () => tiles.map((b, i) => i).filter(i => filter === 'All' || TOOLS[i].c === filter);
+  function place() {
+    const vis = visible(), k = vis.indexOf(cur), mob = innerWidth <= 860;
+    const T = mob ? 60 : 84, G = 14;
+    // PS5: the selected tile stays at the left edge, the row slides under it
+    const prev = Math.max(0, k);
+    const off = mob ? Math.max(0, prev * (T + G) - 0) : prev * (T + G);
+    row.style.transform = 'translateX(' + (-off) + 'px)';
+    tiles.forEach((b, i) => { b.style.display = (filter === 'All' || TOOLS[i].c === filter) ? '' : 'none'; b.classList.toggle('past', i < cur); });
+  }
+  function focus(i, viaClick) {
+    if (i === cur) return; const t = TOOLS[i]; const first = cur < 0; cur = i;
+    tiles.forEach((b, j) => { b.classList.toggle('on', j === i); b.setAttribute('aria-selected', j === i); });
+    const lbl = tiles[i].querySelector('.lbl'); tiles[i].style.setProperty('--lw', lbl.scrollWidth + 'px');
+    place();
+    // background crossfade
+    const tok = ++bgTok, nb = imgs[1 - front];
+    const show = () => { if (tok !== bgTok) return; imgs.forEach(im => im.classList.toggle('on', im === nb)); front = imgs.indexOf(nb); };
+    nb.onload = show; nb.src = t.img; if (nb.complete && nb.naturalWidth) show();
+    // info swap
+    const fill = () => {
+      $('psMeta').innerHTML = t.c + '<i></i>Tool ' + String(i + 1).padStart(2, '0') + ' / ' + TOOLS.length;
+      $('psName').textContent = t.n; $('psDesc').textContent = t.d;
+      $('psUse').innerHTML = t.u.map(u => '<span>' + u + '</span>').join('');
+      $('psGo').href = 'designs.html#' + t.cat;
+    };
+    if (first || reduce) fill(); else { info.classList.add('swap'); setTimeout(() => { fill(); info.classList.remove('swap'); }, 260); }
+    if (!first && viaClick === 'key' && window.__sjTick) window.__sjTick('hover');   // mouse sounds come from the global UI sounds
+    // preload the next background
+    const nx = TOOLS[(i + 1) % TOOLS.length]; (new Image()).src = nx.img;
+  }
+  function step(d, src) { const vis = visible(); let k = vis.indexOf(cur); k = (k + d + vis.length) % vis.length; focus(vis[k], src); }
+  // category tabs
+  sec.querySelectorAll('.ps-tab').forEach(tb => tb.addEventListener('click', () => {
+    user(); filter = tb.dataset.f; sec.querySelectorAll('.ps-tab').forEach(x => x.classList.toggle('on', x === tb));
+    const vis = visible(); cur = -1; place(); focus(vis[0]);
+  }));
+  // keyboard while the menu is on screen
+  let onScreen = false;
+  new IntersectionObserver(([e]) => { onScreen = e.intersectionRatio > .5; }, { threshold: [0, .5, 1] }).observe(sec);
+  addEventListener('keydown', e => {
+    if (!onScreen || /input|textarea/i.test((e.target.tagName || ''))) return;
+    if (e.key === 'ArrowRight') { user(); step(1, 'key'); } else if (e.key === 'ArrowLeft') { user(); step(-1, 'key'); }
+  });
+  // swipe on touch
+  let sx = null; row.parentElement.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  row.parentElement.addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) { user(); step(dx < 0 ? 1 : -1, 'key'); } sx = null; });
+  // auto-advance until the visitor takes over
+  let touched = false; const user = () => { touched = true; };
+  setInterval(() => { if (!touched && onScreen && !document.hidden && !reduce) step(1); }, 4200);
+  // clock, 12-hour like the console
+  const clock = $('psClock'); const tick = () => { clock.textContent = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); };
+  tick(); setInterval(tick, 15000);
+  addEventListener('resize', place);
+  focus(0);
+})();
+
 /* ---------- Sign-off: LET'S TALK fills gold with scroll, glints under the cursor ---------- */
 (function(){
   const w = document.querySelector('.so-word');
@@ -2519,7 +2661,7 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
 });
 </script>
-<script src="assets/vendor/glow.js?v=20261024211227" defer></script>
-<script src="assets/vendor/sound.js?v=20261024211227" defer></script>
+<script src="assets/vendor/glow.js?v=20261024212728" defer></script>
+<script src="assets/vendor/sound.js?v=20261024212728" defer></script>
 </body>
 </html>
