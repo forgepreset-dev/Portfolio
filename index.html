@@ -348,7 +348,7 @@ header.stuck{background:transparent}
 /* =========================================================
    PHILOSOPHY — pinned card that expands to full bleed
    ========================================================= */
-.phil{position:relative;height:340vh;background:#0a0a0a}
+.phil{position:relative;height:440vh;background:#0a0a0a}
 .phil-sticky{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .phil-media{
   --w:48vw;--h:60vh;--r:24px;--b:7px;--sh:0;
@@ -1065,6 +1065,20 @@ html.has-cursor input, html.has-cursor textarea{cursor:text!important}
 body{letter-spacing:-.01em}
 .btn-gold,.btn-ghost,.pill,.cta,.cta-primary,.say-hi,.tab,.send,.submit,button[type=submit],.so-row a,.live{font-family:var(--mono)!important;font-weight:600!important;text-transform:uppercase;letter-spacing:.12em!important;font-size:12px!important}
 .hero h1 em,.sec-h em{font-weight:400}
+
+/* philosophy statement: words light up one by one, key phrases turn gold */
+.phil-copy{width:min(1100px,90vw)!important}
+.phil-copy .phil-line{margin-top:clamp(22px,3.4vh,40px);font-family:var(--font);font-weight:400;
+  font-size:clamp(32px,5vw,78px);line-height:1.02;letter-spacing:-.035em;color:#ebe6e4;text-wrap:balance}
+.phil-line em{font-style:normal}
+.phil-line .w{display:inline-block;opacity:.12;filter:blur(8px);transform:translateY(.25em);
+  transition:color .6s ease,text-shadow .8s ease;will-change:opacity,filter,transform}
+.phil-line .w.gold.on{color:#e3c47e;text-shadow:0 0 34px rgba(214,187,125,.45)}
+.phil-sub{--o:0;opacity:var(--o);transform:translateY(calc((1 - var(--o)) * 14px));
+  margin-top:clamp(26px,4vh,44px);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 14px;
+  font-family:var(--font);font-weight:500;font-size:clamp(13px,1.1vw,15px);letter-spacing:-.005em;color:rgba(235,230,228,.62)}
+.phil-sub i{width:4px;height:4px;border-radius:50%;background:#c4a865}
+@media (max-width:860px){.phil-copy .phil-line{font-size:clamp(30px,9vw,44px)}.phil-line br{display:none}}
 </style>
 </head>
 <body class="locked">
@@ -1145,7 +1159,8 @@ body{letter-spacing:-.01em}
     <div class="phil-hint" id="philHint"><i></i>SCROLL TO EXPAND</div>
     <div class="phil-copy" id="philCopy">
       <span class="phil-pill"><i></i>THE PHILOSOPHY</span>
-      <p>I believe great design is born at the intersection of storytelling and craft. Every frame, every pixel, every brand touchpoint is an opportunity to create something that moves people.</p>
+      <p class="phil-line" id="philLine">I design what people <em>see first</em>, <br>and edit what they <em>remember last.</em></p>
+      <div class="phil-sub" id="philSub"><span>Brand</span><i></i><span>Motion</span><i></i><span>AI</span><i></i><span>4+ years · 1,800+ designs</span></div>
     </div>
   </div>
 </section>
@@ -1870,6 +1885,22 @@ body{letter-spacing:-.01em}
   const lerp = (a,b,t) => a + (b - a) * t;
   const ss = (a,b,x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   const mobile = () => innerWidth <= 860;
+  const line = document.getElementById('philLine'), sub = document.getElementById('philSub');
+  const words = [];
+  if (line) {                                       // split into word spans; words inside <em> become gold
+    const walk = (node, gold) => [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(t => {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const sp = document.createElement('span'); sp.className = 'w' + (gold ? ' gold' : ''); sp.textContent = t; frag.appendChild(sp); words.push(sp);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n, gold || n.tagName === 'EM');
+    });
+    walk(line, false);
+  }
 
   function render(p){
     const e = ss(0.02, 0.52, p);                   // expansion
@@ -1887,9 +1918,19 @@ body{letter-spacing:-.01em}
 
     hint.style.setProperty('--o', (1 - ss(0, 0.07, p)).toFixed(3));
 
-    const c = ss(0.5, 0.68, p);                    // statement arrives
+    const c = ss(0.5, 0.6, p);                     // statement arrives
     copy.style.setProperty('--o', c.toFixed(3));
     copy.style.setProperty('--y', ((1 - c) * 34).toFixed(1) + 'px');
+
+    const wp = ss(0.55, 0.88, p) * (words.length + 1.5);   // words light up one by one
+    words.forEach((w, i) => {
+      const k = Math.min(1, Math.max(0, wp - i));
+      w.style.opacity = (0.12 + 0.88 * k).toFixed(3);
+      w.style.filter = k >= 1 ? 'none' : 'blur(' + ((1 - k) * 8).toFixed(2) + 'px)';
+      w.style.transform = k >= 1 ? 'none' : 'translateY(' + ((1 - k) * 0.25).toFixed(3) + 'em)';
+      w.classList.toggle('on', k >= 1);
+    });
+    if (sub) sub.style.setProperty('--o', ss(0.88, 0.96, p).toFixed(3));
   }
 
   if (reduce){ sec.style.height = '100vh'; render(1); return; }
@@ -2478,7 +2519,7 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
 });
 </script>
-<script src="assets/vendor/glow.js?v=20261024210217" defer></script>
-<script src="assets/vendor/sound.js?v=20261024210217" defer></script>
+<script src="assets/vendor/glow.js?v=20261024211227" defer></script>
+<script src="assets/vendor/sound.js?v=20261024211227" defer></script>
 </body>
 </html>
