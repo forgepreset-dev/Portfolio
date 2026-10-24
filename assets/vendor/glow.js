@@ -61,6 +61,22 @@
 .gb:hover .gb-arr.down>*:nth-child(1){transform:translate(0,130%)}
 .gb:hover .gb-arr.back>*:nth-child(1){transform:translate(-130%,0)}
 .gb:hover .gb-arr>*:nth-child(2){transform:none}
+/* ---------- one button system: site font, tight, consistent geometry ---------- */
+.gb.gb{font-family:var(--font,'Suisse Intl','Inter Tight',sans-serif)!important;font-weight:500!important;font-size:15px!important;
+  letter-spacing:-.01em!important;text-transform:none!important;font-feature-settings:'ss01','cv11';-webkit-font-smoothing:antialiased}
+.gb.cta,.gb.btn-gold,.gb.pill,.gb.btn-ghost,.gb.live{display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  gap:9px!important;height:50px;padding:0 24px!important;line-height:1!important;white-space:nowrap;box-sizing:border-box}
+.gb.cta:has(.gb-lot),.gb.btn-gold:has(.gb-lot),.gb.live:has(.gb-lot){padding:0 24px 0 16px!important}
+.gb.live{height:42px;font-size:14px!important;padding:0 18px!important}
+.gb.live:has(.gb-lot){padding:0 18px 0 11px!important}
+.gb.pill{height:44px;font-size:14px!important;padding:0 20px 0 16px!important}
+.gb .gb-lot{margin:-6px 0!important;width:28px!important;height:28px!important}
+.gb.live .gb-lot{width:26px!important;height:26px!important}
+.gb.cta:has(.gb-lot),.gb.btn-gold:has(.gb-lot){padding:0 24px 0 18px!important}
+.gb.live:has(.gb-lot){padding:0 18px 0 13px!important}
+.gb-sub{color:#f1e4c2!important}.gb-sub:hover{color:#fff8e8!important}
+.gb-main .ico{display:contents!important}
+.gb.say-hi,.gb.send{font-size:14px!important}
 /* Lottie icons */
 .gb .gb-lot{width:32px;height:32px;flex:none;display:inline-block;vertical-align:middle;margin:-10px 3px -10px -7px;
   transition:transform .7s cubic-bezier(.34,1.56,.64,1)}
@@ -142,6 +158,8 @@
     b.prepend(...frag);
     if (b.classList.contains('send') || b.classList.contains('say-hi')) return;   // these keep their own icon animations
     // leading icon → animated sparkle (main buttons)
+    b.childNodes.forEach(n => { if (n.nodeType === 3 && /[A-Z]{3}/.test(n.textContent) && n.textContent === n.textContent.toUpperCase())
+      n.textContent = n.textContent.toLowerCase().replace(/(^|\s)(\S)/g, (m, a, c) => a + c.toUpperCase()); });
     const key = pick(b); if (key) mountIcon(b, key);
     // arrows: removed — the icon carries the motion now (Back pills keep theirs)
     const isBack = b.classList.contains('pill');
