@@ -1210,6 +1210,9 @@ body{letter-spacing:-.01em}
 /* philosophy background: gold ink flowing in dark water (WebGL) */
 .phil-ink{position:absolute;inset:0;width:100%;height:100%;display:block;filter:blur(var(--b));touch-action:pan-y;
   background:radial-gradient(60% 70% at 40% 45%,#5a4218 0%,#1b1408 45%,#050505 100%)}
+
+/* kinetic statement: letters push away from the cursor and spring back */
+.phil-line .ch{display:inline-block;will-change:transform}
 </style>
 </head>
 <body class="locked">
@@ -1284,7 +1287,6 @@ body{letter-spacing:-.01em}
 <section class="phil" id="philosophy">
   <div class="phil-sticky">
     <div class="phil-media" id="philMedia">
-      <div class="phil-wall" aria-hidden="true"><div class="pw-tilt"><div class="pw-col"><div class="pw-run"><i style="background-image:url(assets/designs/tile/b003_00059.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00349.webp)"></i><i style="background-image:url(assets/designs/tile/b045_01840.webp)"></i><i style="background-image:url(assets/designs/tile/b038_01653.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00392.webp)"></i><i style="background-image:url(assets/designs/tile/b013_00273.webp)"></i><i style="background-image:url(assets/designs/tile/b025_01406.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00059.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00349.webp)"></i><i style="background-image:url(assets/designs/tile/b045_01840.webp)"></i><i style="background-image:url(assets/designs/tile/b038_01653.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00392.webp)"></i><i style="background-image:url(assets/designs/tile/b013_00273.webp)"></i><i style="background-image:url(assets/designs/tile/b025_01406.webp)"></i></div></div><div class="pw-col up"><div class="pw-run"><i style="background-image:url(assets/designs/tile/b029_01488.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01022.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00167.webp)"></i><i style="background-image:url(assets/designs/tile/b022_01256.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00092.webp)"></i><i style="background-image:url(assets/designs/tile/b045_01837.webp)"></i><i style="background-image:url(assets/designs/tile/b014_00288.webp)"></i><i style="background-image:url(assets/designs/tile/b029_01488.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01022.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00167.webp)"></i><i style="background-image:url(assets/designs/tile/b022_01256.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00092.webp)"></i><i style="background-image:url(assets/designs/tile/b045_01837.webp)"></i><i style="background-image:url(assets/designs/tile/b014_00288.webp)"></i></div></div><div class="pw-col"><div class="pw-run"><i style="background-image:url(assets/designs/tile/b020_01020.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00013.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00420.webp)"></i><i style="background-image:url(assets/designs/tile/b038_01644.webp)"></i><i style="background-image:url(assets/designs/tile/b019_00991.webp)"></i><i style="background-image:url(assets/designs/tile/b023_01272.webp)"></i><i style="background-image:url(assets/designs/tile/b017_00635.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01020.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00013.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00420.webp)"></i><i style="background-image:url(assets/designs/tile/b038_01644.webp)"></i><i style="background-image:url(assets/designs/tile/b019_00991.webp)"></i><i style="background-image:url(assets/designs/tile/b023_01272.webp)"></i><i style="background-image:url(assets/designs/tile/b017_00635.webp)"></i></div></div><div class="pw-col up"><div class="pw-run"><i style="background-image:url(assets/designs/tile/b020_01021.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00061.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00026.webp)"></i><i style="background-image:url(assets/designs/tile/b014_00281.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01023.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00416.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00426.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01021.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00061.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00026.webp)"></i><i style="background-image:url(assets/designs/tile/b014_00281.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01023.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00416.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00426.webp)"></i></div></div><div class="pw-col"><div class="pw-run"><i style="background-image:url(assets/designs/tile/b015_00347.webp)"></i><i style="background-image:url(assets/designs/tile/b017_00646.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00425.webp)"></i><i style="background-image:url(assets/designs/tile/b032_01532.webp)"></i><i style="background-image:url(assets/designs/tile/b023_01264.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00208.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00185.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00347.webp)"></i><i style="background-image:url(assets/designs/tile/b017_00646.webp)"></i><i style="background-image:url(assets/designs/tile/b015_00425.webp)"></i><i style="background-image:url(assets/designs/tile/b032_01532.webp)"></i><i style="background-image:url(assets/designs/tile/b023_01264.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00208.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00185.webp)"></i></div></div><div class="pw-col up"><div class="pw-run"><i style="background-image:url(assets/designs/tile/b005_00263.webp)"></i><i style="background-image:url(assets/designs/tile/b039_01665.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01019.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00064.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00195.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01018.webp)"></i><i style="background-image:url(assets/designs/tile/b024_01376.webp)"></i><i style="background-image:url(assets/designs/tile/b005_00263.webp)"></i><i style="background-image:url(assets/designs/tile/b039_01665.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01019.webp)"></i><i style="background-image:url(assets/designs/tile/b003_00064.webp)"></i><i style="background-image:url(assets/designs/tile/b004_00195.webp)"></i><i style="background-image:url(assets/designs/tile/b020_01018.webp)"></i><i style="background-image:url(assets/designs/tile/b024_01376.webp)"></i></div></div></div></div>
       <canvas class="phil-ink" id="philInk" aria-hidden="true"></canvas>
     </div>
     <h2 class="phil-title" id="philTitle">THE PHILOSOPHY</h2>
@@ -2311,7 +2313,7 @@ body{letter-spacing:-.01em}
     float hole=smoothstep(.2,.9,rev);
     col+=vec3(1.,.82,.45)*hole*(1.-hole)*1.1;                                   // gold rim around the reveal
     col+=(h(gl_FragCoord.xy+t)-.5)*.025;                                        // film grain
-    gl_FragColor=vec4(col,1.-hole*.94);}`;
+    gl_FragColor=vec4(col,1.);}`;
   const sh = (type, src) => { const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); return o; };
   const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr);
   if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return;
@@ -2338,9 +2340,7 @@ body{letter-spacing:-.01em}
     last = { x, y, t: now };
     if (window.__sjStir) window.__sjStir(sp);                                    // liquid sound follows the stir
   }
-  sec.addEventListener('pointermove', e => add(e.clientX, e.clientY), { passive: true });
-  sec.addEventListener('touchmove', e => { const t = e.touches[0]; if (t) add(t.clientX, t.clientY); }, { passive: true });
-  sec.addEventListener('pointerleave', () => { last = null; });
+
   const SCALE = Math.min(devicePixelRatio || 1, 1.5) * 0.6;                  // soft image anyway: render below full res
   function size(){ const w = Math.max(2, Math.round(cv.clientWidth * SCALE)), h = Math.max(2, Math.round(cv.clientHeight * SCALE));
     if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); } }
@@ -2352,6 +2352,54 @@ body{letter-spacing:-.01em}
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+})();
+
+
+/* ---------- Philosophy: kinetic letters (repel from cursor, spring back) ---------- */
+(function(){
+  const line = document.getElementById('philLine'), copy = document.getElementById('philCopy'), sec = document.getElementById('philosophy');
+  if (!line || !copy || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const chars = [];
+  line.querySelectorAll('.w').forEach(w => {
+    const txt = w.textContent; w.textContent = '';
+    [...txt].forEach(c => { const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = c; w.appendChild(sp);
+      chars.push({ el: sp, cx: 0, cy: 0, x: 0, y: 0, vx: 0, vy: 0 }); });
+  });
+  function measure(){                                    // rest centres relative to the copy box (transforms ignored)
+    chars.forEach(c => { let el = c.el, x = 0, y = 0;
+      while (el && el !== copy) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+      c.cx = x + c.el.offsetWidth / 2; c.cy = y + c.el.offsetHeight / 2; });
+  }
+  measure(); addEventListener('resize', measure); if (document.fonts) document.fonts.ready.then(measure);
+  const P = { x: -9999, y: -9999, on: false };
+  const set = (x, y) => { P.x = x; P.y = y; P.on = true; };
+  addEventListener('pointermove', e => set(e.clientX, e.clientY), { passive: true });
+  addEventListener('touchmove', e => { const t = e.touches[0]; if (t) set(t.clientX, t.clientY); }, { passive: true });
+  addEventListener('touchend', () => { P.on = false; });
+  document.documentElement.addEventListener('mouseleave', () => { P.on = false; });
+  let vis = false; new IntersectionObserver(([e]) => { vis = e.isIntersecting; }).observe(sec);
+  const R = () => Math.max(100, Math.min(170, innerWidth * .1)), PUSH = 46;
+  let moving = false;
+  (function loop(){
+    if (vis) {
+      const r = copy.getBoundingClientRect(), live = parseFloat(getComputedStyle(copy).opacity) > .6, rad = R();
+      moving = false;
+      for (const c of chars) {
+        let tx = 0, ty = 0;
+        if (P.on && live) {
+          const dx = r.left + c.cx - P.x, dy = r.top + c.cy - P.y, d = Math.hypot(dx, dy);
+          if (d < rad) { const f = Math.pow(1 - d / rad, 2) * PUSH; tx = dx / (d || 1) * f; ty = dy / (d || 1) * f; }
+        }
+        c.vx = (c.vx + (tx - c.x) * .16) * .74; c.vy = (c.vy + (ty - c.y) * .16) * .74;   // spring + damping
+        c.x += c.vx; c.y += c.vy;
+        if (Math.abs(c.x) + Math.abs(c.y) > .05) {
+          moving = true;
+          c.el.style.transform = `translate(${c.x.toFixed(2)}px,${c.y.toFixed(2)}px) rotate(${(c.x * .35).toFixed(2)}deg)`;
+        } else if (c.el.style.transform) { c.x = c.y = c.vx = c.vy = 0; c.el.style.transform = ''; }
+      }
+    }
+    requestAnimationFrame(loop);
+  })();
 })();
 
 /* ---------- Toolkit: Photoshop layers panel, the ad builds layer by layer on scroll ---------- */
@@ -2821,7 +2869,7 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
 });
 </script>
-<script src="assets/vendor/glow.js?v=20261024223933" defer></script>
-<script src="assets/vendor/sound.js?v=20261024223933" defer></script>
+<script src="assets/vendor/glow.js?v=20261024224941" defer></script>
+<script src="assets/vendor/sound.js?v=20261024224941" defer></script>
 </body>
 </html>
