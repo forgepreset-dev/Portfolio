@@ -62,12 +62,16 @@
 .gb:hover .gb-arr.back>*:nth-child(1){transform:translate(-130%,0)}
 .gb:hover .gb-arr>*:nth-child(2){transform:none}
 /* Lottie icons */
-.gb .gb-lot{width:28px;height:28px;flex:none;display:inline-block;vertical-align:middle;margin:-8px 3px -8px -6px;
+.gb .gb-lot{width:32px;height:32px;flex:none;display:inline-block;vertical-align:middle;margin:-10px 3px -10px -7px;
   transition:transform .7s cubic-bezier(.34,1.56,.64,1)}
 .gb:hover .gb-lot{transform:scale(1.12)}
 .gb-lot svg{display:block;width:100%!important;height:100%!important}
-.gb-lot path[stroke]{stroke:currentColor}
-.gb-lot path[fill]:not([fill="none"]){fill:currentColor}
+/* icon colours: black → button text colour, any accent colour → gold (cream on the gold hover) */
+.gb{--gb-acc:#d6bb7d}.gb-main:hover,.gb-main:focus-visible{--gb-acc:#fff4d4}
+.gb-lot [stroke]:not([stroke="none"]){stroke:var(--gb-acc)}
+.gb-lot [fill]:not([fill="none"]){fill:var(--gb-acc)}
+.gb-lot [stroke][stroke="rgb(0,0,0)"]{stroke:currentColor}
+.gb-lot [fill][fill="rgb(0,0,0)"]{fill:currentColor}
 .gb-main .ico{width:auto!important;height:auto!important;border:0!important;background:none!important}
 @media (prefers-reduced-motion:reduce){.gb>.gb-ring,.gb-main>.gb-halo{animation:none!important}}`;
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -85,7 +89,7 @@
   function pick(b) {
     const t = ((b.getAttribute('aria-label') || '') + ' ' + b.textContent).toLowerCase();
     if (/talk|contact|say hi/.test(t)) return 'messageCircle';
-    if (/explore work|view work/.test(t)) return 'explore';
+    if (/explore work|view work/.test(t)) return 'fi-explore-work';
     if (/see the work/.test(t)) return 'grid';
     if (/brand/.test(t)) return 'penTool';
     if (/app|interface/.test(t)) return 'smartphone';
