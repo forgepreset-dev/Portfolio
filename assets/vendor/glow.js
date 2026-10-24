@@ -94,14 +94,15 @@
 
   /* ---------- Lottie icons (lottie-web player + MIT useAnimations icon set) ---------- */
   const here = (document.currentScript && document.currentScript.src) || location.href;
+  const VER = new URL(here).search;                       // ?v=… cache-buster from the page, passed on to icons and player
   const ICON_DIR = new URL('../icons/', here).href;
   let lottieP = null;
   const loadLottie = () => lottieP || (lottieP = window.lottie ? Promise.resolve(window.lottie) : new Promise((res, rej) => {
-    const sc = document.createElement('script'); sc.src = new URL('lottie_light.min.js', here).href;
+    const sc = document.createElement('script'); sc.src = new URL('lottie_light.min.js', here).href + VER;
     sc.onload = () => res(window.lottie); sc.onerror = rej; document.head.appendChild(sc);
   }));
   const jsonCache = {};
-  const getJSON = n => jsonCache[n] || (jsonCache[n] = fetch(ICON_DIR + n + '.json').then(r => r.json()));
+  const getJSON = n => jsonCache[n] || (jsonCache[n] = fetch(ICON_DIR + n + '.json' + VER).then(r => r.json()));
   function pick(b) {
     const t = ((b.getAttribute('aria-label') || '') + ' ' + b.textContent).toLowerCase();
     if (/talk|contact|say hi/.test(t)) return 'messageCircle';
