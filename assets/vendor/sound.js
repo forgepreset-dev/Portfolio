@@ -106,6 +106,29 @@
     if (kind !== 'hover') bell(kind === 'open' ? 1174.66 : 880, t + .01, .35, .03);
   }
   window.__sjTick = k => tick(k);
+  /* liquid stir: filtered noise swish that follows stir speed, plus the odd tiny bubble */
+  let stirG = null, stirF = null, lastBub = 0;
+  function stirInit() {
+    if (stirG || !ctx) return;
+    const b = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate), d = b.getChannelData(0);
+    let v = 0; for (let i = 0; i < d.length; i++) { v = v * .97 + (Math.random() * 2 - 1) * .03; d[i] = v * 6; }   // soft brown noise
+    const src = ctx.createBufferSource(); src.buffer = b; src.loop = true;
+    stirF = ctx.createBiquadFilter(); stirF.type = 'bandpass'; stirF.frequency.value = 500; stirF.Q.value = 1.4;
+    stirG = ctx.createGain(); stirG.gain.value = 0;
+    src.connect(stirF); stirF.connect(stirG); stirG.connect(fx); src.start();
+  }
+  window.__sjStir = sp => {
+    if (!ctx || !wantOn || ctx.state !== 'running') return; stirInit(); const t = now();
+    stirG.gain.cancelScheduledValues(t); stirG.gain.setTargetAtTime(.05 + sp * .22, t, .06); stirG.gain.setTargetAtTime(0, t + .12, .35);
+    stirF.frequency.setTargetAtTime(380 + sp * 900, t, .1);
+    if (sp > .35 && t - lastBub > .22 && Math.random() < .5) {          // bubble: quick rising sine blip
+      lastBub = t; const o = ctx.createOscillator(), g = ctx.createGain(), f0 = 500 + Math.random() * 500;
+      o.type = 'sine'; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f0 * 2.2, t + .07);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.035, t + .01); g.gain.exponentialRampToValueAtTime(.0001, t + .12);
+      o.connect(g); g.connect(fx); o.start(t); o.stop(t + .14);
+    }
+  };
+
   function setOn(on, withBoot) {
     wantOn = on; store.set('sj-sound', on ? 'on' : 'off'); label();
     if (on) { init(); if (!ctx) return; ctx.resume();
