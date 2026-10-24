@@ -1499,7 +1499,7 @@ body{letter-spacing:-.01em}
 </section>
 
 <!-- ============ TOOLKIT — editing timeline ============ -->
-<section class="kit ps" id="kit" aria-label="Toolkit">
+<section class="kit ps" id="kit" aria-label="Toolkit" data-snap>
   <div class="ps-bg" aria-hidden="true"><img class="a" alt=""><img class="b" alt=""></div>
   <div class="ps-top">
     <div class="ps-tabs" role="tablist" aria-label="Tool categories">
@@ -2122,6 +2122,7 @@ body{letter-spacing:-.01em}
   root.style.scrollBehavior = 'auto';          // we animate, the browser must not
   const EASE = 0.055;                           // lower = longer glide
   let current = scrollY, target = scrollY, running = false, last = 0, lastSet = -1;
+  let snapHold = 0, snapUntil = 0;
 
   const maxScroll = () => root.scrollHeight - innerHeight;
   const locked = () => root.style.overflow === 'hidden' || document.body.classList.contains('locked') || root.classList.contains('wiping');
@@ -2157,7 +2158,17 @@ body{letter-spacing:-.01em}
     if (e.deltaMode === 1) dy *= 16;             // lines
     else if (e.deltaMode === 2) dy *= innerHeight; // pages
     if (!running) current = scrollY;             // resync after keyboard / scrollbar
+    const now = performance.now();
+    // after a snap, swallow the rest of that same wheel / trackpad gesture so it holds in place
+    if (now < snapHold) { snapHold = Math.min(now + 260, snapUntil); return; }
+    const prevT = target;
     target = Math.max(0, Math.min(maxScroll(), target + dy));
+    // magnetic sections: entering one's zone glides the page to frame it exactly
+    document.querySelectorAll('[data-snap]').forEach(el => {
+      const top = el.getBoundingClientRect().top + scrollY, zone = innerHeight * 0.6;
+      const enters = Math.min(prevT, target) <= top + zone && Math.max(prevT, target) >= top - zone;
+      if (Math.abs(prevT - top) >= zone && enters) { target = top; snapHold = now + 260; snapUntil = now + 1400; }
+    });
     start();
   }, {passive:false});
 
@@ -2178,6 +2189,25 @@ body{letter-spacing:-.01em}
   window.smoothJump = y => { current = target = y; lastSet = Math.round(y); window.scrollTo(0, y); };
 })();
 
+
+
+/* ---------- Snap sections into full view on touch / native scrolling ---------- */
+(function(){
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) return;   // desktop uses the wheel snap
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let t = null, lastY = scrollY, snapping = false, dir = 0;
+  addEventListener('scroll', () => {
+    dir = scrollY > lastY ? 1 : scrollY < lastY ? -1 : dir; lastY = scrollY;
+    if (snapping) return; clearTimeout(t);
+    t = setTimeout(() => {
+      document.querySelectorAll('[data-snap]').forEach(el => {
+        const top = el.getBoundingClientRect().top;          // distance from the viewport top
+        const near = dir > 0 ? (top > 4 && top < innerHeight * .45) : (top < -4 && top > -innerHeight * .45);
+        if (near) { snapping = true; scrollTo({ top: scrollY + top, behavior: 'smooth' }); setTimeout(() => { snapping = false; }, 900); }
+      });
+    }, 140);
+  }, { passive: true });
+})();
 
 /* ---------- Page transition: gold curtain between sections ---------- */
 (function(){
@@ -2482,7 +2512,6 @@ body{letter-spacing:-.01em}
     b.style.setProperty('--t', t.t); b.setAttribute('aria-label', t.n);
     b.innerHTML = (t.p ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + t.p + '"/></svg>' : '<span class="mono" aria-hidden="true">' + t.m + '</span>') + '<span class="lbl">' + t.n + '</span>';
     b.addEventListener('click', () => { user(); focus(i, true); });
-    b.addEventListener('mouseenter', () => { if (matchMedia('(hover:hover)').matches) { user(); focus(i); } });
     row.appendChild(b); return b;
   });
   let cur = -1, filter = 'All', bgTok = 0;
@@ -2535,7 +2564,8 @@ body{letter-spacing:-.01em}
   row.parentElement.addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) { user(); step(dx < 0 ? 1 : -1, 'key'); } sx = null; });
   // auto-advance until the visitor takes over
   let touched = false; const user = () => { touched = true; };
-  setInterval(() => { if (!touched && onScreen && !document.hidden && !reduce) step(1); }, 4200);
+  let over = false; sec.addEventListener('pointerenter', () => { over = true; }); sec.addEventListener('pointerleave', () => { over = false; });
+  setInterval(() => { if (!touched && !over && onScreen && !document.hidden && !reduce) step(1); }, 4200);
   // clock, 12-hour like the console
   const clock = $('psClock'); const tick = () => { clock.textContent = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); };
   tick(); setInterval(tick, 15000);
@@ -2661,7 +2691,7 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
 });
 </script>
-<script src="assets/vendor/glow.js?v=20261024212728" defer></script>
-<script src="assets/vendor/sound.js?v=20261024212728" defer></script>
+<script src="assets/vendor/glow.js?v=20261024213755" defer></script>
+<script src="assets/vendor/sound.js?v=20261024213755" defer></script>
 </body>
 </html>
