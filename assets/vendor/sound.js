@@ -16,7 +16,7 @@
   .sj-snd:hover{transform:scale(1.07)}.sj-snd:active{transform:scale(.95)}
   .sj-snd svg{width:30px;height:20px;overflow:visible}.sj-snd path{fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
   .sj-snd:focus-visible{outline:2px solid #d6bb7d;outline-offset:3px}
-  @media (max-width:700px){.sj-snd{width:48px;height:48px}.sj-snd svg{width:24px;height:16px}}`;
+  @media (max-width:700px){.sj-snd{width:48px;height:48px;left:auto;right:16px;bottom:16px}.sj-snd svg{width:24px;height:16px}}`;
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   const btn = document.createElement('button');
   btn.className = 'sj-snd'; btn.type = 'button';
