@@ -1225,8 +1225,13 @@ body{letter-spacing:-.01em}
   .lx-sticky .lg-track ul{gap:24px}
   .lx-row{height:29px!important}
 }
+
+/* LET'S TALK: arrow sits beside the word instead of over the K */
+.so-word{--aw:clamp(26px,4vw,76px);--ag:clamp(8px,1.1vw,20px);padding-right:calc(var(--aw) + var(--ag))}
+.so-word span.so-base,.so-word span.so-fill{font-size:clamp(56px,14.2vw,280px)!important}
+.so-arrow{right:0!important;left:auto!important;top:.06em!important;width:var(--aw)!important;height:var(--aw)!important}
 </style>
-<link rel="stylesheet" href="assets/vendor/site-font.css?v=20261025223421">
+<link rel="stylesheet" href="assets/vendor/site-font.css?v=20261025225324">
 </head>
 <body class="locked">
 <div class="cur-ring" aria-hidden="true"><i></i></div>
@@ -2882,8 +2887,8 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
 });
 </script>
-<script src="assets/vendor/glow.js?v=20261025223421" defer></script>
-<script src="assets/vendor/sound.js?v=20261025223421" defer></script>
-<script src="assets/vendor/gold-gradient.js?v=20261025225001" defer></script>
+<script src="assets/vendor/glow.js?v=20261025225324" defer></script>
+<script src="assets/vendor/sound.js?v=20261025225324" defer></script>
+<script src="assets/vendor/gold-gradient.js?v=20261025225324" defer></script>
 </body>
 </html>
