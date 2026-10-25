@@ -1,0 +1,8 @@
+/* One typeface across the whole site: Suisse Intl → Inter Tight.
+   Overrides every leftover mono / Poppins / Jost / Inter rule. The hero STEPHEN wordmark keeps
+   Roboto Flex because its cursor animation needs a variable width axis. */
+:root{--mono:var(--font,'Suisse Intl','Inter Tight','Helvetica Neue',Arial,sans-serif)}
+html body *:not(#_):not(.wordmark > span):not(.morph-glyph){
+  font-family:var(--font,'Suisse Intl','Inter Tight','Helvetica Neue',Arial,sans-serif)!important}
+/* numbers that tick or line up stay steady */
+html body .tc,html body .count-tag,html body .when span,html body .ps-clock,html body #count{font-variant-numeric:tabular-nums}
