@@ -12,8 +12,9 @@
     @keyframes ggRun{from{background-position:0% 0}to{background-position:-200% 0}}
     @media (prefers-reduced-motion:reduce){.gg-t,.gg-b,.gg-bd,.gg-bdr,.gg-ring{animation:none!important}}
     .gg-t{${RUN};background-image:${TEXT}!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
-    .gg-t{filter:drop-shadow(0 0 10px rgba(232,200,122,.30)) drop-shadow(0 0 22px rgba(214,170,90,.14))}
-    .gg-t.gg-glow{text-shadow:none!important;filter:drop-shadow(0 0 18px rgba(214,187,125,.42)) drop-shadow(0 0 30px rgba(214,170,90,.18))}
+    .gg-t{filter:drop-shadow(0 0 .5px rgba(255,236,180,.45)) drop-shadow(0 0 4px rgba(236,198,118,.22))}
+    h1.gg-t,h2.gg-t,.work-title.gg-t,.lx-title .gg-t,h2 .gg-t,.phil-line .gg-t{filter:drop-shadow(0 0 .6px rgba(255,236,180,.5)) drop-shadow(0 0 7px rgba(236,198,118,.2))}
+    .gg-t.gg-glow{text-shadow:none!important;filter:drop-shadow(0 0 .6px rgba(255,236,180,.5)) drop-shadow(0 0 8px rgba(236,198,118,.24))}
     .gg-eye{color:#f4efe8!important;-webkit-text-fill-color:#f4efe8!important;background-image:none!important;filter:none!important;animation:none!important}
     .gg-b{${RUN};background-image:${FILL}!important}
     .gb{border-color:transparent!important}
