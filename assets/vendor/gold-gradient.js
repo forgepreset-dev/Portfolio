@@ -74,6 +74,15 @@
     h.querySelectorAll('*').forEach(c => c.style.setProperty('text-transform', 'none', 'important'));
   }
   const HEADS = 'h1,h2,h3,h4,.lx-title,.work-title,.ps-name,.phil-title';
+  // headings split into one span per letter (reveal animations): once the letters have landed,
+  // the heading itself carries one continuous gradient instead of a separate gradient per letter
+  function splitSettled(h) {
+    if (!h) return false;
+    const kids = [...h.children];
+    if (kids.length < 4 || !kids.every(k => k.tagName === 'SPAN' && k.textContent.length <= 1)) return false;
+    return kids.every(k => { const c = getComputedStyle(k); return c.transform === 'none' && c.filter === 'none' && c.opacity === '1'; });
+  }
+
   const hasOwnText = el => [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
   // things that are already gradients or must keep their own colours
   const SKIP = 'script,style,canvas,img,video,iframe,.gb-fill,.gb-halo,.gb-ring,.wordmark,.lg-mark,.lx-chip,#ggGrad';
@@ -117,7 +126,9 @@
     if (hEl && head) smartCaps(hEl);
     const eye = hasOwnText(el) && !head && isEyebrow(el, cs);
     el.classList.toggle('gg-eye', eye);
-    const gt = !eye && hasOwnText(el) && (isGold(cs.color) || !!head);
+    let gt = !eye && hasOwnText(el) && (isGold(cs.color) || !!head);
+    if (head && hEl !== el && el.parentElement === hEl && splitSettled(hEl)) gt = false;      // letter inside a settled split heading
+    if (head && hEl === el && splitSettled(el)) gt = true;                                     // the split heading itself
     el.classList.toggle('gg-t', gt);
     if (cs.textShadow && cs.textShadow !== 'none' && !el.classList.contains('gg-glow')) el.dataset.ggglow = '1';
     el.classList.toggle('gg-glow', gt && el.dataset.ggglow === '1');
