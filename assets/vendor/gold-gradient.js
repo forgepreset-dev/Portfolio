@@ -12,7 +12,9 @@
     @keyframes ggRun{from{background-position:0% 0}to{background-position:-200% 0}}
     @media (prefers-reduced-motion:reduce){.gg-t,.gg-b,.gg-bd,.gg-bdr,.gg-ring{animation:none!important}}
     .gg-t{${RUN};background-image:${TEXT}!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
-    .gg-t.gg-glow{text-shadow:none!important;filter:drop-shadow(0 0 18px rgba(214,187,125,.38))}
+    .gg-t{filter:drop-shadow(0 0 10px rgba(232,200,122,.30)) drop-shadow(0 0 22px rgba(214,170,90,.14))}
+    .gg-t.gg-glow{text-shadow:none!important;filter:drop-shadow(0 0 18px rgba(214,187,125,.42)) drop-shadow(0 0 30px rgba(214,170,90,.18))}
+    .gg-eye{color:#f4efe8!important;-webkit-text-fill-color:#f4efe8!important;background-image:none!important;filter:none!important;animation:none!important}
     .gg-b{${RUN};background-image:${FILL}!important}
     .gb{border-color:transparent!important}
     .gb>.gb-ring{background:conic-gradient(from var(--gba),transparent 0 62%,rgba(255,240,205,.95) 74%,transparent 84%),linear-gradient(135deg,rgba(243,223,162,.5),rgba(169,131,54,.38) 55%,rgba(241,217,149,.5))!important}
@@ -42,6 +44,36 @@
     return h >= 28 && h <= 56 && s >= .3 && l >= .32 && l <= .78;      // the light cream text colour is not gold
   }
   window.__ggIsGold = isGold;
+
+  // eyebrow = small, widely tracked, all-caps gold label → white
+  function isEyebrow(el, cs) {
+    if (el.classList.contains('gg-eye')) return true;
+    if (el.closest('.gb,button,.lx-doc,.frame,.phone')) return false;
+    const fs = parseFloat(cs.fontSize), ls = parseFloat(cs.letterSpacing) || 0, txt = el.textContent.trim();
+    const caps = cs.textTransform === 'uppercase' || (/[A-Z]/.test(txt) && txt === txt.toUpperCase());
+    return fs <= 14.5 && ls >= fs * .08 && caps && isGold(cs.color);
+  }
+  // all-caps headings → title case (small words lower, acronyms kept)
+  const SMALL = /^(a|an|and|the|of|in|on|at|to|for|by|with|or|from)$/, ACR = /^(AI|UI|UX|UAE|LLC|FZ|PD|ST|3D)$/;
+  function smartCaps(h) {
+    if (h.dataset.ggcase || h.closest('.lx-doc,.frame,.phone,.wordmark')) return;
+    const cs = getComputedStyle(h), nodes = [], w = document.createTreeWalker(h, NodeFilter.SHOW_TEXT);
+    let n; while ((n = w.nextNode())) nodes.push(n);
+    const full = nodes.map(x => x.textContent).join('');
+    const letters = full.replace(/[^A-Za-z]/g, '');
+    const allCaps = cs.textTransform === 'uppercase' || (letters.length > 2 && letters === letters.toUpperCase());
+    h.dataset.ggcase = '1'; if (!allCaps) return;
+    let i = 0; const out = full.replace(/[A-Za-z0-9&'’]+/g, word => {
+      const first = i++ === 0, up = word.toUpperCase();
+      if (ACR.test(up)) return up;
+      const lw = word.toLowerCase();
+      return (!first && SMALL.test(lw)) ? lw : lw.charAt(0).toUpperCase() + lw.slice(1);
+    });
+    let k = 0; nodes.forEach(x => { const len = x.textContent.length; x.textContent = out.slice(k, k + len); k += len; });
+    h.style.setProperty('text-transform', 'none', 'important');
+    h.querySelectorAll('*').forEach(c => c.style.setProperty('text-transform', 'none', 'important'));
+  }
+  const HEADS = 'h1,h2,h3,h4,.lx-title,.work-title,.ps-name,.phil-title';
   const hasOwnText = el => [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
   // things that are already gradients or must keep their own colours
   const SKIP = 'script,style,canvas,img,video,iframe,.gb-fill,.gb-halo,.gb-ring,.wordmark,.lg-mark,.lx-chip,#ggGrad';
@@ -81,8 +113,11 @@
       return;
     }
     // text
-    const head = el.closest('h1,h2,h3,h4,.lx-title,.work-title,.ps-name') && !el.closest('.lx-doc,.frame,.phone,.screen,.pc-mock,.lb');
-    const gt = hasOwnText(el) && (isGold(cs.color) || !!head);
+    const hEl = el.closest(HEADS), head = hEl && !el.closest('.lx-doc,.frame,.phone,.screen,.pc-mock,.lb');
+    if (hEl && head) smartCaps(hEl);
+    const eye = hasOwnText(el) && !head && isEyebrow(el, cs);
+    el.classList.toggle('gg-eye', eye);
+    const gt = !eye && hasOwnText(el) && (isGold(cs.color) || !!head);
     el.classList.toggle('gg-t', gt);
     if (cs.textShadow && cs.textShadow !== 'none' && !el.classList.contains('gg-glow')) el.dataset.ggglow = '1';
     el.classList.toggle('gg-glow', gt && el.dataset.ggglow === '1');
