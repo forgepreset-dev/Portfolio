@@ -105,7 +105,7 @@
   const getJSON = n => jsonCache[n] || (jsonCache[n] = fetch(ICON_DIR + n + '.json' + VER).then(r => r.json()));
   function pick(b) {
     const t = ((b.getAttribute('aria-label') || '') + ' ' + b.textContent).toLowerCase();
-    if (/talk|contact|say hi/.test(t)) return 'messageCircle';
+    if (/talk|contact|say hi/.test(t)) return 'fi-lets-talk';
     if (/explore work|view work/.test(t)) return 'fi-explore-work';
     if (/see the work/.test(t)) return 'grid';
     if (/brand/.test(t)) return 'penTool';
