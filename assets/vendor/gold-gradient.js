@@ -3,24 +3,32 @@
    Loaded only on the *-gold.html copies, so the main site stays untouched. */
 (function () {
   if (window.__sjGG) return; window.__sjGG = true;
-  const STOPS = [['0%', '#f7e6ae'], ['38%', '#e2c277'], ['70%', '#b88c3c'], ['100%', '#ecd28f']];
-  const TEXT = 'linear-gradient(180deg,' + STOPS.map(s => s[1] + ' ' + s[0]).join(',') + ')';
-  const FILL = 'linear-gradient(135deg,#f3dfa2 0%,#d6b56a 32%,#a98336 62%,#f1d995 100%)';
+  // periodic gold: dark → light → dark → light → dark over 200% width, so shifting by one width loops seamlessly
+  const P = '#b0843a 0%,#e3c47c 12%,#f8e8b2 25%,#e3c47c 38%,#b0843a 50%,#e3c47c 62%,#f8e8b2 75%,#e3c47c 88%,#b0843a 100%';
+  const TEXT = 'linear-gradient(90deg,' + P + ')';
+  const FILL = 'linear-gradient(90deg,' + P + ')';
+  const RUN = 'background-size:200% 100%!important;animation:ggRun 5s linear infinite';
   const css = `
-    .gg-t{background-image:${TEXT}!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
+    @keyframes ggRun{from{background-position:0% 0}to{background-position:-200% 0}}
+    @media (prefers-reduced-motion:reduce){.gg-t,.gg-b,.gg-bd,.gg-bdr,.gg-ring{animation:none!important}}
+    .gg-t{${RUN};background-image:${TEXT}!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important}
     .gg-t.gg-glow{text-shadow:none!important;filter:drop-shadow(0 0 18px rgba(214,187,125,.38))}
-    .gg-b{background-image:${FILL}!important}
+    .gg-b{${RUN};background-image:${FILL}!important}
     .gb{border-color:transparent!important}
     .gb>.gb-ring{background:conic-gradient(from var(--gba),transparent 0 62%,rgba(255,240,205,.95) 74%,transparent 84%),linear-gradient(135deg,rgba(243,223,162,.5),rgba(169,131,54,.38) 55%,rgba(241,217,149,.5))!important}
     .gg-bd{border-image:${FILL} 1!important}
     .gg-bdr{background:linear-gradient(var(--gg-bg),var(--gg-bg)) padding-box,${FILL} border-box!important;border-color:transparent!important}
-    .gg-ring{background:${FILL} border-box!important;border-color:transparent!important;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0)}`;
+    .gg-ring{${RUN};background:${FILL} border-box!important;border-color:transparent!important;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) padding-box exclude,linear-gradient(#000 0 0)}`;
   const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   const pst = document.createElement('style'); document.head.appendChild(pst);          // generated ::before/::after rules
   // shared SVG gradient for icon fills / strokes
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   defs.setAttribute('width', 0); defs.setAttribute('height', 0); defs.style.position = 'absolute'; defs.setAttribute('aria-hidden', 'true');
-  defs.innerHTML = '<defs><linearGradient id="ggGrad" x1="0" y1="0" x2="0" y2="1">' + STOPS.map(s => `<stop offset="${s[0]}" stop-color="${s[1]}"/>`).join('') + '</linearGradient></defs>';
+  const reduceM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  defs.innerHTML = '<defs><linearGradient id="ggGrad" x1="0" y1="0" x2="1" y2="0" spreadMethod="repeat">' +
+    '<stop offset="0" stop-color="#b0843a"/><stop offset=".25" stop-color="#e3c47c"/><stop offset=".5" stop-color="#f8e8b2"/><stop offset=".75" stop-color="#e3c47c"/><stop offset="1" stop-color="#b0843a"/>' +
+    (reduceM ? '' : '<animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="-1 0" dur="2.5s" repeatCount="indefinite"/>') +
+    '</linearGradient></defs>';
   const mountDefs = () => document.body.prepend(defs);
 
   function isGold(c) {
@@ -51,8 +59,8 @@
     if (!gBg && !gTx && !gBd && !gRing) { if (had) { prules.delete(key); flush(); } return; }
     if (!el.dataset.gg) el.dataset.gg = 'g' + (++pid);
     const sel = `[data-gg="${el.dataset.gg}"]${which}`;
-    prules.set(which + el.dataset.gg, sel + '{' + (gBg ? `background-image:${FILL}!important;` : '') +
-      (gTx ? `background-image:${TEXT}!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;` : '') +
+    prules.set(which + el.dataset.gg, sel + '{' + (gBg ? `${RUN};background-image:${FILL}!important;` : '') +
+      (gTx ? `${RUN};background-image:${TEXT}!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;` : '') +
       (gBd ? `border-image:${FILL} 1!important;` : '') +
       (gRing ? `background:linear-gradient(${gRing},${gRing}) padding-box,${FILL} border-box!important;border-color:transparent!important;` : '') + '}');
     flush();
@@ -73,7 +81,8 @@
       return;
     }
     // text
-    const gt = hasOwnText(el) && isGold(cs.color);
+    const head = el.closest('h1,h2,h3,h4,.lx-title,.work-title,.ps-name') && !el.closest('.lx-doc,.frame,.phone,.screen,.pc-mock,.lb');
+    const gt = hasOwnText(el) && (isGold(cs.color) || !!head);
     el.classList.toggle('gg-t', gt);
     if (cs.textShadow && cs.textShadow !== 'none' && !el.classList.contains('gg-glow')) el.dataset.ggglow = '1';
     el.classList.toggle('gg-glow', gt && el.dataset.ggglow === '1');
