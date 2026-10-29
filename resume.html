@@ -196,13 +196,16 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 /* name card v2 */
 .who h1{font-size:47px!important;margin-top:4px!important;letter-spacing:-.05em!important}
 .who .role{margin-top:10px!important}
-.vd{position:relative;display:inline-flex;align-items:center;padding:6px 16px;border-radius:100px;font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.005em;isolation:isolate;
-  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06) 55%,rgba(255,255,255,.12)),linear-gradient(90deg,rgba(226,64,157,.28),rgba(138,69,230,.22) 55%,rgba(63,107,255,.28));
-  -webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -1px 1px rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.18),inset 0 -8px 14px rgba(120,80,255,.18),0 8px 22px -8px rgba(150,70,230,.65);
-  text-shadow:0 1px 6px rgba(80,20,140,.45)}
-.vd::before{content:"";position:absolute;left:10%;right:10%;top:2px;height:42%;border-radius:100px;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0));filter:blur(.5px)}
-.vd::after{content:"";position:absolute;inset:-1px;border-radius:100px;padding:1px;z-index:-1;background:linear-gradient(120deg,rgba(255,140,210,.9),rgba(255,255,255,.15) 40%,rgba(255,255,255,.1) 60%,rgba(120,150,255,.9));
+.vd{position:relative;display:inline-flex;align-items:center;padding:6px 17px;border-radius:100px;font-size:13.5px;font-weight:600;color:#fff;letter-spacing:-.005em;isolation:isolate;
+  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.03) 45%,rgba(255,255,255,.02) 60%,rgba(255,255,255,.09));
+  -webkit-backdrop-filter:blur(18px) saturate(1.8) brightness(1.08);backdrop-filter:blur(18px) saturate(1.8) brightness(1.08);
+  box-shadow:inset 1.5px 1.5px 0 -0.5px rgba(255,255,255,.75),inset -1.5px -1.5px 0 -0.5px rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.14),
+    inset 0 0 12px rgba(255,255,255,.06),0 10px 24px -10px rgba(0,0,0,.55),0 2px 6px -2px rgba(0,0,0,.35);
+  text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.vd::before{content:"";position:absolute;inset:1px;border-radius:100px;z-index:-1;
+  background:radial-gradient(120% 90% at 30% -20%,rgba(255,255,255,.28),rgba(255,255,255,0) 55%),radial-gradient(80% 70% at 85% 130%,rgba(255,255,255,.14),rgba(255,255,255,0) 60%)}
+.vd::after{content:"";position:absolute;inset:0;border-radius:100px;padding:1px;z-index:-1;
+  background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,255,255,.08) 35%,rgba(255,255,255,0) 55%,rgba(255,255,255,.45));
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .pills{gap:6px 5px!important;padding-top:10px!important}
 .pills span{font-size:10.5px!important;padding:4.5px 10px 4.5px 8px!important;gap:6px!important}
@@ -220,13 +223,16 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .r6{font-size:12px;color:rgba(255,255,255,.75)}.r6 b{color:#fff;font-weight:600}
 .now2 .fmt{margin-top:10px!important;gap:5px!important;flex-wrap:nowrap!important}
 .now2 .fmt span{font-size:10px!important;padding:5px 9px!important}
+.vdbg{position:absolute;left:0;top:0;width:var(--vw,128px);height:100%;pointer-events:none;
+  background:radial-gradient(22px 22px at 18% 85%,rgba(240,70,170,.95),transparent 100%),radial-gradient(26px 24px at 84% 15%,rgba(80,120,255,.95),transparent 100%),radial-gradient(16px 14px at 55% 100%,rgba(170,90,245,.8),transparent 100%);filter:blur(2.5px)}
+.who .role{position:relative}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
 .bar a.back{background:none;color:var(--txt);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 @media (max-width:840px){body{padding-top:12px}.bar{width:calc(100vw - 24px)}}
 @page{size:A4;margin:0}
-@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.vd::after{display:none}.vd{box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 0 0 1px rgba(220,180,255,.45),0 6px 16px -8px rgba(150,70,230,.6)!important}.n6{background:none!important;-webkit-text-fill-color:#b866f0!important;color:#b866f0!important}.who .mono text{stroke:#46336f!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp::before{display:none}.yp{box-shadow:inset 0 0 0 1px #9a5ce8!important}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
+@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.vd::after{display:none}.vdbg{display:none}.vd{background:linear-gradient(90deg,rgba(240,70,170,.22),rgba(150,90,240,.12) 50%,rgba(80,120,255,.24))!important}.vd{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.35),0 6px 14px -8px rgba(0,0,0,.6)!important}.n6{background:none!important;-webkit-text-fill-color:#b866f0!important;color:#b866f0!important}.who .mono text{stroke:#46336f!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp::before{display:none}.yp{box-shadow:inset 0 0 0 1px #9a5ce8!important}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class="bar"><a class="back" href="index.html">← Portfolio</a><a href="assets/resume/Stephen-J-Resume.pdf" download>Download PDF</a></div>
@@ -237,7 +243,7 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
       <svg class="mono" viewBox="0 0 250 160" aria-hidden="true"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2409d"/><stop offset="1" stop-color="#3f6bff"/></linearGradient></defs><text x="248" y="148" text-anchor="end">SJ</text></svg>
       <span class="hi">Hello, I'm</span>
       <h1>Stephen <span class="gj">J</span><i class="gdot"></i></h1>
-      <p class="role"><span class="vd">Visual Designer</span></p>
+      <p class="role"><i class="vdbg"></i><span class="vd" id="vd">Visual Designer</span></p>
       <div class="pills">
         <span style="--c:#e2409d">Brand identity &amp; logos</span><span style="--c:#c443c4">Social campaigns</span><span style="--c:#a647dc">Print &amp; outdoor</span>
         <span style="--c:#8a4ee8">Digital ads</span><span style="--c:#6f55f0">App UI</span><span style="--c:#5a5ff8">Motion &amp; video</span><span style="--c:#3f6bff">AI visuals</span>
@@ -316,6 +322,7 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
   window.__tcBuild=build;
 })();
 
+(function(){const v=document.getElementById('vd');if(v)v.previousElementSibling.style.setProperty('--vw',v.offsetWidth+'px');})();
 /* fit the A4 page to small screens */
 (function(){const p=document.getElementById('page');function fit(){const vw=document.documentElement.clientWidth;const s=Math.min(1,(vw-24)/794);p.style.transform=s<1?'scale('+s+')':'';p.style.marginBottom=s<1?(-(1-s)*1123)+'px':'';}addEventListener('resize',fit);fit();})();
 </script>
