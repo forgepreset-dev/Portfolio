@@ -193,6 +193,14 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .now .tly{position:relative;margin-top:4px}
 .now .fmt{margin-top:8px!important}
 .base{margin-top:7px;display:flex;align-items:center;gap:6px;font-size:10.5px;color:rgba(255,255,255,.7)}.base i{width:13px;height:13px;color:#e2409d;display:inline-flex}.base svg{width:100%;height:100%}
+/* name card v2 */
+.who h1{font-size:47px!important;margin-top:4px!important;letter-spacing:-.05em!important}
+.who .role{margin-top:10px!important}
+.vd{display:inline-flex;align-items:center;gap:7px;padding:5px 13px 5px 11px;border-radius:100px;font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.005em;
+  background:linear-gradient(90deg,#e2409d,#8a45e6 55%,#3f6bff);box-shadow:0 6px 18px -6px rgba(170,70,230,.7),inset 0 1px 0 rgba(255,255,255,.25)}
+.vd::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
+.pills{gap:6px 5px!important;padding-top:10px!important}
+.pills span{font-size:10.5px!important;padding:4.5px 10px 4.5px 8px!important;gap:6px!important}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
@@ -210,8 +218,7 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
       <svg class="mono" viewBox="0 0 250 160" aria-hidden="true"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2409d"/><stop offset="1" stop-color="#3f6bff"/></linearGradient></defs><text x="248" y="148" text-anchor="end">SJ</text></svg>
       <span class="hi">Hello, I'm</span>
       <h1>Stephen <span class="gj">J</span><i class="gdot"></i></h1>
-      <p class="role">Visual Designer</p>
-      <p class="tag">I design what people see first, and edit what they remember last.</p>
+      <p class="role"><span class="vd">Visual Designer</span></p>
       <div class="pills">
         <span style="--c:#e2409d">Brand identity &amp; logos</span><span style="--c:#c443c4">Social campaigns</span><span style="--c:#a647dc">Print &amp; outdoor</span>
         <span style="--c:#8a4ee8">Digital ads</span><span style="--c:#6f55f0">App UI</span><span style="--c:#5a5ff8">Motion &amp; video</span><span style="--c:#3f6bff">AI visuals</span>
