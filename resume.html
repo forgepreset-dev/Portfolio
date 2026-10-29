@@ -162,13 +162,28 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .now .facts li{display:flex;align-items:center;gap:7px;font-size:10.5px!important;color:rgba(255,255,255,.78)!important}
 .now .facts li i{width:18px;height:18px;flex:none;border-radius:6px;display:inline-grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 45%,transparent)}
 .now .facts li i svg{width:11px;height:11px}
+/* highlighted 6+ panel with career bar */
+.yp{position:relative;margin-top:8px;padding:9px 11px 8px;border-radius:12px;background:linear-gradient(135deg,rgba(226,64,157,.16),rgba(63,107,255,.12)),#161126;
+  box-shadow:inset 0 0 0 1px rgba(190,140,255,.28),0 8px 24px -10px rgba(160,70,230,.55)}
+.yp::before{content:"";position:absolute;inset:0;border-radius:12px;padding:1px;background:linear-gradient(135deg,#e2409d,#8a45e6,#3f6bff);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.yr1{display:flex;align-items:center;gap:6px}
+.yp .big{font-size:44px;font-weight:800;line-height:.85;letter-spacing:-.05em;background:linear-gradient(135deg,#ff5fb3,#a66bff 55%,#5a7dff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 12px rgba(180,90,240,.55))}
+.yp .plus{font-size:22px;font-weight:800;color:#c27bff;align-self:flex-start;margin:-4px 4px 0 -6px}
+.yt{display:flex;flex-direction:column;gap:2px}.yt span{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.01em}
+.yt small{font-size:10px;color:rgba(255,255,255,.7)}.yt small b{color:#fff;font-weight:600}
+.tl{display:flex;gap:3px;margin-top:8px;height:6px}
+.tl i{border-radius:3px;background:var(--c);box-shadow:0 0 8px color-mix(in srgb,var(--c) 70%,transparent);position:relative}
+.tl i.cur::after{content:"";position:absolute;right:-3px;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(63,107,255,.5),0 0 10px #6f8cff;animation:pulse3 1.8s infinite}
+@keyframes pulse3{50%{box-shadow:0 0 0 6px rgba(63,107,255,0),0 0 14px #6f8cff}}
+.tly{display:flex;justify-content:space-between;margin-top:4px;font-size:8.5px;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}.tly .nw{color:#9db0ff;font-weight:600}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
 .bar a.back{background:none;color:var(--txt);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 @media (max-width:840px){body{padding-top:12px}.bar{width:calc(100vw - 24px)}}
 @page{size:A4;margin:0}
-@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.who .mono text{stroke:#5b3f92!important;stroke-opacity:1!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
+@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.who .mono text{stroke:#5b3f92!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class="bar"><a class="back" href="index.html">← Portfolio</a><a href="assets/resume/Stephen-J-Resume.pdf" download>Download PDF</a></div>
@@ -188,8 +203,11 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
     </div>
     <div class="card now">
       <h3>Currently <span class="live"><i></i>Available</span></h3>
-      <div class="yrs"><b class="big">6</b><b class="plus">+</b><span>years as a<br>visual designer</span></div>
-      <p class="at"><i class="nowdot"></i>Visual Designer at <b>Zofeur</b> · Dubai</p>
+      <div class="yp">
+        <div class="yr1"><b class="big">6</b><b class="plus">+</b><div class="yt"><span>years designing</span><small>Now at <b>Zofeur</b> · Dubai</small></div></div>
+        <div class="tl"><i style="flex:12;--c:#e2409d" title="Betamonks"></i><i style="flex:18;--c:#b247d8" title="ZTH Orbit"></i><i style="flex:16;--c:#7a50ee" title="Freelance"></i><i class="cur" style="flex:33;--c:#3f6bff" title="Zofeur"></i></div>
+        <div class="tly"><span>2020</span><span>2022</span><span>2024</span><span class="nw">Now</span></div>
+      </div>
       <div class="fmt"><span style="--c:#e2409d">Full-time</span><span style="--c:#8a45e6">Remote</span><span style="--c:#3f6bff">Relocation</span></div>
       <ul class="facts">
         <li style="--c:#e2409d"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></i>Chennai-based, open to anywhere</li>
