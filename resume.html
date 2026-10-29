@@ -177,6 +177,22 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .tl i.cur::after{content:"";position:absolute;right:-3px;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(63,107,255,.5),0 0 10px #6f8cff;animation:pulse3 1.8s infinite}
 @keyframes pulse3{50%{box-shadow:0 0 0 6px rgba(63,107,255,0),0 0 14px #6f8cff}}
 .tly{display:flex;justify-content:space-between;margin-top:4px;font-size:8.5px;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}.tly .nw{color:#9db0ff;font-weight:600}
+/* 6+ panel v2: fills the card */
+.now{display:flex;flex-direction:column}
+.now .yp{flex:1;display:flex;flex-direction:column;overflow:hidden;padding:10px 12px 9px}
+.yrays{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.yrays path{stroke:rgba(200,160,255,.07);stroke-width:10;fill:none}
+.yr1{position:relative;gap:8px!important}
+.yp .big{font-size:78px!important;line-height:.82!important}
+.yp .plus{font-size:36px!important;margin:-2px 2px 0 -10px!important}
+.yt span{font-size:15px!important;line-height:1.08;font-weight:700}
+.ynow{position:relative;margin-top:7px;display:flex;align-items:center;gap:6px;font-size:10.5px;color:rgba(255,255,255,.75)}.ynow b{color:#fff;font-weight:600}
+.now .tl{position:relative;margin-top:auto;height:16px;gap:3px}
+.now .tl i{display:flex;align-items:center;justify-content:center;border-radius:5px;overflow:visible}
+.now .tl em{font-style:normal;font-size:7.6px;font-weight:700;color:#fff;letter-spacing:.01em;white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.now .tl i.cur::after{right:-4px}
+.now .tly{position:relative;margin-top:4px}
+.now .fmt{margin-top:8px!important}
+.base{margin-top:7px;display:flex;align-items:center;gap:6px;font-size:10.5px;color:rgba(255,255,255,.7)}.base i{width:13px;height:13px;color:#e2409d;display:inline-flex}.base svg{width:100%;height:100%}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
@@ -204,17 +220,16 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
     <div class="card now">
       <h3>Currently <span class="live"><i></i>Available</span></h3>
       <div class="yp">
-        <div class="yr1"><b class="big">6</b><b class="plus">+</b><div class="yt"><span>years designing</span><small>Now at <b>Zofeur</b> · Dubai</small></div></div>
-        <div class="tl"><i style="flex:12;--c:#e2409d" title="Betamonks"></i><i style="flex:18;--c:#b247d8" title="ZTH Orbit"></i><i style="flex:16;--c:#7a50ee" title="Freelance"></i><i class="cur" style="flex:33;--c:#3f6bff" title="Zofeur"></i></div>
+        <svg class="yrays" viewBox="0 0 200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 120 L60 -10 M10 130 L100 -10 M50 130 L140 -10 M90 130 L180 -10 M130 130 L220 -10"/></svg>
+        <div class="yr1"><b class="big">6</b><b class="plus">+</b><div class="yt"><span>years of<br>designing</span></div></div>
+        <p class="ynow"><i class="nowdot"></i>Now at <b>Zofeur</b> · Dubai</p>
+        <div class="tl">
+          <i style="flex:12;--c:#e2409d"><em>Betamonks</em></i><i style="flex:18;--c:#b247d8"><em>ZTH Orbit</em></i><i style="flex:16;--c:#7a50ee"><em>Freelance</em></i><i class="cur" style="flex:33;--c:#3f6bff"><em>Zofeur</em></i>
+        </div>
         <div class="tly"><span>2020</span><span>2022</span><span>2024</span><span class="nw">Now</span></div>
       </div>
       <div class="fmt"><span style="--c:#e2409d">Full-time</span><span style="--c:#8a45e6">Remote</span><span style="--c:#3f6bff">Relocation</span></div>
-      <ul class="facts">
-        <li style="--c:#e2409d"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></i>Chennai-based, open to anywhere</li>
-        <li style="--c:#b247d8"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5z"/><path d="M2 13l10 5 10-5"/></svg></i>1,800+ designs shipped for Zofeur</li>
-        <li style="--c:#7a50ee"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></i>BSc Computer Science, Loyola</li>
-        <li style="--c:#3f6bff"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 8 21l4-2 4 2-1-7.5"/></svg></i>Certified graphic designer</li>
-      </ul>
+      <p class="base"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></i>Chennai-based · open to anywhere</p>
     </div>
   </section>
   <div class="band">
