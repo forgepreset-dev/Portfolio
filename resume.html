@@ -20,7 +20,7 @@ h2{font-weight:700;font-size:17px;letter-spacing:-.02em;display:flex;align-items
 h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169,139,255,.5),rgba(208,82,214,.15),transparent)}
 /* top row */
 .top,.langs,.wave,.kit,.contact{flex:none}
-.top{display:grid;grid-template-columns:220px 1fr 238px;gap:10px;height:250px}
+.top{display:grid;grid-template-columns:206px 1fr 230px;gap:10px;height:250px}
 .photo{overflow:hidden;position:relative}
 .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block}
 .photo::after{content:"";position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(169,139,255,.35)}
@@ -131,13 +131,30 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .req p{margin-top:3px;font-size:11px;line-height:1.5;color:rgba(255,255,255,.88)}.req i{font-style:normal;color:rgba(255,255,255,.35);margin:0 4px}
 .crs{margin-top:auto;padding-top:6px;display:grid;gap:5px}
 .cr{display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,.9)}
+/* creative name card */
+.who{position:relative;overflow:hidden;padding:16px 20px 16px!important;display:flex;flex-direction:column;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(226,64,157,.20),transparent 55%),radial-gradient(90% 80% at 0% 100%,rgba(63,107,255,.16),transparent 60%),var(--card)!important}
+.who .mono{position:absolute;right:-10px;bottom:-26px;width:200px;height:140px;pointer-events:none}
+.who .mono text{font-family:var(--font);font-weight:800;font-size:150px;letter-spacing:-.06em;fill:none;stroke:rgba(190,170,255,.13);stroke-width:1.2}
+.hi{position:relative;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.who h1{position:relative;margin-top:3px;font-size:36px!important;line-height:.95;letter-spacing:-.045em!important}
+.gj{background:linear-gradient(135deg,#e2409d,#8a45e6 55%,#3f6bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.gdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:3px;background:linear-gradient(135deg,#e2409d,#3f6bff);box-shadow:0 0 12px rgba(208,82,214,.8);animation:pulse2 2s ease-in-out infinite}
+@keyframes pulse2{50%{transform:scale(.6);opacity:.6}}
+.who .role{position:relative;margin-top:6px!important;font-size:13.5px!important;font-weight:600;color:#fff!important;letter-spacing:-.01em}
+.who .role .x{font-weight:400;margin:0 3px;background:linear-gradient(135deg,#e2409d,#3f6bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.who .tag{position:relative;margin-top:4px;font-size:11px;line-height:1.35;color:var(--mut);font-style:italic}
+.pills{position:relative;margin-top:auto;padding-top:8px;display:flex;flex-wrap:wrap;gap:4px}
+.pills span{font-size:10px;font-weight:500;color:#fff;padding:3px 8px 3px 7px;border-radius:100px;display:inline-flex;align-items:center;gap:6px;
+  background:color-mix(in srgb,var(--c) 16%,#151124);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 55%,transparent)}
+.pills span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--c);box-shadow:0 0 6px var(--c)}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
 .bar a.back{background:none;color:var(--txt);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 @media (max-width:840px){body{padding-top:12px}.bar{width:calc(100vw - 24px)}}
 @page{size:A4;margin:0}
-@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
+@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class="bar"><a class="back" href="index.html">← Portfolio</a><a href="assets/resume/Stephen-J-Resume.pdf" download>Download PDF</a></div>
@@ -145,10 +162,15 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
   <section class="top">
     <div class="card photo"><img src="assets/resume/photo.jpg" alt="Stephen J"></div>
     <div class="card who">
-      <h1 class="gold">Stephen J</h1>
-      <p class="role">Visual Designer &amp; Video Editor — branding, campaigns, print, UI and motion.</p>
-      <h3>Core focus</h3>
-      <ul><li>Brand identity &amp; logos</li><li>Social media campaigns &amp; digital ads</li><li>Print &amp; outdoor</li><li>App UI design</li><li>Motion graphics &amp; video editing</li><li>AI visuals</li></ul>
+      <svg class="mono" viewBox="0 0 200 140" aria-hidden="true"><text x="200" y="128" text-anchor="end">SJ</text></svg>
+      <span class="hi">Hello, I'm</span>
+      <h1>Stephen <span class="gj">J</span><i class="gdot"></i></h1>
+      <p class="role">Visual Designer <b class="x">×</b> Video Editor</p>
+      <p class="tag">I design what people see first, and edit what they remember last.</p>
+      <div class="pills">
+        <span style="--c:#e2409d">Brand identity &amp; logos</span><span style="--c:#c443c4">Social campaigns</span><span style="--c:#a647dc">Print &amp; outdoor</span>
+        <span style="--c:#8a4ee8">Digital ads</span><span style="--c:#6f55f0">App UI</span><span style="--c:#5a5ff8">Motion &amp; video</span><span style="--c:#3f6bff">AI visuals</span>
+      </div>
     </div>
     <div class="card now">
       <h3>Currently <span class="live"><i></i>Available</span></h3>
