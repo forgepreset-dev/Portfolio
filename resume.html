@@ -196,9 +196,14 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 /* name card v2 */
 .who h1{font-size:47px!important;margin-top:4px!important;letter-spacing:-.05em!important}
 .who .role{margin-top:10px!important}
-.vd{display:inline-flex;align-items:center;gap:7px;padding:5px 13px 5px 11px;border-radius:100px;font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.005em;
-  background:linear-gradient(90deg,#e2409d,#8a45e6 55%,#3f6bff);box-shadow:0 6px 18px -6px rgba(170,70,230,.7),inset 0 1px 0 rgba(255,255,255,.25)}
-.vd::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
+.vd{position:relative;display:inline-flex;align-items:center;padding:6px 16px;border-radius:100px;font-size:13.5px;font-weight:700;color:#fff;letter-spacing:-.005em;isolation:isolate;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.06) 55%,rgba(255,255,255,.12)),linear-gradient(90deg,rgba(226,64,157,.28),rgba(138,69,230,.22) 55%,rgba(63,107,255,.28));
+  -webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 -1px 1px rgba(255,255,255,.12),inset 0 0 0 1px rgba(255,255,255,.18),inset 0 -8px 14px rgba(120,80,255,.18),0 8px 22px -8px rgba(150,70,230,.65);
+  text-shadow:0 1px 6px rgba(80,20,140,.45)}
+.vd::before{content:"";position:absolute;left:10%;right:10%;top:2px;height:42%;border-radius:100px;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0));filter:blur(.5px)}
+.vd::after{content:"";position:absolute;inset:-1px;border-radius:100px;padding:1px;z-index:-1;background:linear-gradient(120deg,rgba(255,140,210,.9),rgba(255,255,255,.15) 40%,rgba(255,255,255,.1) 60%,rgba(120,150,255,.9));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .pills{gap:6px 5px!important;padding-top:10px!important}
 .pills span{font-size:10.5px!important;padding:4.5px 10px 4.5px 8px!important;gap:6px!important}
 /* Currently v3: airy */
@@ -221,7 +226,7 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .bar a.back{background:none;color:var(--txt);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 @media (max-width:840px){body{padding-top:12px}.bar{width:calc(100vw - 24px)}}
 @page{size:A4;margin:0}
-@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.n6{background:none!important;-webkit-text-fill-color:#b866f0!important;color:#b866f0!important}.who .mono text{stroke:#46336f!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp::before{display:none}.yp{box-shadow:inset 0 0 0 1px #9a5ce8!important}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
+@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.vd::after{display:none}.vd{box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 0 0 1px rgba(220,180,255,.45),0 6px 16px -8px rgba(150,70,230,.6)!important}.n6{background:none!important;-webkit-text-fill-color:#b866f0!important;color:#b866f0!important}.who .mono text{stroke:#46336f!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp::before{display:none}.yp{box-shadow:inset 0 0 0 1px #9a5ce8!important}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class="bar"><a class="back" href="index.html">← Portfolio</a><a href="assets/resume/Stephen-J-Resume.pdf" download>Download PDF</a></div>
