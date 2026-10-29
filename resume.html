@@ -201,13 +201,27 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .vd::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
 .pills{gap:6px 5px!important;padding-top:10px!important}
 .pills span{font-size:10.5px!important;padding:4.5px 10px 4.5px 8px!important;gap:6px!important}
+/* Currently v3: airy */
+.now2{display:flex;flex-direction:column;padding:16px 18px 16px!important}
+.hero6{position:relative;flex:1;display:flex;align-items:center;gap:12px;margin-top:4px}
+.halo{position:absolute;left:-18px;top:50%;width:120px;height:120px;margin-top:-60px;border-radius:50%;
+  background:radial-gradient(circle,rgba(176,80,235,.32),rgba(176,80,235,0) 68%);pointer-events:none}
+.halo::after{content:"";position:absolute;inset:16px;border-radius:50%;border:1px solid rgba(190,140,255,.22)}
+.n6{position:relative;font-size:84px;font-weight:800;line-height:.8;letter-spacing:-.06em;
+  background:linear-gradient(160deg,#ff6fbf,#a66bff 55%,#5a7dff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.n6 sup{font-size:38px;vertical-align:top;position:relative;top:-4px;margin-left:2px;-webkit-text-fill-color:#c27bff}
+.l6{position:relative;font-size:13px;line-height:1.25;font-weight:600;color:rgba(255,255,255,.9)}
+.div6{display:block;height:1px;background:linear-gradient(90deg,#e2409d,#8a45e6,#3f6bff,transparent);opacity:.6;margin:10px 0 9px}
+.r6{font-size:12px;color:rgba(255,255,255,.75)}.r6 b{color:#fff;font-weight:600}
+.now2 .fmt{margin-top:10px!important;gap:5px!important;flex-wrap:nowrap!important}
+.now2 .fmt span{font-size:10px!important;padding:5px 9px!important}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
 .bar a.back{background:none;color:var(--txt);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 @media (max-width:840px){body{padding-top:12px}.bar{width:calc(100vw - 24px)}}
 @page{size:A4;margin:0}
-@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.who .mono text{stroke:#46336f!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp::before{display:none}.yp{box-shadow:inset 0 0 0 1px #9a5ce8!important}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
+@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.n6{background:none!important;-webkit-text-fill-color:#b866f0!important;color:#b866f0!important}.who .mono text{stroke:#46336f!important;stroke-opacity:1!important}.tl i.cur::after{animation:none}.yp::before{display:none}.yp{box-shadow:inset 0 0 0 1px #9a5ce8!important}.yp .big{filter:none;background:none!important;-webkit-text-fill-color:#c06bff!important;color:#c06bff!important}.yrs .big{filter:none;background:none!important;-webkit-text-fill-color:#b25ae8!important;color:#b25ae8!important}.gj{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class="bar"><a class="back" href="index.html">← Portfolio</a><a href="assets/resume/Stephen-J-Resume.pdf" download>Download PDF</a></div>
@@ -224,19 +238,12 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
         <span style="--c:#8a4ee8">Digital ads</span><span style="--c:#6f55f0">App UI</span><span style="--c:#5a5ff8">Motion &amp; video</span><span style="--c:#3f6bff">AI visuals</span>
       </div>
     </div>
-    <div class="card now">
+    <div class="card now now2">
       <h3>Currently <span class="live"><i></i>Available</span></h3>
-      <div class="yp">
-        <svg class="yrays" viewBox="0 0 200 120" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 120 L60 -10 M10 130 L100 -10 M50 130 L140 -10 M90 130 L180 -10 M130 130 L220 -10"/></svg>
-        <div class="yr1"><b class="big">6</b><b class="plus">+</b><div class="yt"><span>years of<br>designing</span></div></div>
-        <p class="ynow"><i class="nowdot"></i>Now at <b>Zofeur</b> · Dubai</p>
-        <div class="tl">
-          <i style="flex:12;--c:#e2409d"><em>Betamonks</em></i><i style="flex:18;--c:#b247d8"><em>ZTH Orbit</em></i><i style="flex:16;--c:#7a50ee"><em>Freelance</em></i><i class="cur" style="flex:33;--c:#3f6bff"><em>Zofeur</em></i>
-        </div>
-        <div class="tly"><span>2020</span><span>2022</span><span>2024</span><span class="nw">Now</span></div>
-      </div>
+      <div class="hero6"><span class="halo"></span><b class="n6">6<sup>+</sup></b><span class="l6">years of design<br>experience</span></div>
+      <i class="div6"></i>
+      <p class="r6">Visual Designer · <b>Zofeur</b>, Dubai</p>
       <div class="fmt"><span style="--c:#e2409d">Full-time</span><span style="--c:#8a45e6">Remote</span><span style="--c:#3f6bff">Relocation</span></div>
-      <p class="base"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></i>Chennai-based · open to anywhere</p>
     </div>
   </section>
   <div class="band">
