@@ -148,13 +148,27 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .pills span{font-size:10px;font-weight:500;color:#fff;padding:3px 8px 3px 7px;border-radius:100px;display:inline-flex;align-items:center;gap:6px;
   background:color-mix(in srgb,var(--c) 16%,#151124);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 55%,transparent)}
 .pills span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--c);box-shadow:0 0 6px var(--c)}
+/* creative "Currently" card */
+.now{position:relative;overflow:hidden;background:radial-gradient(100% 70% at 100% 100%,rgba(63,107,255,.16),transparent 60%),radial-gradient(80% 60% at 0% 0%,rgba(226,64,157,.10),transparent 60%),var(--card)!important}
+.yrs{display:flex;align-items:center;gap:9px;margin-top:8px}
+.yrs .big{font-size:46px;font-weight:800;line-height:.9;letter-spacing:-.05em;background:linear-gradient(135deg,#e2409d,#8a45e6 55%,#3f6bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 14px rgba(160,80,230,.45))}
+.yrs .plus{font-size:26px;font-weight:800;color:#b25ae8;margin:-10px 0 0 -8px;align-self:flex-start}
+.yrs span{font-size:11.5px;line-height:1.25;color:rgba(255,255,255,.85)}
+.now .at{margin-top:6px!important;display:flex;align-items:center;gap:7px;font-size:11.5px!important;color:rgba(255,255,255,.8)!important}.now .at b{color:#fff;font-weight:600}
+.nowdot{width:6px;height:6px;border-radius:50%;background:#e2409d;box-shadow:0 0 0 0 rgba(226,64,157,.6);animation:pulse 1.8s infinite;flex:none}
+.now .fmt{margin-top:7px;gap:4px;flex-wrap:wrap}
+.now .fmt span{padding:4px 8px!important;font-size:10px!important;border-radius:100px!important;background:color-mix(in srgb,var(--c) 18%,#151124)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 60%,transparent)!important}
+.now .facts{gap:4px!important}
+.now .facts li{display:flex;align-items:center;gap:7px;font-size:10.5px!important;color:rgba(255,255,255,.78)!important}
+.now .facts li i{width:18px;height:18px;flex:none;border-radius:6px;display:inline-grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) 45%,transparent)}
+.now .facts li i svg{width:11px;height:11px}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
 .bar a.back{background:none;color:var(--txt);box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
 @media (max-width:840px){body{padding-top:12px}.bar{width:calc(100vw - 24px)}}
 @page{size:A4;margin:0}
-@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.gj,.who .role .x{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
+@media print{html,body{background:var(--bg);padding:0;height:auto}.bar{display:none}.page{transform:none!important;margin:0!important;height:1123px;overflow:hidden}.card,.col,.main{break-inside:avoid}.col>.card{flex-shrink:0}.top{height:250px!important}.gold{color:#fff!important}.gdot{animation:none}.nowdot{animation:none}.yrs .big{filter:none}.gj,.who .role .x{background:none!important;-webkit-text-fill-color:#a85cf0!important;color:#a85cf0!important}.radar .shape{animation:none}.radar .area{fill-opacity:1!important}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style></head><body>
 <div class="bar"><a class="back" href="index.html">← Portfolio</a><a href="assets/resume/Stephen-J-Resume.pdf" download>Download PDF</a></div>
@@ -174,9 +188,15 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
     </div>
     <div class="card now">
       <h3>Currently <span class="live"><i></i>Available</span></h3>
-      <p>6+ years as a visual designer; currently Visual Designer at Zofeur, Dubai.</p>
-      <div class="fmt"><span>Open to full-time</span><span>Relocation-ready</span></div>
-      <ul class="facts"><li>— Based in Chennai, ready to relocate anywhere.</li><li>— 1,800+ designs shipped for Zofeur.</li><li>— BSc Computer Science, Loyola College.</li><li>— Certified graphic designer.</li></ul>
+      <div class="yrs"><b class="big">6</b><b class="plus">+</b><span>years as a<br>visual designer</span></div>
+      <p class="at"><i class="nowdot"></i>Visual Designer at <b>Zofeur</b> · Dubai</p>
+      <div class="fmt"><span style="--c:#e2409d">Full-time</span><span style="--c:#8a45e6">Remote</span><span style="--c:#3f6bff">Relocation</span></div>
+      <ul class="facts">
+        <li style="--c:#e2409d"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></i>Chennai-based, open to anywhere</li>
+        <li style="--c:#b247d8"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5z"/><path d="M2 13l10 5 10-5"/></svg></i>1,800+ designs shipped for Zofeur</li>
+        <li style="--c:#7a50ee"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></i>BSc Computer Science, Loyola</li>
+        <li style="--c:#3f6bff"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M9 13.5 8 21l4-2 4 2-1-7.5"/></svg></i>Certified graphic designer</li>
+      </ul>
     </div>
   </section>
   <div class="band">
