@@ -319,6 +319,18 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
 .st-cl .clc{top:12%!important;height:60%!important;opacity:.28}
 .st-cl .orb{top:17%!important;opacity:.45;box-shadow:0 0 8px 2px rgba(192,132,252,.6)!important}
 .st-cl .clt{padding:0!important}
+/* 6+ card: reference "Market Size" style */
+.st-mk{position:relative;height:96px;padding:10px 12px!important;overflow:hidden;border-radius:14px!important;
+  background:radial-gradient(85% 130% at 0% 55%,#4c6bff 0%,#7a3df0 30%,rgba(190,60,190,.55) 48%,rgba(20,15,36,0) 75%),#120e1f!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)!important}
+.mk-dots{position:absolute;right:10px;top:9px;display:flex;flex-direction:column;gap:2px}.mk-dots i{width:2.5px;height:2.5px;border-radius:50%;background:#fff}
+.mk-t{position:relative;z-index:2}
+.mk-t small{display:block;margin:0!important;font-size:9px!important;color:rgba(255,255,255,.75)!important}
+.mk-t b{display:block;font-size:40px!important;font-weight:500!important;line-height:1!important;letter-spacing:-.04em;margin-top:4px;color:#fff}
+.mk-t em{display:block;font-style:normal;font-size:7.5px;line-height:1.3;color:rgba(255,255,255,.7);margin-top:4px}.mk-t em strong{color:#fff;font-weight:600}
+.mk-g{position:absolute;right:0;bottom:0;width:62%;height:62%;overflow:visible}
+.mk-ring{position:absolute;left:calc(38% + 62% * 110 / 160);bottom:calc(62% * 22 / 44);width:8px;height:8px;margin:0 0 -4px -4px;border-radius:50%;border:1.6px solid #ff4fa3;background:#120e1f;box-shadow:0 0 6px rgba(255,79,163,.7)}
+.mk-tag{position:absolute;left:calc(38% + 62% * 110 / 160);bottom:calc(62% * 22 / 44 + 9px);transform:translateX(-50%);font-size:7px;font-weight:600;color:#ff8cc6;padding:2px 5px;border-radius:4px;background:rgba(255,79,163,.16);box-shadow:inset 0 0 0 1px rgba(255,79,163,.5)}
 /* screen-only chrome */
 .bar{width:794px;display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;font-size:13px;color:var(--mut)}
 .bar a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:100px;background:linear-gradient(135deg,#d052d6,#7b6bff);color:#fff;font-weight:600}
@@ -343,10 +355,17 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(169
       </div>
     </div>
     <div class="now3">
-      <div class="st st-wide st-exp">
-        <div class="ex-top"><b>6+</b><small>Years of design<br>experience</small></div>
-        <div class="lg2"><span style="--c:#f472b6"><i></i>Betamonks <em>1y</em></span><span style="--c:#c4b5fd"><i></i>ZTH Orbit <em>1y 6m</em></span><span style="--c:#e9d5ff"><i></i>Freelance <em>1y 3m</em></span><span style="--c:#7dd3fc"><i></i>Zofeur <em>2y 8m+</em></span></div>
-        <div class="cxw"><svg class="cx" viewBox="0 0 200 40" preserveAspectRatio="none"><defs><linearGradient id="zf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".16"/><stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/></linearGradient></defs><path d="M103.0,37 C119.0,37 119.0,4 135.0,4 L198,4 L198,40 L103.0,40Z" fill="url(#zf)"/><path d="M0,6 L14.4,6 C30.4,6 30.4,26 46.4,26 L200,26" fill="none" stroke="#f472b6" stroke-opacity=".9" stroke-width="1.1" class="cl" style="--d:0ms"/><path d="M0,30 L14.4,30 C30.4,30 30.4,9 46.4,9 L59.9,9 C75.9,9 75.9,30 91.9,30 L200,30" fill="none" stroke="#c4b5fd" stroke-opacity=".9" stroke-width="1.1" class="cl" style="--d:150ms"/><path d="M0,34 L62.5,34 C78.5,34 78.5,7 94.5,7 L100.5,7 C116.5,7 116.5,34 132.5,34 L200,34" fill="none" stroke="#e9d5ff" stroke-opacity=".9" stroke-width="1.1" class="cl" style="--d:300ms"/><path d="M0,37 L103.0,37 C119.0,37 119.0,4 135.0,4 L200,4" fill="none" stroke="#7dd3fc" stroke-opacity=".9" stroke-width="1.1" class="cl" style="--d:450ms"/><line x1="198" x2="198" y1="4" y2="40" stroke="rgba(255,255,255,.7)" stroke-width="1" vector-effect="non-scaling-stroke"/></svg><i class="nowdot2"></i></div>
+      <div class="st st-mk">
+        <span class="mk-dots"><i></i><i></i><i></i></span>
+        <div class="mk-t"><small>Experience</small><b>6+</b><em><strong>years designing</strong> from<br>2020 to now.</em></div>
+        <svg class="mk-g" viewBox="0 0 160 44" preserveAspectRatio="none">
+          <defs><linearGradient id="mkf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f46e5" stop-opacity=".55"/><stop offset="1" stop-color="#4f46e5" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0,40 C10,40 14,14 26,14 C36,14 40,30 50,30 C62,30 66,6 80,6 C92,6 100,26 110,22 L110,44 L0,44Z" fill="url(#mkf)"/>
+          <path d="M110,22 C118,18 122,8 132,8 C144,8 146,30 160,30" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="2.4" stroke-linecap="round"/>
+          <path class="ln" d="M0,40 C10,40 14,14 26,14 C36,14 40,30 50,30 C62,30 66,6 80,6 C92,6 100,26 110,22" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+          <line x1="110" y1="22" x2="110" y2="44" stroke="rgba(255,255,255,.4)" stroke-dasharray="1.5 1.5" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <i class="mk-ring"></i><span class="mk-tag">Now</span>
       </div>
       <div class="strow">
         <div class="st"><b>1000+</b><small>Projects</small><svg class="sb2" viewBox="0 0 60 32"><defs><linearGradient id="cb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff4fa3"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><rect x="1" y="18" width="6" height="14" rx="3" fill="url(#cb)"/><rect x="11" y="10" width="6" height="22" rx="3" fill="url(#cb)"/><rect x="21" y="15" width="6" height="17" rx="3" fill="url(#cb)"/><rect x="31" y="6" width="6" height="26" rx="3" fill="url(#cb)"/><rect x="41" y="12" width="6" height="20" rx="3" fill="url(#cb)"/><rect x="51" y="2" width="6" height="30" rx="3" fill="url(#cb)"/></svg></div>
