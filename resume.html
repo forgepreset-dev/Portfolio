@@ -9,7 +9,7 @@
   --gg:linear-gradient(90deg,#b0843a 0%,#e3c47c 12%,#f8e8b2 25%,#e3c47c 38%,#b0843a 50%,#e3c47c 62%,#f8e8b2 75%,#e3c47c 88%,#b0843a 100%);
   --font:'Suisse Intl','Inter Tight','Helvetica Neue',Arial,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:#050505}
+html{background:#050505;overflow-x:hidden}body{overflow-x:hidden}
 body{font-family:var(--font);color:var(--txt);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;padding:28px 0 60px}
 a{color:inherit;text-decoration:none}
 .page{width:794px;height:1123px;background:var(--bg);padding:22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transform-origin:top center}
@@ -151,6 +151,6 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(214
 </main>
 <script>
 /* fit the A4 page to small screens */
-(function(){const p=document.getElementById('page');function fit(){const s=Math.min(1,(innerWidth-24)/794);p.style.transform=s<1?'scale('+s+')':'';p.style.marginBottom=s<1?(-(1-s)*1123)+'px':'';}addEventListener('resize',fit);fit();})();
+(function(){const p=document.getElementById('page');function fit(){const vw=document.documentElement.clientWidth;const s=Math.min(1,(vw-24)/794);p.style.transform=s<1?'scale('+s+')':'';p.style.marginBottom=s<1?(-(1-s)*1123)+'px':'';}addEventListener('resize',fit);fit();})();
 </script>
 </body></html>
