@@ -1231,7 +1231,7 @@ body{letter-spacing:-.01em}
 .so-word span.so-base,.so-word span.so-fill{font-size:clamp(56px,14.2vw,280px)!important}
 .so-arrow{right:0!important;left:auto!important;top:.06em!important;width:var(--aw)!important;height:var(--aw)!important}
 </style>
-<link rel="stylesheet" href="assets/vendor/site-font.css?v=20261102004707">
+<link rel="stylesheet" href="assets/vendor/site-font.css?v=20261102064802">
 </head>
 <body class="locked">
 <div class="cur-ring" aria-hidden="true"><i></i></div>
@@ -1263,6 +1263,7 @@ body{letter-spacing:-.01em}
       <li><a href="#work" style="--i:0"><span class="mask"><span class="txt">PROJECTS</span></span><sup>01</sup></a></li>
       <li><a href="#path" style="--i:1"><span class="mask"><span class="txt">EXPERIENCE</span></span><sup>02</sup></a></li>
       <li><a href="#contact" style="--i:2"><span class="mask"><span class="txt">CONTACT</span></span><sup>03</sup></a></li>
+      <li><a href="resume.html" style="--i:3"><span class="mask"><span class="txt">RESUME</span></span><sup>04</sup></a></li>
     </ul>
     <div class="menu-foot">
       <small>SOCIALS</small>
@@ -1295,7 +1296,7 @@ body{letter-spacing:-.01em}
     <p>Visual Designer &amp; Video Editor crafting brand identities, motion graphics, and AI-powered visuals with 6+ years of experience.</p>
     <div class="hero-actions">
       <a class="cta cta-primary" href="#work" data-magnetic><span class="ico">↗</span>Explore Work <span class="arr">→</span></a>
-      <a class="cta cta-ghost" href="#contact" data-magnetic>Let's Talk <span class="arr">→</span></a>
+      <a class="cta cta-ghost" href="resume.html" data-magnetic>Resume <span class="arr">→</span></a>
     </div>
   </div>
 
@@ -2169,7 +2170,9 @@ body{letter-spacing:-.01em}
 
   menu.querySelectorAll('.menu-links a').forEach(a => a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
+    const href = a.getAttribute('href');
+    if (!href.startsWith('#')) { set(false); setTimeout(() => { location.href = href; }, 350); return; }
+    const target = document.querySelector(href);
     set(false);
     if (!target) return;
     if (window.pageWipe) setTimeout(() => window.pageWipe(target, a.querySelector('.txt').textContent), 120);
@@ -2889,7 +2892,7 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
 });
 </script>
-<script src="assets/vendor/glow.js?v=20261102004707" defer></script>
-<script src="assets/vendor/sound.js?v=20261102004707" defer></script>
+<script src="assets/vendor/glow.js?v=20261102064802" defer></script>
+<script src="assets/vendor/sound.js?v=20261102064802" defer></script>
 </body>
 </html>
