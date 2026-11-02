@@ -574,8 +574,8 @@ h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(110
 (function(){
   const box=document.getElementById('tchart'),svg=document.getElementById('tsvg'),svg0=document.getElementById('tsvg0'),tools=[...document.querySelectorAll('#tools .tool')];
   function build(){
-    const B=box.getBoundingClientRect(),W=B.width,H=B.height,yb=H-4,top=8,NS='http://www.w3.org/2000/svg';
-    const sc=B.width/box.offsetWidth||1;                        // undo the phone scale-to-fit
+    const B=box.getBoundingClientRect(),W=B.width,H=B.height,top=8,NS='http://www.w3.org/2000/svg';
+    const sc=B.width/box.offsetWidth||1,yb=H/sc-4;                        // undo the phone scale-to-fit
     const P=tools.map(t=>{const r=t.getBoundingClientRect();return {x:(r.left+r.width/2-B.left)/sc,y:yb-14-(+t.dataset.v/10)*(H/sc-top-22),c:getComputedStyle(t).getPropertyValue('--t').trim()};});
     const w=W/sc,h=H/sc,ybb=h-4,x0=P[0].x-34,x1=P[P.length-1].x+34;
     const pts=[{x:x0,y:ybb},...P,{x:x1,y:ybb}];
