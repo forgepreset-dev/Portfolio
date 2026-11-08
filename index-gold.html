@@ -2588,50 +2588,44 @@ body{letter-spacing:-.01em}
 })();
 
 
-/* ---------- Mockup frame-scrub: screens advance with scroll like a timeline ---------- */
+/* ---------- Mockup frames autoplay like a video while the card is on screen ---------- */
 (function(){
   const cards = [...document.querySelectorAll('.pcard')];
   if (!cards.length) return;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const clamp = v => Math.max(0, Math.min(1, v));
+  const DUR = 2600;                                   // ms per screen
   const state = cards.map(c => ({
     frames: [...c.querySelectorAll('.frame')],
     track: c.querySelector('.scrub .track'),
     tc: c.querySelector('.scrub .tc'),
     fr: c.querySelector('.scrub .fr'),
-    idx: 0
+    idx: 0, vis: false, t: 0, last: 0
   }));
-  let ticking = false;
-  function update(){
-    ticking = false;
-    const vh = innerHeight;
-    const stack = cards[0].parentElement.getBoundingClientRect();
-    cards.forEach((card, i) => {
-      const st = state[i];
-      // Even pacing: the run starts when this card's top reaches 60% of the screen and ends
-      // when the next card's top reaches the same line — one card-length of scrolling.
-      const cs = getComputedStyle(card);
-      const D = card.offsetHeight + parseFloat(cs.marginBottom || 0);
-      const next = cards[i + 1];
-      const nextTop = next ? next.getBoundingClientRect().top : stack.bottom + parseFloat(cs.marginBottom || 0) + vh * 0.08;
-      const line = vh * 0.6;
-      let p = (line + D - nextTop) / D;
-      p = clamp(p);
-      const N = st.frames.length;
-      const idx = reduce ? 0 : Math.min(N - 1, Math.floor(p * N * 0.999));
-      if (idx !== st.idx){
-        st.frames.forEach((f, k) => f.classList.toggle('on', k <= idx));
-        st.idx = idx;
-        st.fr.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(N).padStart(2, '0');
-      }
+  function setIdx(st, idx){
+    if (idx === st.idx) return;
+    st.frames.forEach((f, k) => f.classList.toggle('on', k <= idx));
+    st.idx = idx;
+    st.fr.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(st.frames.length).padStart(2, '0');
+  }
+  if (reduce) { state.forEach(st => setIdx(st, 0)); return; }
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const st = state[cards.indexOf(e.target)]; st.vis = e.isIntersecting; st.last = 0;
+  }), { threshold: 0.25 });
+  cards.forEach(c => io.observe(c));
+  function loop(now){
+    state.forEach(st => {
+      if (!st.vis) return;
+      if (st.last) st.t += Math.min(100, now - st.last);
+      st.last = now;
+      const N = st.frames.length, total = N * DUR, t = st.t % total, p = t / total;
+      setIdx(st, Math.min(N - 1, Math.floor(t / DUR)));
       st.track.style.setProperty('--p', p.toFixed(4));
-      const secs = p * N * 2;                                             // ~2s per frame on the timecode
+      const secs = t / 1000;
       st.tc.textContent = '00:' + String(Math.floor(secs)).padStart(2, '0') + ':' + String(Math.floor((secs % 1) * 24)).padStart(2, '0');
     });
+    requestAnimationFrame(loop);
   }
-  addEventListener('scroll', () => { if (!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
-  addEventListener('resize', update);
-  update();
+  requestAnimationFrame(loop);
 })();
 
 
