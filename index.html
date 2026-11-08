@@ -785,7 +785,7 @@ html.has-cursor input, html.has-cursor textarea{cursor:text!important}
   transition:transform .55s cubic-bezier(.76,0,.24,1), opacity .45s ease, filter .45s ease}
 #loader.exit .loader-bar{transform:scaleX(0);transition:transform .55s cubic-bezier(.76,0,.24,1)}
 #loader.exit .loader-bar i{transition:none}
-#loader.fade{opacity:0;transform:none;transition:opacity .9s ease .15s}
+#loader.fade{opacity:0;transform:none;transition:opacity .9s ease .15s;pointer-events:none}
 #loader.handoff .loader-name span{opacity:0}
 .morph-glyph{
   position:fixed;z-index:120;pointer-events:none;display:block;
@@ -828,6 +828,16 @@ html.has-cursor input, html.has-cursor textarea{cursor:text!important}
 /* 02 — gallery grid */
 .f2 .lbl{position:absolute;left:4.8%;top:17%;font-size:clamp(5px,.5vw,8px);letter-spacing:.18em;font-weight:500;opacity:.6}
 .f2 .grid{position:absolute;left:4.5%;right:4.5%;top:25%;bottom:7%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:3.5%}
+.screen .f2 .grid.txt i{display:flex;align-items:center;justify-content:center;text-align:center;font-style:normal;padding:6%;font-size:clamp(5px,.56vw,8.5px);letter-spacing:.06em;line-height:1.3;font-weight:500;color:var(--fg);background:color-mix(in srgb,var(--fg) 7%,var(--bg))}
+.screen .f2 .grid.txt i:nth-child(2),.screen .f2 .grid.txt i:nth-child(6){background:var(--btn);color:var(--btnfg,#fff)}
+.f3 .shot{position:absolute;left:4.5%;top:17%;bottom:8%;width:52%;border-radius:6px;overflow:hidden;background:var(--btn)}
+.screen .f3 .shot.txt{display:flex;flex-direction:column;justify-content:flex-end;gap:4%;padding:6%;background:linear-gradient(160deg,var(--btn),color-mix(in srgb,var(--btn) 40%,var(--bg)))}
+.f3 .shot.txt b{font-size:clamp(12px,1.9vw,28px);font-weight:500;letter-spacing:-.02em;color:#fff;line-height:1}
+.f3 .shot.txt small{font-size:clamp(4.5px,.48vw,7.5px);letter-spacing:.16em;color:rgba(255,255,255,.75)}
+.f3 .copy.real{gap:6%}
+.screen .f3 .copy.real b{height:auto;width:auto;background:none;color:var(--hl);font-size:clamp(8px,1.05vw,16px);font-weight:600;letter-spacing:-.01em;line-height:1.15}
+.f3 .copy.real p{font-size:clamp(5px,.56vw,8.5px);line-height:1.55;opacity:.82;margin:0}
+.pcard{cursor:pointer}
 .f2 .grid i{border-radius:5px;background:var(--art),var(--bg);border:1px solid color-mix(in srgb,var(--fg) 14%,transparent)}
 .f2 .grid i:nth-child(2){background:var(--btn)}
 .f2 .grid i:nth-child(3){background:linear-gradient(135deg,var(--hl),transparent 80%)}
@@ -1342,25 +1352,25 @@ body{letter-spacing:-.01em}
         <div class="dots"><i></i><i></i><i></i></div>
         <div class="screen" style="--bg:#060606;--fg:#ddd;--hl:#e1d1ad;--btn:#51421f;--art:radial-gradient(40% 70% at 74% 52%,rgba(230,220,210,.55),transparent 60%),radial-gradient(22% 40% at 86% 46%,rgba(224,209,174,.45),transparent 70%),radial-gradient(18% 30% at 64% 40%,rgba(120,170,160,.35),transparent 70%)">
           <div class="frame f1 on">
-            <div class="art"></div>
+            <div class="art" style="background:linear-gradient(90deg,#060606 34%,rgba(6,6,6,.35) 62%,rgba(6,6,6,0) 80%),url(assets/designs/tile/b022_01256.webp) 80% 50%/cover"></div>
             <div class="nav"><b>ZOFEUR</b><em><i></i><i></i><i></i></em></div>
             <div class="hl">Arrive</div>
             <div class="sub">BRAND, CAMPAIGNS &amp; APP UI</div>
-            <div class="btnx">View project →</div>
+            <div class="btnx">View work →</div>
           </div>
           <div class="frame f2">
             <div class="nav"><b>ZOFEUR</b><em><i></i><i></i><i></i></em></div>
             <div class="lbl">SELECTED WORK</div>
-            <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="grid"><i style="background:url(assets/designs/tile/b015_00420.webp) center/cover"></i><i style="background:url(assets/designs/tile/b004_00208.webp) center/cover"></i><i style="background:url(assets/designs/tile/b004_00195.webp) center/cover"></i><i style="background:url(assets/designs/tile/b038_01644.webp) center/cover"></i><i style="background:url(assets/designs/tile/b023_01264.webp) center/cover"></i><i style="background:url(assets/designs/tile/b045_01837.webp) center/cover"></i></div>
           </div>
           <div class="frame f3">
             <div class="nav"><b>ZOFEUR</b><em><i></i><i></i><i></i></em></div>
-            <div class="hero"></div>
-            <div class="copy"><b></b><i></i><i></i><i></i><span class="btnx">Read more →</span></div>
+            <div class="shot" style="background:url(assets/designs/tile/b046_01842.webp) center/cover"></div>
+            <div class="copy real"><b>Your instant chauffeur</b><p>Brand, campaigns and app UI for the UAE's on-demand chauffeur app — 1,800+ designs across social, ads, print and product.</p><span class="btnx">Read more →</span></div>
           </div>
           <div class="frame f4">
-            <div class="art"></div>
-            <div class="end"><b>ZOFEUR</b><small>BRAND, CAMPAIGNS &amp; APP UI</small><span class="btnx">Get in touch →</span></div>
+            <div class="art" style="background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url(assets/designs/tile/b015_00425.webp) center/cover"></div>
+            <div class="end"><b>Zofeur</b><small>BRAND, CAMPAIGNS &amp; APP UI</small><span class="btnx">Get in touch →</span></div>
           </div>
         </div>
         <div class="scrub"><span class="tc">00:00</span><div class="track"><i class="fill"></i><i class="tick" style="--t:0"></i><i class="tick" style="--t:1"></i><i class="tick" style="--t:2"></i><i class="tick" style="--t:3"></i><i class="head"></i></div><span class="tc fr">01 / 04</span></div>
@@ -1381,25 +1391,25 @@ body{letter-spacing:-.01em}
         <div class="dots"><i></i><i></i><i></i></div>
         <div class="screen" style="--bg:#120c04;--fg:#e8c48a;--hl:#ffd28a;--btn:#b8792a;--art:linear-gradient(90deg,#120c04 42%,rgba(18,12,4,0) 70%),conic-gradient(from 210deg at 76% 48%,#c98a2a,#2a1a08,#e0a94a,#150c04)">
           <div class="frame f1 on">
-            <div class="art"></div>
+            <div class="art" style="background:linear-gradient(90deg,#120c04 36%,rgba(18,12,4,.3) 64%,rgba(18,12,4,0) 82%),url(assets/designs/tile/b004_00175.webp) 85% 50%/cover"></div>
             <div class="nav"><b>FREELANCE</b><em><i></i><i></i><i></i></em></div>
             <div class="hl">Build</div>
             <div class="sub">IDENTITIES, CAMPAIGNS &amp; VIDEO</div>
-            <div class="btnx">View project →</div>
+            <div class="btnx">View work →</div>
           </div>
           <div class="frame f2">
             <div class="nav"><b>FREELANCE</b><em><i></i><i></i><i></i></em></div>
             <div class="lbl">SELECTED WORK</div>
-            <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="grid"><i style="background:url(assets/designs/tile/b004_00174.webp) center/cover"></i><i style="background:url(assets/designs/tile/b004_00176.webp) center/cover"></i><i style="background:url(assets/designs/tile/b004_00178.webp) center/cover"></i><i style="background:url(assets/designs/tile/b004_00181.webp) center/cover"></i><i style="background:url(assets/designs/tile/b019_00989.webp) center/cover"></i><i style="background:url(assets/designs/tile/b019_00990.webp) center/cover"></i></div>
           </div>
           <div class="frame f3">
             <div class="nav"><b>FREELANCE</b><em><i></i><i></i><i></i></em></div>
-            <div class="hero"></div>
-            <div class="copy"><b></b><i></i><i></i><i></i><span class="btnx">Read more →</span></div>
+            <div class="shot" style="background:url(assets/designs/tile/b019_00990.webp) center/cover"></div>
+            <div class="copy real"><b>Brands, end to end</b><p>Brand identities, social campaigns, launch creatives and short-form video for multiple brands — from first concept to final delivery.</p><span class="btnx">Read more →</span></div>
           </div>
           <div class="frame f4">
-            <div class="art"></div>
-            <div class="end"><b>FREELANCE</b><small>IDENTITIES, CAMPAIGNS &amp; VIDEO</small><span class="btnx">Get in touch →</span></div>
+            <div class="art" style="background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),url(assets/designs/tile/b004_00175.webp) center/cover"></div>
+            <div class="end"><b>Freelance</b><small>IDENTITIES, CAMPAIGNS &amp; VIDEO</small><span class="btnx">Get in touch →</span></div>
           </div>
         </div>
         <div class="scrub"><span class="tc">00:00</span><div class="track"><i class="fill"></i><i class="tick" style="--t:0"></i><i class="tick" style="--t:1"></i><i class="tick" style="--t:2"></i><i class="tick" style="--t:3"></i><i class="head"></i></div><span class="tc fr">01 / 04</span></div>
@@ -1424,21 +1434,21 @@ body{letter-spacing:-.01em}
             <div class="nav"><b>ZTH ORBIT</b><em><i></i><i></i><i></i></em></div>
             <div class="hl">Inform</div>
             <div class="sub">CLEAR, ACCESSIBLE COMMUNICATION</div>
-            <div class="btnx">View project →</div>
+            <div class="btnx">View work →</div>
           </div>
           <div class="frame f2">
             <div class="nav"><b>ZTH ORBIT</b><em><i></i><i></i><i></i></em></div>
-            <div class="lbl">SELECTED WORK</div>
-            <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="lbl">WHAT I DID</div>
+            <div class="grid txt"><i>Awareness campaigns</i><i>Data visualisation</i><i>Public communication</i><i>Government clients</i><i>Print &amp; digital</i><i>Accessible design</i></div>
           </div>
           <div class="frame f3">
             <div class="nav"><b>ZTH ORBIT</b><em><i></i><i></i><i></i></em></div>
-            <div class="hero"></div>
-            <div class="copy"><b></b><i></i><i></i><i></i><span class="btnx">Read more →</span></div>
+            <div class="shot txt"><b>2021 — 2022</b><small>SENIOR GRAPHIC DESIGNER</small></div>
+            <div class="copy real"><b>Clear by design</b><p>Awareness campaigns, data visualisations and public materials for government clients — compliant, clear and accessible.</p><span class="btnx">Read more →</span></div>
           </div>
           <div class="frame f4">
             <div class="art"></div>
-            <div class="end"><b>ZTH ORBIT</b><small>CLEAR, ACCESSIBLE COMMUNICATION</small><span class="btnx">Get in touch →</span></div>
+            <div class="end"><b>ZTH Orbit</b><small>CLEAR, ACCESSIBLE COMMUNICATION</small><span class="btnx">Get in touch →</span></div>
           </div>
         </div>
         <div class="scrub"><span class="tc">00:00</span><div class="track"><i class="fill"></i><i class="tick" style="--t:0"></i><i class="tick" style="--t:1"></i><i class="tick" style="--t:2"></i><i class="tick" style="--t:3"></i><i class="head"></i></div><span class="tc fr">01 / 04</span></div>
@@ -1463,21 +1473,21 @@ body{letter-spacing:-.01em}
             <div class="nav"><b>BETAMONKS</b><em><i></i><i></i><i></i></em></div>
             <div class="hl">Interfaces</div>
             <div class="sub">WEB &amp; MOBILE INTERFACES</div>
-            <div class="btnx">View project →</div>
+            <div class="btnx">View work →</div>
           </div>
           <div class="frame f2">
             <div class="nav"><b>BETAMONKS</b><em><i></i><i></i><i></i></em></div>
-            <div class="lbl">SELECTED WORK</div>
-            <div class="grid"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="lbl">WHAT I DID</div>
+            <div class="grid txt"><i>Web interfaces</i><i>Mobile screens</i><i>User flows</i><i>Adobe XD</i><i>Figma</i><i>UI/UX principles</i></div>
           </div>
           <div class="frame f3">
             <div class="nav"><b>BETAMONKS</b><em><i></i><i></i><i></i></em></div>
-            <div class="hero"></div>
-            <div class="copy"><b></b><i></i><i></i><i></i><span class="btnx">Read more →</span></div>
+            <div class="shot txt"><b>2020 — 2021</b><small>JUNIOR GRAPHIC DESIGNER</small></div>
+            <div class="copy real"><b>Interfaces that work</b><p>Web and mobile interfaces designed in Adobe XD and Figma, grounded in UI/UX principles — clear flows and consistent screens.</p><span class="btnx">Read more →</span></div>
           </div>
           <div class="frame f4">
             <div class="art"></div>
-            <div class="end"><b>BETAMONKS</b><small>WEB &amp; MOBILE INTERFACES</small><span class="btnx">Get in touch →</span></div>
+            <div class="end"><b>Betamonks</b><small>WEB &amp; MOBILE INTERFACES</small><span class="btnx">Get in touch →</span></div>
           </div>
         </div>
         <div class="scrub"><span class="tc">00:00</span><div class="track"><i class="fill"></i><i class="tick" style="--t:0"></i><i class="tick" style="--t:1"></i><i class="tick" style="--t:2"></i><i class="tick" style="--t:3"></i><i class="head"></i></div><span class="tc fr">01 / 04</span></div>
@@ -2857,6 +2867,12 @@ document.getElementById('contactForm').addEventListener('submit', function(ev){
       ? 'Almost there — the site owner needs to activate the form from their inbox.' : undefined), wait);
   })
   .catch(() => setTimeout(() => fail(), Math.max(0, minAnim - (performance.now() - started))));
+});
+
+/* whole project card opens its link */
+document.querySelectorAll('.pcard').forEach(c => {
+  const a = c.querySelector('a.live'); if (!a) return;
+  c.addEventListener('click', e => { if (e.target.closest('a,button')) return; a.click(); });
 });
 </script>
 <script src="assets/vendor/glow.js?v=20261102064802" defer></script>
